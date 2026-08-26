@@ -50,7 +50,7 @@ imageboard/
 - 色彩：全部为 `base.css` 中的 OKLCH 自定义属性（`--night` 外层夜色、`--stage` 舞台、`--night-ink`/`--stage-ink` 正文墨色、`--night-muted` 弱化、`--rose`/`--cyan` 点缀、`--danger` 错误）。
 - 字体：Futura Medium + 中文系统回退；Shanzoon 是开场的主展示词，slogan 保持紧凑平衡；日期只出现在归档与详情元数据中。
 - 布局：首屏 story 高于视口、sticky 舞台完成 identity→archive 转场，滚动不劫持；第二个满屏帧用紧凑的 `GENERATIVE ARCHIVE` 标题块 + 左主张右 `VIEW ALL` + 四个比例各异的重叠文件夹；手机端该行改为居中堆叠。产品区为一个 sticky 叠层：三块大板（漫剧有数、灵境 AI 创作平台、Loomicc）互相叠压，较早的板只露出边缘；两个公开产品带访问链接，Loomicc 明确标注为本地原型；Loomicc 收束到联系方式。归档为四列等宽瀑布流，手机上两列。
-- 动效：滚动进度映射舞台缩放、图片淡出、identity 交叉淡化、文件夹错峰入场与 `VIEW ALL` 出现，从不 `preventDefault` 或改写滚轮行为；只动 transform、opacity 与有限模糊；链接只在所在产品激活时获得指针与键盘可达性。移动端与 `prefers-reduced-motion` 用户得到相同内容的静态序列。
+- 动效：滚动进度映射舞台缩放、图片淡出、identity 交叉淡化、文件夹错峰入场与 `VIEW ALL` 出现，从不 `preventDefault` 或改写滚轮行为；只动 transform、opacity 与有限模糊；链接只在所在产品激活时获得指针与键盘可达性。桌面动效场景下章节边界使用 `scroll-snap-type: y proximity` 吸附，惯性滚动停靠不再漂过界。移动端与 `prefers-reduced-motion` 用户得到相同内容的静态序列。
 
 ## 设计原则与无障碍
 

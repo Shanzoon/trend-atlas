@@ -75,6 +75,7 @@
     margin-top: -110dvh;
   }
   .motion-ready .systems-story { height: 440dvh; min-height: 2800px; }
+  .systems-story { scroll-snap-align: start; }
   .motion-ready .systems-deck {
     position: sticky;
     top: 0;

@@ -108,6 +108,10 @@
 .detail-nav:hover { background: oklch(0.22 0.03 356.8); transform: scale(1.05); }
 .detail-nav:active { transform: scale(0.96); }
 
+@media (min-width: 761px) and (prefers-reduced-motion: no-preference) {
+  .detail-page { scroll-snap-align: start; }
+}
+
 @media (max-width: 980px) {
   .detail-page { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); gap: 20px; }
   .detail-layout { grid-column: 1; grid-row: 2; grid-template-columns: minmax(0, 1fr) minmax(210px, 260px); gap: 32px; }

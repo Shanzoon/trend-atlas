@@ -154,6 +154,7 @@
     height: 300dvh;
     min-height: 1800px;
   }
+  .brand-story { scroll-snap-align: start; }
 }
 
 @media (max-width: 980px) {
