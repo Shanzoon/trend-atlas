@@ -15,8 +15,9 @@ function hydrateDetailThumbnail(image) {
 }
 
 function selectDailyItem() {
-  if (!state.allItems.length) return null;
-  return state.allItems[hashString(stableDateKey()) % state.allItems.length];
+  const candidates = itemsForScope("01-Dreamscape");
+  if (!candidates.length) return null;
+  return candidates[hashString(stableDateKey()) % candidates.length];
 }
 
 function detailHash(scope, item) {
