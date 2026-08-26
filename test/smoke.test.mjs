@@ -178,6 +178,8 @@ describe("home page", () => {
     assert.match(html, /<img alt="" loading="lazy" decoding="async" \/>/, "collection images should remain lazy-loaded");
     assert.ok(html.includes('id="collectionMore"'), "expected a manual archive pagination control");
     assert.ok(html.includes('id="dailyRefresh"'), "expected a daily pick refresh control");
+    assert.ok(!html.includes('id="detailStrip"'), "detail page should not render the old thumbnail strip");
+    assert.ok(!html.includes('class="detail-browser"'), "detail page should not render the old thumbnail browser");
     const stylesheetOrder = ["/base.css", "/home.css", "/systems.css", "/collection.css", "/detail.css"];
     const styleIndexes = stylesheetOrder.map((href) => html.indexOf(`href="${href}"`));
     for (let index = 0; index < styleIndexes.length; index += 1) {

@@ -36,7 +36,6 @@ export const elements = {
   detailCounter: document.querySelector("#detailCounter"),
   detailMeta: document.querySelector("#detailMeta"),
   detailImageWrap: document.querySelector("#detailImageWrap"),
-  detailStrip: document.querySelector("#detailStrip"),
   detailPrevious: document.querySelector("#detailPrevious"),
   detailNext: document.querySelector("#detailNext"),
 };

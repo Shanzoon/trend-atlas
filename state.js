@@ -8,7 +8,6 @@ export const state = {
   detailIndex: 0,
   detailScope: "all",
   detailSource: "home",
-  renderedStripScope: "",
   page: "home",
   homeScrollY: 0,
   archiveScrollY: 0,
