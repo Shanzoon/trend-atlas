@@ -8,7 +8,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { categoryDefinitions } from "../categories.js";
 import { COLLECTION_PAGE_SIZE, nextCollectionPageEnd } from "../state.js";
-import { progressWithHold, progressWithHolds, systemsTimeline } from "../timelines.js";
+import { progressWithHold, progressWithHolds, scrollCueOpacity, systemsTimeline } from "../timelines.js";
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -58,6 +58,18 @@ describe("scroll timeline hold", () => {
     assert.equal(progressWithHolds(1790, motionDistance, holds), 0.99);
     assert.equal(progressWithHolds(-1, motionDistance, holds), 0);
     assert.equal(progressWithHolds(1800, motionDistance, holds), 1);
+  });
+});
+
+describe("shared archive scroll cue", () => {
+  it("reuses one cue across the identity and archive visibility windows", () => {
+    assert.equal(scrollCueOpacity(0), 1);
+    assert.equal(scrollCueOpacity(0.16), 0);
+    assert.equal(scrollCueOpacity(0.5), 0);
+    assert.equal(scrollCueOpacity(0.72), 0);
+    assert.ok(scrollCueOpacity(0.78) > 0);
+    assert.equal(scrollCueOpacity(0.84), 1);
+    assert.equal(scrollCueOpacity(0.98), 0);
   });
 });
 
@@ -177,7 +189,12 @@ describe("home page", () => {
     assert.ok(html.includes('<script type="module" src="/app.js">'), "expected /app.js module entry");
     assert.match(html, /<img alt="" loading="lazy" decoding="async" \/>/, "collection images should remain lazy-loaded");
     assert.ok(html.includes('id="collectionMore"'), "expected a manual archive pagination control");
+    assert.ok(html.includes('id="collectionFilters"'), "expected a collection category filter control");
     assert.ok(html.includes('id="dailyRefresh"'), "expected a daily pick refresh control");
+    const archiveCuePattern = /<div class="scroll-cue" id="scrollCue" aria-hidden="true">\s*<span class="scroll-cue-label">ENTER ARCHIVE<\/span>\s*<span class="scroll-cue-mouse"><\/span>\s*<\/div>/g;
+    assert.equal(html.match(archiveCuePattern)?.length, 1, "one complete scroll cue component should serve both archive transitions");
+    assert.ok(!html.includes('id="archiveScrollCue"'), "archive transitions should not fork the scroll cue component");
+    assert.match(html, /id="homeStatus"[^>]*>[^<]*<\/p>\s*<\/div>\s*<div class="scroll-cue" id="scrollCue"/, "the scroll cue should sit outside the scaled stage");
     assert.ok(!html.includes('id="detailStrip"'), "detail page should not render the old thumbnail strip");
     assert.ok(!html.includes('class="detail-browser"'), "detail page should not render the old thumbnail browser");
     assert.ok(html.includes('class="detail-nav previous"'), "detail page should expose the previous image control");

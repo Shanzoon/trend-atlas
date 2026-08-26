@@ -5,6 +5,24 @@
 .collection-heading > p:first-child { grid-column: 2; grid-row: 1; margin: 0; color: var(--rose); font-family: var(--font-display); font-size: var(--type-eyebrow); letter-spacing: 0.08em; }
 .collection-heading > p:last-child { grid-column: 1; max-width: 34ch; margin: 0; color: var(--night-muted); font-size: var(--type-body); line-height: var(--leading-copy); letter-spacing: var(--tracking-copy); }
 
+.collection-filters { display: flex; flex-wrap: wrap; gap: 10px; padding-bottom: 34px; }
+.collection-filter {
+  min-height: 40px;
+  padding: 0 20px;
+  border: 1px solid oklch(0.92 0.008 356.8 / 0.24);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--night-muted);
+  font-family: var(--font-display);
+  font-size: var(--type-small);
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: border-color 180ms ease, background 180ms ease, color 180ms ease, transform 180ms ease;
+}
+.collection-filter:hover { border-color: oklch(0.92 0.008 356.8 / 0.55); color: var(--night-ink); transform: translateY(-1px); }
+.collection-filter:active { transform: scale(0.98); }
+.collection-filter.is-active { background: oklch(0.92 0.008 356.8); border-color: oklch(0.92 0.008 356.8); color: var(--night); }
+
 .collection-grid { column-count: 4; column-gap: clamp(10px, 1.4vw, 20px); }
 .collection-item { display: inline-block; width: 100%; min-width: 0; margin: 0 0 clamp(10px, 1.4vw, 20px); padding: 0; border: 0; border-radius: 12px; background: var(--night-raised); text-align: left; cursor: zoom-in; break-inside: avoid; overflow: hidden; transition: transform 260ms var(--ease-out), background 180ms var(--ease-out); }
 .collection-item:hover { transform: translateY(-5px); background: oklch(0.17 0.008 356.8); }
@@ -36,6 +54,8 @@
   .collection-heading > p:first-child { margin-bottom: 14px; }
   .collection-heading h1 { font-size: 3.8rem; }
   .collection-heading > p:last-child { margin-top: 18px; }
+  .collection-filters { gap: 8px; padding-bottom: 24px; }
+  .collection-filter { min-height: 36px; padding: 0 16px; }
   .collection-grid { column-count: 2; column-gap: 8px; }
   .collection-item { margin-bottom: 8px; }
   .collection-meta { min-height: 56px; padding: 9px; }

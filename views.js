@@ -1,4 +1,4 @@
-import { categoryFor } from "./categories.js";
+import { categoryDefinitions, categoryFor } from "./categories.js";
 import { elements } from "./elements.js";
 import { scheduleStoryUpdate } from "./home.js";
 import { reduceMotion } from "./media.js";
@@ -47,6 +47,46 @@ function detailHash(scope, item) {
   return `#detail/${encodeURIComponent(scope)}/${encodeURIComponent(item.src)}`;
 }
 
+function archiveHash(scope) {
+  return scope === "all" ? "#archive" : `#archive/${encodeURIComponent(scope)}`;
+}
+
+function collectionItems() {
+  return itemsForScope(state.collectionScope);
+}
+
+function syncCollectionScope(scope) {
+  state.collectionScope = scope;
+  elements.collectionFilters.querySelectorAll(".collection-filter").forEach((button) => {
+    const active = button.dataset.scope === scope;
+    button.classList.toggle("is-active", active);
+    button.setAttribute("aria-pressed", String(active));
+  });
+  state.collectionRenderedCount = 0;
+  elements.collectionGrid.replaceChildren();
+}
+
+function setCollectionScope(scope) {
+  if (state.collectionScope === scope) return;
+  syncCollectionScope(scope);
+  renderCollection();
+  if (location.hash !== archiveHash(scope)) history.pushState({ source: "collection" }, "", archiveHash(scope));
+}
+
+export function initCollectionFilters() {
+  const filters = [{ scope: "all", label: "全部" }, ...categoryDefinitions.map(({ id, label }) => ({ scope: id, label }))];
+  filters.forEach(({ scope, label }) => {
+    const button = document.createElement("button");
+    button.className = "collection-filter";
+    button.type = "button";
+    button.dataset.scope = scope;
+    button.setAttribute("aria-pressed", "false");
+    button.textContent = label;
+    button.addEventListener("click", () => setCollectionScope(scope));
+    elements.collectionFilters.append(button);
+  });
+}
+
 function setPage(page) {
   state.page = page;
   document.body.dataset.page = page;
@@ -58,7 +98,8 @@ function setPage(page) {
 
   if (page === "collection") elements.galleryBackLabel.textContent = "返回首页";
   if (page === "detail") {
-    elements.galleryBackLabel.textContent = state.detailScope === "all" ? "返回全部图像" : "返回首页";
+    // 按真实来源定文案：从图库进详情（含筛选）返回图库，从首页进返回首页。
+    elements.galleryBackLabel.textContent = state.detailSource === "collection" ? "返回图库" : "返回首页";
   }
 }
 
@@ -106,19 +147,21 @@ export function switchDailyItem() {
 }
 
 function updateCollectionMore() {
-  const hasMore = state.collectionRenderedCount < state.allItems.length;
+  const items = collectionItems();
+  const hasMore = state.collectionRenderedCount < items.length;
   elements.collectionMore.hidden = !hasMore;
   elements.collectionMore.setAttribute(
     "aria-label",
-    `加载更多图像，已显示 ${state.collectionRenderedCount} 张，共 ${state.allItems.length} 张`,
+    `加载更多图像，已显示 ${state.collectionRenderedCount} 张，共 ${items.length} 张`,
   );
 }
 
 export function renderNextCollectionPage() {
-  const pageEnd = nextCollectionPageEnd(state.collectionRenderedCount, state.allItems.length);
+  const items = collectionItems();
+  const pageEnd = nextCollectionPageEnd(state.collectionRenderedCount, items.length);
   const fragment = document.createDocumentFragment();
 
-  state.allItems.slice(state.collectionRenderedCount, pageEnd).forEach((item) => {
+  items.slice(state.collectionRenderedCount, pageEnd).forEach((item) => {
     const card = elements.itemTemplate.content.firstElementChild.cloneNode(true);
     const image = card.querySelector("img");
     card.dataset.category = item.category;
@@ -129,7 +172,8 @@ export function renderNextCollectionPage() {
     image.alt = `${item.title}，${item.categoryLabel}`;
     card.querySelector("strong").textContent = item.title;
     card.querySelector("small").textContent = item.date;
-    card.addEventListener("click", () => navigateToDetail(item, "all"));
+    // 详情翻页范围跟随当前筛选分类。
+    card.addEventListener("click", () => navigateToDetail(item, state.collectionScope));
     fragment.append(card);
   });
 
@@ -139,9 +183,10 @@ export function renderNextCollectionPage() {
 }
 
 function renderCollection() {
-  elements.collectionCount.textContent = `${state.allItems.length} 张图像`;
+  const items = collectionItems();
+  elements.collectionCount.textContent = `${items.length} 张图像`;
 
-  if (!state.allItems.length) {
+  if (!items.length) {
     if (!elements.collectionGrid.childElementCount) {
       const empty = document.createElement("p");
       empty.className = "empty-collection";
@@ -185,10 +230,13 @@ export function navigateHome(updateHash = true, restorePosition = false) {
 export function navigateToArchive(updateHash = true, restorePosition = false) {
   const previousPage = state.page;
   if (previousPage === "home") state.homeScrollY = scrollY;
+  syncCollectionScope(state.collectionScope);
   setPage("collection");
   renderCollection();
   document.title = "shanzoon.art";
-  if (updateHash && location.hash !== "#archive") history.pushState({ source: previousPage }, "", "#archive");
+  if (updateHash && location.hash !== archiveHash(state.collectionScope)) {
+    history.pushState({ source: previousPage }, "", archiveHash(state.collectionScope));
+  }
   if (restorePosition) restoreScroll(state.archiveScrollY);
   else window.scrollTo({ top: 0, left: 0 });
 }
@@ -230,9 +278,14 @@ export function moveDetail(direction) {
 export function routeFromHash() {
   if (!state.allItems.length) return;
 
-  if (location.hash === "#archive") {
-    navigateToArchive(false, state.page === "detail" && state.detailSource === "collection");
-    return;
+  const archiveMatch = location.hash.match(/^#archive\/([^/]+)$/);
+  if (location.hash === "#archive" || archiveMatch) {
+    const scope = archiveMatch ? decodeURIComponent(archiveMatch[1]) : "all";
+    if (scope === "all" || categoryFor(scope)) {
+      syncCollectionScope(scope);
+      navigateToArchive(false, state.page === "detail" && state.detailSource === "collection");
+      return;
+    }
   }
 
   const detailMatch = location.hash.match(/^#detail\/([^/]+)\/(.+)$/);

@@ -73,12 +73,11 @@
               </button>
             </div>
 
-            <div class="scroll-cue" id="scrollCue" aria-hidden="true">
-              <span class="scroll-cue-label">ENTER ARCHIVE</span>
-              <span class="scroll-cue-mouse"></span>
-            </div>
-            <div class="scroll-cue archive-scroll-cue" id="archiveScrollCue" aria-hidden="true"><span class="scroll-cue-mouse"></span></div>
             <p class="home-status" id="homeStatus" role="status">我正在挑选今天的图像</p>
+          </div>
+          <div class="scroll-cue" id="scrollCue" aria-hidden="true">
+            <span class="scroll-cue-label">ENTER ARCHIVE</span>
+            <span class="scroll-cue-mouse"></span>
           </div>
         </div>
       </section>
@@ -144,6 +143,7 @@
           <h1 id="collectionTitle">ALL IMAGES</h1>
           <p>完整归档，按最新收录排序。</p>
         </header>
+        <div class="collection-filters" id="collectionFilters" role="group" aria-label="按分类筛选图像"></div>
         <div class="collection-grid" id="collectionGrid"></div>
         <button class="collection-more" id="collectionMore" type="button" hidden>LOAD MORE</button>
       </section>
