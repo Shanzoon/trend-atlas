@@ -5,15 +5,6 @@ import { reduceMotion } from "./media.js";
 import { itemsForScope, nextCollectionPageEnd, state } from "./state.js";
 import { hashString, stableDateKey } from "./utils.js";
 
-let detailThumbnailObserver;
-
-function hydrateDetailThumbnail(image) {
-  if (!image?.dataset.src) return;
-  image.src = image.dataset.src;
-  delete image.dataset.src;
-  detailThumbnailObserver?.unobserve(image);
-}
-
 let dailyDeck = [];
 
 function shuffle(items) {
@@ -85,9 +76,9 @@ export function hydrateFolderCovers() {
     image.alt = "";
     image.decoding = "async";
     button.addEventListener("click", () => {
-      const categoryItems = itemsForScope(definition.id);
-      const coverItem = categoryItems.find((item) => item.src === definition.cover) || categoryItems[0];
-      if (coverItem) navigateToDetail(coverItem, definition.id);
+      // 落点固定为列表第一张（最新收录），保证进入后往后翻页是完整的一段。
+      const firstItem = itemsForScope(definition.id)[0];
+      if (firstItem) navigateToDetail(firstItem, definition.id);
     });
   });
 }
@@ -165,60 +156,9 @@ function renderCollection() {
   else updateCollectionMore();
 }
 
-function renderDetailStrip() {
-  elements.detailStrip.replaceChildren();
-  detailThumbnailObserver?.takeRecords();
-  detailThumbnailObserver?.disconnect();
-  detailThumbnailObserver = null;
-  if ("IntersectionObserver" in window) {
-    const observer = new IntersectionObserver((entries) => {
-      if (observer !== detailThumbnailObserver) return;
-      entries.forEach((entry) => {
-        const image = entry.target;
-        if (!entry.isIntersecting || !image.isConnected) return;
-        hydrateDetailThumbnail(image);
-        observer.unobserve(image);
-      });
-    }, { root: elements.detailStrip, rootMargin: "200px" });
-    detailThumbnailObserver = observer;
-  }
-
-  state.activeItems.forEach((item, index) => {
-    const button = document.createElement("button");
-    const image = document.createElement("img");
-    button.className = "detail-thumb";
-    button.type = "button";
-    button.role = "option";
-    button.setAttribute("aria-label", `查看 ${item.title}`);
-    button.setAttribute("aria-selected", "false");
-    image.alt = "";
-    image.loading = "lazy";
-    image.decoding = "async";
-    image.dataset.src = item.src;
-    if (Math.abs(index - state.detailIndex) <= 2) {
-      hydrateDetailThumbnail(image);
-    } else {
-      detailThumbnailObserver?.observe(image);
-    }
-    button.append(image);
-    button.addEventListener("focus", () => hydrateDetailThumbnail(image));
-    button.addEventListener("pointerenter", () => hydrateDetailThumbnail(image));
-    button.addEventListener("click", () => {
-      hydrateDetailThumbnail(image);
-      selectDetail(index);
-    });
-    elements.detailStrip.append(button);
-  });
-  state.renderedStripScope = state.detailScope;
-}
-
 function renderDetail() {
   const item = state.activeItems[state.detailIndex];
   if (!item) return;
-
-  if (state.renderedStripScope !== state.detailScope || elements.detailStrip.childElementCount !== state.activeItems.length) {
-    renderDetailStrip();
-  }
 
   elements.detailImage.src = item.src;
   elements.detailImage.alt = `${item.title}，${item.categoryLabel}`;
@@ -227,18 +167,9 @@ function renderDetail() {
   elements.detailMeta.textContent = `${item.categoryLabel} · ${item.date}`;
   document.title = "shanzoon.art";
 
-  const thumbnails = [...elements.detailStrip.querySelectorAll(".detail-thumb")];
-  thumbnails.forEach((thumbnail, index) => {
-    const selected = index === state.detailIndex;
-    thumbnail.setAttribute("aria-selected", String(selected));
-    thumbnail.tabIndex = selected ? 0 : -1;
-  });
-
-  const selectedThumbnail = thumbnails[state.detailIndex];
-  hydrateDetailThumbnail(selectedThumbnail?.querySelector("img"));
-  requestAnimationFrame(() => {
-    selectedThumbnail?.scrollIntoView({ behavior: reduceMotion.matches ? "auto" : "smooth", block: "nearest", inline: "center" });
-  });
+  // 线性翻页：到列表两端时隐藏对应按钮，避免死胡同或环形瞬移。
+  elements.detailPrevious.hidden = state.detailIndex <= 0;
+  elements.detailNext.hidden = state.detailIndex >= state.activeItems.length - 1;
 }
 
 export function navigateHome(updateHash = true, restorePosition = false) {
@@ -275,7 +206,6 @@ function navigateToDetail(item, scope, updateHash = true) {
   state.detailIndex = itemIndex;
   state.detailScope = scope;
   state.detailSource = previousPage === "collection" ? "collection" : "home";
-  state.renderedStripScope = "";
   setPage("detail");
   renderDetail();
 
@@ -285,7 +215,7 @@ function navigateToDetail(item, scope, updateHash = true) {
 
 function selectDetail(index, updateHash = true) {
   if (!state.activeItems.length) return;
-  state.detailIndex = (index + state.activeItems.length) % state.activeItems.length;
+  state.detailIndex = Math.min(Math.max(index, 0), state.activeItems.length - 1);
   renderDetail();
   if (updateHash) {
     const item = state.activeItems[state.detailIndex];
@@ -319,11 +249,9 @@ export function routeFromHash() {
   const legacyMatch = location.hash.match(/^#gallery\/(.+)$/);
   if (legacyMatch) {
     const scope = decodeURIComponent(legacyMatch[1]);
-    const definition = categoryFor(scope);
-    const categoryItems = itemsForScope(scope);
-    const coverItem = categoryItems.find((item) => item.src === definition?.cover) || categoryItems[0];
-    if (coverItem) {
-      navigateToDetail(coverItem, scope, false);
+    const firstItem = itemsForScope(scope)[0];
+    if (firstItem) {
+      navigateToDetail(firstItem, scope, false);
       return;
     }
   }
