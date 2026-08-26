@@ -166,6 +166,7 @@ const server = http.createServer(async (request, response) => {
   const staticFiles = {
     "/": "brand.html",
     "/index.html": "brand.html",
+    "/archive.json": "archive.json",
     "/base.css": "base.css",
     "/home.css": "home.css",
     "/systems.css": "systems.css",
@@ -185,10 +186,6 @@ const server = http.createServer(async (request, response) => {
     "/assets/project-drama-data.png": "assets/project-drama-data.png",
     "/assets/project-lingjing-ai.png": "assets/project-lingjing-ai.png",
     "/assets/project-loomicc-card-v2.png": "assets/project-loomicc-card-v2.png",
-    "/assets/folder-wonder.jpg": "assets/folder-wonder.jpg",
-    "/assets/folder-current.jpg": "assets/folder-current.jpg",
-    "/assets/folder-underground.jpg": "assets/folder-underground.jpg",
-    "/assets/folder-persona.jpg": "assets/folder-persona.jpg",
   };
   const staticFile = staticFiles[url.pathname];
   if (!staticFile) {

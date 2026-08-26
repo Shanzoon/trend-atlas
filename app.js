@@ -59,7 +59,7 @@ mobileLayout.addEventListener("change", invalidateMotionLayout);
 async function initialize() {
   hydrateFolderCovers();
   try {
-    const response = await fetch("/api/archive");
+    const response = await fetch("/archive.json");
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
     state.days = data.days;

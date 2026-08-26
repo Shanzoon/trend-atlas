@@ -168,6 +168,11 @@ describe("home page", () => {
 
     for (const definition of categoryDefinitions) {
       assert.ok(html.includes(`data-category="${definition.id}"`), `missing folder portal for ${definition.id}`);
+      assert.ok(definition.cover.startsWith("https://media.shanzoon.art/"));
+      assert.equal(definition.preview, definition.cover);
+    }
+    for (const image of ["project-lingjing-ai.webp", "project-drama-data.webp", "project-loomicc-card-v2.webp"]) {
+      assert.ok(html.includes(`https://media.shanzoon.art/site-assets/${image}`), `missing R2 product image ${image}`);
     }
     assert.ok(html.includes('<script type="module" src="/app.js">'), "expected /app.js module entry");
     assert.match(html, /<img alt="" loading="lazy" decoding="async" \/>/, "collection images should remain lazy-loaded");
@@ -190,6 +195,7 @@ describe("static assets", () => {
       "/systems.css",
       "/collection.css",
       "/detail.css",
+      "/archive.json",
       "/categories.js",
       "/app.js",
       "/views.js",
@@ -208,15 +214,22 @@ describe("static assets", () => {
     }
   });
 
+  it("serves the published R2 archive manifest", async () => {
+    const response = await fetchWithRetry(`${baseUrl}/archive.json`);
+    assert.equal(response.status, 200);
+    assert.match(response.headers.get("content-type"), /application\/json/);
+    const archive = await response.json();
+    const items = archive.days.flatMap((day) => day.items);
+    assert.ok(items.length > 0);
+    assert.ok(items.every((item) => item.src.startsWith("https://media.shanzoon.art/")));
+    assert.ok(items.every((item) => item.src.endsWith(".webp")));
+  });
+
   it("serves local content images and 404s for gitignored ones", async () => {
     const contentImages = [
       "/assets/project-drama-data.png",
       "/assets/project-lingjing-ai.png",
       "/assets/project-loomicc-card-v2.png",
-      "/assets/folder-wonder.jpg",
-      "/assets/folder-current.jpg",
-      "/assets/folder-underground.jpg",
-      "/assets/folder-persona.jpg",
     ];
     for (const image of contentImages) {
       const expected = existsSync(path.join(appRoot, image)) ? 200 : 404;

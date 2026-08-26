@@ -1,6 +1,6 @@
 # Shanzoon
 
-Shanzoon 的品牌型个人主页：夜间黑色舞台 + 每日精选图像 + 四个图像文件夹入口 + 滚动驱动的作品系统展示。应用运行时直接扫描同级的 `../trend-lab/<分类>/YYYY-MM-DD__<原文件名>` 作为图片事实源，不会复制或改写原图。
+Shanzoon 的品牌型个人主页：夜间黑色舞台 + 每日精选图像 + 四个图像文件夹入口 + 滚动驱动的作品系统展示。本地 `../trend-lab/<分类>/YYYY-MM-DD__<原文件名>` 是图片事实源；发布脚本把公开副本转换为 WebP 上传到 Cloudflare R2，并生成前端读取的 `archive.json`，不会改写原图。
 
 品牌调性：夜间、收敛、精确。界面像一间从安静的暗色波点中浮现的黑棚舞台；只展示真实存在的作品证据，不设简历、履历或商业化入口。
 
@@ -69,7 +69,9 @@ imageboard/
 ## 代码结构
 
 ```text
-server.mjs         HTTP 服务：/api/archive、/media/*、静态白名单（ARCHIVE_ROOT 可用环境变量覆盖事实源）
+server.mjs         本地 HTTP 服务：/api/archive、/media/*、静态白名单（ARCHIVE_ROOT 可用环境变量覆盖事实源）
+archive.json       线上归档清单：页面据此直接读取 media.shanzoon.art 的 WebP
+scripts/publish-images.mjs 增量转换、上传、验证图片并更新 archive.json
 brand.html         页面结构（文件夹按钮的 data-category 与 categories.js 一致）
 categories.js      分类配置单一来源（server 与前端共用）
 app.js             脚本入口：启动、事件接线、数据加载
@@ -98,6 +100,6 @@ npm run publish:images:dry
 
 ## 素材与开源
 
-- 本仓库以 MIT 协议开源（见 `LICENSE`）。`assets/` 下七张内容图——四个文件夹封面 `folder-*.jpg` 与三张项目界面证据图 `project-drama-data.png`、`project-lingjing-ai.png`、`project-loomicc-card-v2.png`——属于本地素材，已加入 `.gitignore` 并从 git 历史中移除，**不随仓库发布**。克隆后需自行补回（或在原环境保留），否则对应区域显示缺图；服务端白名单仍保留这些路径，缺失时按 404 处理（冒烟测试覆盖此约定）。
+- 本仓库以 MIT 协议开源（见 `LICENSE`）。三张项目界面证据图 `project-drama-data.png`、`project-lingjing-ai.png`、`project-loomicc-card-v2.png` 是本地源文件，已加入 `.gitignore` 并从 git 历史中移除；页面使用发布在 `media.shanzoon.art/site-assets/` 的 WebP 副本。服务端白名单保留本地路径供开发环境检查，缺失时按 404 处理（冒烟测试覆盖此约定）。
 - `assets/shanzoon-glyph.svg` 与 `shanzoon-glyph-favicon.svg` 是品牌徽标，随仓库发布。
-- 首页产品区使用上述三张界面证据图；`assets/folder-*.jpg` 是四个既定封面的轻量首页预览，点击后仍按原始归档路径进入详情。额外的悬停预览只在访客开始进入第二幕后加载。服务端只对白名单中的静态素材开放路径。
+- 首页产品区使用上述三张界面证据图的 R2 WebP 副本；四张文件夹预览直接复用各分类在 R2 归档中的选定图片，点击后按 `archive.json` 中的同一地址进入详情。额外的悬停预览只在访客开始进入第二幕后加载。

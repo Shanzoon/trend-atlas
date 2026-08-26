@@ -1,10 +1,13 @@
 .DS_Store
 node_modules/
 
-# 本地内容素材：不随开源仓库发布（服务端白名单保留，缺失时返回 404）
-assets/folder-*.jpg
+# 本地内容素材：不随开源仓库发布
 assets/project-*.png
 assets/project-*.jpg
+assets/2026-07-11__character-01.png
+assets/2026-08-07__hottest-01-sleeve-activism.png
+assets/2026-08-11__niche-02.png
+assets/2026-08-26__illustration-12.png
 
 # Wrangler 本地缓存
 .wrangler/
