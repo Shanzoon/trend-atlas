@@ -2,18 +2,14 @@ import http from "node:http";
 import { lstat, readFile, readdir, realpath, stat } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { categories } from "./categories.js";
 
 const appRoot = path.dirname(fileURLToPath(import.meta.url));
 const archiveRoot = path.resolve(process.env.ARCHIVE_ROOT || path.join(appRoot, "..", "trend-lab"));
 const port = Number(process.env.PORT || 4173);
 const host = process.env.HOST || "127.0.0.1";
 
-const categories = {
-  "01-interesting": "有趣",
-  "02-hottest": "最热",
-  "03-niche": "小众",
-  "04-best-character": "角色",
-};
+const titlePrefixPattern = new RegExp(`^(${Object.keys(categories).map((id) => id.split("-")[1]).join("|")})-\\d+-`);
 
 const mimeTypes = {
   ".html": "text/html; charset=utf-8",
@@ -30,7 +26,7 @@ const mimeTypes = {
 function titleFromFile(file) {
   return file
     .replace(/\.(png|jpe?g|webp)$/i, "")
-    .replace(/^(interesting|hottest|niche|character)-\d+-/, "")
+    .replace(titlePrefixPattern, "")
     .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
@@ -182,6 +178,7 @@ const server = http.createServer(async (request, response) => {
     "/index.html": "brand.html",
     "/brand.css": "brand.css",
     "/brand.js": "brand.js",
+    "/categories.js": "categories.js",
     "/assets/shanzoon-glyph.svg": "assets/shanzoon-glyph.svg",
     "/assets/shanzoon-glyph-favicon.svg": "assets/shanzoon-glyph-favicon.svg",
     "/assets/project-drama-data.png": "assets/project-drama-data.png",

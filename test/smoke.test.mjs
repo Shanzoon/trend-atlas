@@ -5,6 +5,7 @@ import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { categoryDefinitions } from "../categories.js";
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -94,7 +95,7 @@ describe("api/archive", () => {
     const moonlight = latest.items[0];
     assert.equal(moonlight.id, "01-interesting/interesting-04-moonlight-diner-double-sunrise.png");
     assert.equal(moonlight.category, "01-interesting");
-    assert.equal(moonlight.categoryLabel, "有趣");
+    assert.equal(moonlight.categoryLabel, categoryDefinitions.find((c) => c.id === "01-interesting").label);
     assert.equal(moonlight.title, "Moonlight Diner Double Sunrise");
     assert.equal(moonlight.src, "/media/2026-08-17/01-interesting/interesting-04-moonlight-diner-double-sunrise.png");
     assert.equal(moonlight.bytes, Buffer.byteLength("moonlight fixture bytes"));
@@ -102,7 +103,7 @@ describe("api/archive", () => {
     assert.equal(older.date, "2026-08-08");
     assert.equal(older.count, 1);
     assert.equal(older.items[0].title, "Night Market");
-    assert.equal(older.items[0].categoryLabel, "最热");
+    assert.equal(older.items[0].categoryLabel, categoryDefinitions.find((c) => c.id === "02-hottest").label);
   });
 });
 
@@ -113,8 +114,8 @@ describe("home page", () => {
     assert.match(response.headers.get("content-type"), /text\/html/);
     const html = await response.text();
 
-    for (const id of ["01-interesting", "02-hottest", "03-niche", "04-best-character"]) {
-      assert.ok(html.includes(`data-category="${id}"`), `missing folder portal for ${id}`);
+    for (const definition of categoryDefinitions) {
+      assert.ok(html.includes(`data-category="${definition.id}"`), `missing folder portal for ${definition.id}`);
     }
     assert.ok(html.includes('<script type="module" src="/brand.js">'), "expected /brand.js module entry");
     assert.ok(html.includes('href="/brand.css"'), "expected /brand.css stylesheet");
@@ -126,6 +127,7 @@ describe("static assets", () => {
     const assets = [
       "/brand.css",
       "/brand.js",
+      "/categories.js",
       "/assets/shanzoon-glyph.svg",
       "/assets/shanzoon-glyph-favicon.svg",
       "/assets/project-drama-data.png",

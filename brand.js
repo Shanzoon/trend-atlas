@@ -1,9 +1,4 @@
-const categoryDefinitions = [
-  { id: "01-interesting", label: "有趣", cover: "/media/2026-08-17/01-interesting/interesting-04-moonlight-diner-double-sunrise.png", preview: "/assets/folder-wonder.jpg" },
-  { id: "02-hottest", label: "最热", cover: "/media/2026-08-08/02-hottest/h02_night_market_kite_mender.png", preview: "/assets/folder-current.jpg" },
-  { id: "03-niche", label: "小众", cover: "/media/2026-08-08/03-niche/n03_folded_city_book.png", preview: "/assets/folder-underground.jpg" },
-  { id: "04-best-character", label: "角色", cover: "/media/2026-08-08/04-best-character/c02_punk_ballet_footmaker.png", preview: "/assets/folder-persona.jpg" },
-];
+import { categoryDefinitions, categoryFor } from "./categories.js";
 
 const elements = {
   story: document.querySelector("#brandStory"),
@@ -154,10 +149,6 @@ function hashString(value) {
 function selectDailyItem() {
   if (!state.allItems.length) return null;
   return state.allItems[hashString(stableDateKey()) % state.allItems.length];
-}
-
-function categoryFor(id) {
-  return categoryDefinitions.find((category) => category.id === id);
 }
 
 function itemsForScope(scope) {
