@@ -126,22 +126,23 @@
 .daily-refresh {
   position: absolute;
   z-index: 4;
-  top: 10px;
-  right: 10px;
+  top: 8px;
+  right: 8px;
   display: grid;
   place-items: center;
-  width: 34px;
-  height: 34px;
+  width: 30px;
+  height: 30px;
   padding: 0;
-  border: 1px solid oklch(1 0 0 / 0.22);
+  border: 0;
   border-radius: 999px;
   background: transparent;
   color: var(--stage-ink);
   font-family: var(--font-display);
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   line-height: 1;
   cursor: pointer;
   opacity: 0.72;
+  text-shadow: 0 1px 3px oklch(0 0 0 / 0.85), 0 0 12px oklch(0 0 0 / 0.6);
   transition: opacity 180ms var(--ease-out), transform 180ms var(--ease-out);
 }
 .daily-art:hover .daily-refresh, .daily-refresh:hover, .daily-refresh:focus-visible { opacity: 1; }
