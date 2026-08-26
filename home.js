@@ -1,0 +1,206 @@
+import { categoryFor } from "./categories.js";
+import { elements } from "./elements.js";
+import { mobileLayout, reduceMotion } from "./media.js";
+import { itemsForScope, state } from "./state.js";
+import { archiveTimeline, systemsTimeline } from "./timelines.js";
+import { clamp, clearMotionStyles, lerp, setButtonInteractive, setContainerInteractive, smoothstep } from "./utils.js";
+
+function measureMotionLayout() {
+  const storyTop = elements.story.offsetTop;
+  const systemsTop = elements.systemsStory.getBoundingClientRect().top + scrollY;
+  return {
+    storyTop,
+    storyDistance: Math.max(1, elements.story.offsetHeight - innerHeight),
+    systemsTop,
+    systemsDistance: Math.max(1, elements.systemsStory.offsetHeight - innerHeight),
+    portalsWidth: elements.portals.clientWidth,
+    portalOffsets: elements.portalButtons.map((button) => button.offsetLeft),
+  };
+}
+
+function hydrateFolderPreviews() {
+  if (state.folderPreviewsHydrated) return;
+  state.folderPreviewsHydrated = true;
+  elements.portalButtons.forEach((button) => {
+    const definition = categoryFor(button.dataset.category);
+    const categoryItems = itemsForScope(definition.id);
+    const previewItems = categoryItems.filter((item) => item.src !== definition.cover).slice(0, 2);
+
+    button.querySelectorAll(".is-preview-extra").forEach((layer) => layer.remove());
+    button.classList.toggle("has-preview-stack", previewItems.length === 2);
+
+    previewItems.forEach((item, index) => {
+      const layer = document.createElement("span");
+      const image = document.createElement("img");
+      layer.className = `folder-image is-preview-extra ${index === 0 ? "is-preview-left" : "is-preview-right"}`;
+      image.src = item.src;
+      image.alt = "";
+      image.loading = "lazy";
+      image.decoding = "async";
+      layer.append(image);
+      button.querySelector(".folder-front").before(layer);
+    });
+  });
+}
+
+function updateSystemsStory(staticStory, metrics, brandProgress = 0) {
+  if (staticStory) {
+    clearMotionStyles(elements.systemsBridge);
+    elements.projectSheets.forEach((sheet) => {
+      clearMotionStyles(sheet);
+      sheet.removeAttribute("inert");
+    });
+    elements.projectTitles.forEach(clearMotionStyles);
+    elements.projectCopies.forEach((copy) => {
+      clearMotionStyles(copy);
+      copy.removeAttribute("inert");
+    });
+    elements.projectLinks.forEach((link) => { link.tabIndex = 0; });
+    clearMotionStyles(elements.systemsContact);
+    elements.systemsContact.removeAttribute("inert");
+    elements.systemsContactLinks.forEach((link) => { link.tabIndex = 0; });
+    return;
+  }
+
+  const progress = clamp((scrollY - metrics.systemsTop) / metrics.systemsDistance);
+  // Establish the chapter title during the hand-off, then let the first board
+  // arrive after the visitor has registered the new section.
+  const bridgeEntry = Math.max(
+    smoothstep(...systemsTimeline.bridgeEntry, progress),
+    smoothstep(...archiveTimeline.bridgeHandoff, brandProgress),
+  );
+  elements.systemsBridge.style.opacity = bridgeEntry.toFixed(3);
+  elements.systemsBridge.style.filter = `blur(${lerp(5, 0, bridgeEntry).toFixed(2)}px)`;
+  elements.systemsBridge.style.transform = `translateX(-50%) translateY(${lerp(18, 0, bridgeEntry).toFixed(1)}px)`;
+
+  const starts = systemsTimeline.projectStarts;
+  elements.projectSheets.forEach((sheet, index) => {
+    const entryDuration = index === 0 ? 0.18 : 0.12;
+    const entry = smoothstep(starts[index], starts[index] + entryDuration, progress);
+    const firstCover = index < starts.length - 1 ? smoothstep(starts[index + 1], starts[index + 1] + 0.12, progress) : 0;
+    const secondCover = index < starts.length - 2 ? smoothstep(starts[index + 2], starts[index + 2] + 0.12, progress) : 0;
+    const direction = index % 2 === 0 ? -1 : 1;
+    const entryX = index === 0 ? 0 : 118;
+    const x = lerp(entryX, 0, entry) + direction * (54 * firstCover + 28 * secondCover);
+    const y = lerp(index === 0 ? 160 : 112, 0, entry) - 18 * firstCover - 14 * secondCover;
+    const scale = lerp(0.91, 1, entry) - 0.05 * firstCover - 0.035 * secondCover;
+    const rotation = lerp(3.2, 0, entry) + direction * (2.1 * firstCover + 0.8 * secondCover);
+    const opacity = entry * (1 - 0.55 * firstCover - 0.25 * secondCover);
+    sheet.style.zIndex = String(index + 2);
+    sheet.style.opacity = opacity.toFixed(3);
+    sheet.style.transform = `translate(-50%, -50%) translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) scale(${scale.toFixed(4)}) rotate(${rotation.toFixed(2)}deg)`;
+    const active = entry > 0.9 && firstCover < 0.15;
+    setContainerInteractive(sheet, active);
+
+    const titleEntry = smoothstep(starts[index] + 0.06, starts[index] + 0.12, progress);
+    const titleExit = index < starts.length - 1
+      ? smoothstep(starts[index + 1], starts[index + 1] + 0.06, progress)
+      : 0;
+    const titleOpacity = titleEntry * (1 - titleExit);
+    elements.projectTitles[index].style.opacity = titleOpacity.toFixed(3);
+    elements.projectTitles[index].style.transform = `translateY(${lerp(10, 0, titleEntry).toFixed(1)}px)`;
+
+    const copyEntry = index === 0
+      ? smoothstep(starts[index] + 0.11, starts[index] + 0.22, progress)
+      : smoothstep(starts[index] + 0.12, starts[index] + 0.21, progress);
+    const copyOpacity = copyEntry * (1 - firstCover);
+    const copyInteractive = active && copyOpacity > 0.2;
+    elements.projectCopies[index].style.opacity = copyOpacity.toFixed(3);
+    setContainerInteractive(elements.projectCopies[index], copyInteractive);
+    elements.projectCopies[index].style.transform = `translateY(${lerp(12, 0, copyOpacity).toFixed(1)}px)`;
+    if (elements.projectLinks[index]) elements.projectLinks[index].tabIndex = copyInteractive ? 0 : -1;
+  });
+
+  const contactEntry = smoothstep(...systemsTimeline.contactEntry, progress);
+  const contactIsInteractive = contactEntry > 0.9;
+  elements.systemsContact.style.opacity = contactEntry.toFixed(3);
+  setContainerInteractive(elements.systemsContact, contactIsInteractive);
+  elements.systemsContact.style.transform = `translateY(${lerp(14, 0, contactEntry).toFixed(1)}px)`;
+  elements.systemsContactLinks.forEach((link) => { link.tabIndex = contactIsInteractive ? 0 : -1; });
+}
+
+function updateStory() {
+  state.animationFrame = 0;
+  if (state.page !== "home") return;
+
+  const staticStory = mobileLayout.matches || reduceMotion.matches;
+
+  if (staticStory) {
+    if (!state.folderPreviewsHydrated && scrollY - elements.story.offsetTop > innerHeight * 0.42) hydrateFolderPreviews();
+    if (state.staticMotionApplied) return;
+    updateSystemsStory(true);
+    elements.stage.style.setProperty("--stage-scale", "1");
+    elements.portalButtons.forEach((button) => setButtonInteractive(button, true));
+    elements.portals.classList.add("is-ready");
+    setButtonInteractive(elements.archiveAll, true);
+    elements.archiveAll.classList.add("is-ready");
+    state.staticMotionApplied = true;
+    return;
+  }
+
+  state.staticMotionApplied = false;
+  const metrics = state.motionMetrics || (state.motionMetrics = measureMotionLayout());
+  const progress = clamp((scrollY - metrics.storyTop) / metrics.storyDistance);
+  updateSystemsStory(false, metrics, progress);
+  if (progress > 0.24) hydrateFolderPreviews();
+
+  const gather = smoothstep(...archiveTimeline.gather, progress);
+  const folders = smoothstep(...archiveTimeline.folders, progress);
+  const handoff = smoothstep(...archiveTimeline.handoff, progress);
+
+  elements.stage.style.setProperty("--stage-scale", lerp(1, 0.84, gather).toFixed(4));
+  elements.identity.style.left = `${lerp(7, 25, gather)}%`;
+  elements.identity.style.top = `${lerp(50, 17, gather)}%`;
+  elements.identity.style.width = `${lerp(38, 50, gather)}%`;
+
+  const identityExit = smoothstep(...archiveTimeline.identityExit, progress);
+  const archiveEntry = smoothstep(...archiveTimeline.archiveEntry, progress);
+  elements.identity.style.opacity = (1 - identityExit).toFixed(3);
+  elements.identity.style.filter = `blur(${lerp(0, 5, identityExit).toFixed(2)}px)`;
+  elements.identity.style.transform = `translateY(-50%) translateY(${lerp(0, -10, identityExit).toFixed(1)}px) scale(${lerp(1, 0.97, identityExit).toFixed(3)})`;
+  const archiveExit = smoothstep(...archiveTimeline.archiveExit, progress);
+  elements.archiveCopy.style.opacity = (archiveEntry * (1 - archiveExit)).toFixed(3);
+  elements.archiveCopy.style.filter = `blur(${(lerp(5, 0, archiveEntry) + lerp(0, 4, archiveExit)).toFixed(2)}px)`;
+  elements.archiveCopy.style.transform = `translateX(-50%) translateY(${(lerp(12, 0, archiveEntry) - 34 * archiveExit).toFixed(1)}px)`;
+
+  const artOpacity = 1 - smoothstep(...archiveTimeline.artExit, progress);
+  elements.dailyArt.style.opacity = artOpacity.toFixed(3);
+  elements.dailyArt.style.transform = `translateY(-50%) scale(${lerp(1, 0.72, 1 - artOpacity).toFixed(3)})`;
+  elements.scrollCue.style.opacity = (1 - smoothstep(0, 0.16, progress)).toFixed(3);
+
+  const rotations = [-11, -4, 6, 12];
+  const gatheredOffsets = [-0.16, -0.055, 0.065, 0.17];
+  elements.portalButtons.forEach((button, index) => {
+    const local = smoothstep(0.08 * index, 0.6 + 0.07 * index, folders);
+    const gatheredCenter = metrics.portalsWidth * (0.5 + gatheredOffsets[index]);
+    const gatherX = (gatheredCenter - metrics.portalOffsets[index]) * handoff;
+    const gatherY = lerp(0, -52, handoff);
+    const folderScale = lerp(1, 0.78, handoff);
+    const folderRotation = rotations[index] * lerp(1, 0.55, handoff);
+    button.style.opacity = local.toFixed(3);
+    button.style.transform = `translate(-50%, -50%) translate(${gatherX.toFixed(1)}px, ${(lerp(120, 0, local) + gatherY).toFixed(1)}px) scale(${(lerp(0.72, 1, local) * folderScale).toFixed(3)}) rotate(${folderRotation.toFixed(2)}deg)`;
+    setButtonInteractive(button, folders > 0.72 && handoff < 0.18);
+  });
+  const folderExit = smoothstep(...archiveTimeline.folderExit, progress);
+  elements.portals.style.opacity = (folders * (1 - folderExit)).toFixed(3);
+  elements.portals.classList.toggle("is-ready", folders > 0.72 && handoff < 0.18);
+
+  const allEntry = smoothstep(...archiveTimeline.allEntry, progress);
+  elements.archiveAll.style.opacity = (allEntry * (1 - archiveExit)).toFixed(3);
+  elements.archiveAll.style.transform = `translateY(${(lerp(12, 0, allEntry) - 20 * archiveExit).toFixed(1)}px)`;
+  elements.archiveScrollCue.style.opacity = (smoothstep(...archiveTimeline.cueEntry, progress) * (1 - handoff)).toFixed(3);
+  const archiveIsInteractive = allEntry > 0.82 && handoff < 0.18;
+  setButtonInteractive(elements.archiveAll, archiveIsInteractive);
+  elements.archiveAll.classList.toggle("is-ready", archiveIsInteractive);
+}
+
+export function scheduleStoryUpdate() {
+  if (state.animationFrame) return;
+  state.animationFrame = requestAnimationFrame(updateStory);
+}
+
+export function invalidateMotionLayout() {
+  state.motionMetrics = null;
+  state.staticMotionApplied = false;
+  scheduleStoryUpdate();
+}

@@ -117,7 +117,7 @@ describe("home page", () => {
     for (const definition of categoryDefinitions) {
       assert.ok(html.includes(`data-category="${definition.id}"`), `missing folder portal for ${definition.id}`);
     }
-    assert.ok(html.includes('<script type="module" src="/brand.js">'), "expected /brand.js module entry");
+    assert.ok(html.includes('<script type="module" src="/app.js">'), "expected /app.js module entry");
     assert.ok(html.includes('href="/brand.css"'), "expected /brand.css stylesheet");
   });
 });
@@ -126,8 +126,15 @@ describe("static assets", () => {
   it("serves every whitelisted file", async () => {
     const assets = [
       "/brand.css",
-      "/brand.js",
       "/categories.js",
+      "/app.js",
+      "/views.js",
+      "/home.js",
+      "/elements.js",
+      "/state.js",
+      "/media.js",
+      "/timelines.js",
+      "/utils.js",
       "/assets/shanzoon-glyph.svg",
       "/assets/shanzoon-glyph-favicon.svg",
       "/assets/project-drama-data.png",
