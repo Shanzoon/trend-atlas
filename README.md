@@ -78,13 +78,23 @@ home.js            首屏与系统场景的滚动动效
 elements.js        DOM 引用；state.js 运行时状态；media.js 媒体查询；timelines.js 动效时间线；utils.js 工具函数
 base.css           令牌、重置、页头（通用）
 home.css           首屏舞台与文件夹；systems.css 产品叠层；collection.css 归档瀑布流；detail.css 详情页
-test/smoke.test.mjs 零依赖冒烟测试（node:test + fetch）
+test/smoke.test.mjs 冒烟测试（node:test + fetch）
 ```
 
 ## 开发约定
 
-- 可运行 `npm run check`（零依赖冒烟测试 + 语法检查）。
+- 首次运行先执行 `npm install`；可运行 `npm run check`（冒烟测试 + 语法检查）。
 - 重构只搬移、不改行为；视觉改动需人工验收。
+
+## 发布新增图片
+
+把 PNG 原图放入 `../trend-lab/01-Dreamscape` 至 `04-Persona`，文件名使用 `YYYY-MM-DD__名称.png`。首次使用先执行 `npm install`，之后可先预览增量：
+
+```bash
+npm run publish:images:dry
+```
+
+确认后执行 `npm run publish:images`。脚本只把 R2 中不存在的同名图片转换为质量 84 的 WebP，上传到 `media.shanzoon.art/<分类>/<文件名>.webp`，逐张验证后更新根目录 `archive.json`，并自动删除临时 WebP；本地 PNG 原图和 R2 既有对象不会被删除或覆盖。已经发布的图片使用不可变文件名，修改图片内容时请换一个文件名。
 
 ## 素材与开源
 
