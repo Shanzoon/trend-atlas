@@ -45,9 +45,13 @@
   z-index: 2;
   width: 100%;
   margin: 0;
+  border: 1px solid oklch(1 0 0 / 0.07);
   border-radius: 14px;
   background: var(--night-raised);
-  box-shadow: 0 8px 8px oklch(0 0 0 / 0.42);
+  box-shadow:
+    inset 0 1px 0 oklch(1 0 0 / 0.06),
+    0 2px 4px oklch(0 0 0 / 0.35),
+    0 16px 32px -12px oklch(0 0 0 / 0.6);
   overflow: hidden;
 }
 .project-board img { display: block; width: 100%; height: auto; }
@@ -155,6 +159,6 @@
   .project-title { font-size: clamp(1.55rem, 7vw, 2rem); }
   .project-sheet-copy p { max-width: 24ch; margin-top: 12px; font-size: 0.92rem; }
   .project-visit, .project-availability { display: inline-flex; margin: 16px 0 0; font-size: 0.76rem; }
-  .project-board { border-radius: 10px; box-shadow: 0 6px 8px oklch(0 0 0 / 0.4); }
+  .project-board { border-radius: 10px; box-shadow: 0 2px 4px oklch(0 0 0 / 0.35), 0 12px 24px -12px oklch(0 0 0 / 0.55); }
   .systems-contact { display: grid; justify-content: stretch; gap: 16px; width: 100%; margin-top: 16px; }
 }
