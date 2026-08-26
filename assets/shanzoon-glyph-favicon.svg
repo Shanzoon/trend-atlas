@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="320 220 620 680">
+  <style>
+    .glyph { fill: #111111; }
+    @media (prefers-color-scheme: dark) { .glyph { fill: #f5f5f5; } }
+  </style>
+  <g class="glyph">
+    <path d="M640 257H501C442 257 360 320 360 399c0 65 41 123 105 142l34-34c-64-11-97-55-97-107 2-55 62-103 99-103h139v-40Z"/>
+    <path fill-rule="evenodd" d="M638 453a125 125 0 1 1 0 250 125 125 0 0 1 0-250Zm0 39a86 86 0 1 0 0 172 86 86 0 0 0 0-172Z"/>
+    <path d="M814 609h58L688 804h177l-39 39H608l206-234Z"/>
+    <path d="M405 797h44v44h-44z"/>
+  </g>
+</svg>
