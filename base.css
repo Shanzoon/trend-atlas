@@ -128,15 +128,17 @@ button:focus-visible, a:focus-visible { outline: none; }
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 0 14px;
-  border: 0;
+  padding: 0 18px;
+  border: 1px solid oklch(1 0 0 / 0.14);
   border-radius: 999px;
-  background: var(--night-raised);
+  background: oklch(0.17 0.012 356.8 / 0.92);
   color: var(--night-ink);
   cursor: pointer;
-  transition: background 180ms var(--ease-out), transform 180ms var(--ease-out);
+  box-shadow: 0 2px 6px oklch(0 0 0 / 0.4);
+  backdrop-filter: blur(6px);
+  transition: background 180ms var(--ease-out), border-color 180ms var(--ease-out), transform 180ms var(--ease-out);
 }
-.gallery-back:hover { background: oklch(0.19 0.01 356.8); transform: translateY(-1px); }
+.gallery-back:hover { background: oklch(0.22 0.015 356.8); border-color: oklch(1 0 0 / 0.26); transform: translateY(-1px); }
 .gallery-back:active { transform: scale(0.97); }
 
 @media (max-width: 760px) {
