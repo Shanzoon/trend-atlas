@@ -1,4 +1,5 @@
 export const archiveTimeline = {
+  identityCueExit: [0, 0.16],
   gather: [0.06, 0.44],
   folders: [0.32, 0.62],
   handoff: [0.84, 0.98],
@@ -10,6 +11,18 @@ export const archiveTimeline = {
   allEntry: [0.48, 0.62],
   cueEntry: [0.72, 0.84],
 };
+
+function timelineStep([start, end], value) {
+  const progress = Math.min(1, Math.max(0, (value - start) / (end - start)));
+  return progress * progress * (3 - 2 * progress);
+}
+
+export function scrollCueOpacity(progress) {
+  const identityOpacity = 1 - timelineStep(archiveTimeline.identityCueExit, progress);
+  const archiveOpacity = timelineStep(archiveTimeline.cueEntry, progress)
+    * (1 - timelineStep(archiveTimeline.handoff, progress));
+  return Math.max(identityOpacity, archiveOpacity);
+}
 
 export const systemsTimeline = {
   bridgeEntry: [0, 0.08],

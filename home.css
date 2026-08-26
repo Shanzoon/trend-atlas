@@ -211,8 +211,7 @@
 .archive-all:hover { border-color: oklch(0.92 0.008 356.8 / 0.72); background: oklch(0.19 0.008 356.8); transform: translateY(-2px); }
 .archive-all:active { transform: scale(0.97); }
 
-.scroll-cue { position: absolute; z-index: 6; left: 50%; bottom: 18px; width: 28px; height: 44px; border: 1px solid oklch(0.92 0 0 / 0.26); border-radius: 999px; pointer-events: none; transform: translateX(-50%); }
-.archive-scroll-cue { opacity: 0; }
+.scroll-cue { position: absolute; z-index: 6; left: 50%; bottom: 40px; width: 28px; height: 44px; border: 1px solid oklch(0.92 0 0 / 0.26); border-radius: 999px; pointer-events: none; transform: translateX(-50%); }
 .scroll-cue-label { position: absolute; left: calc(100% + 10px); top: 50%; color: var(--stage-muted); font-family: var(--font-display); font-size: var(--type-eyebrow); font-weight: var(--weight-display); letter-spacing: 0.08em; line-height: 1; white-space: nowrap; transform: translateY(-50%); }
 .scroll-cue-mouse { position: absolute; left: 50%; top: 9px; width: 4px; height: 4px; border-radius: 50%; background: var(--stage-ink); transform: translateX(-50%); animation: cue 1.5s var(--ease-out) infinite; }
 @keyframes cue { 0% { transform: translate(-50%, 0); opacity: 0; } 28% { opacity: 1; } 80%, 100% { transform: translate(-50%, 18px); opacity: 0; } }

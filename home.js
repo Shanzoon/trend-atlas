@@ -2,7 +2,7 @@ import { categoryFor } from "./categories.js";
 import { elements } from "./elements.js";
 import { mobileLayout, reduceMotion } from "./media.js";
 import { itemsForScope, state } from "./state.js";
-import { archiveTimeline, progressWithHold, progressWithHolds, systemsTimeline } from "./timelines.js";
+import { archiveTimeline, progressWithHold, progressWithHolds, scrollCueOpacity, systemsTimeline } from "./timelines.js";
 import { clamp, clearMotionStyles, lerp, setButtonInteractive, setContainerInteractive, smoothstep } from "./utils.js";
 
 const ARCHIVE_STAGE_SCALE = 0.84;
@@ -201,8 +201,6 @@ function updateStory() {
   const artOpacity = 1 - smoothstep(...archiveTimeline.artExit, progress);
   elements.dailyArt.style.opacity = artOpacity.toFixed(3);
   elements.dailyArt.style.transform = `translateY(-50%) scale(${lerp(1, 0.72, 1 - artOpacity).toFixed(3)})`;
-  elements.scrollCue.style.opacity = (1 - smoothstep(0, 0.16, progress)).toFixed(3);
-
   const rotations = [-11, -4, 6, 12];
   const gatheredOffsets = [-0.16, -0.055, 0.065, 0.17];
   const folderExit = smoothstep(...archiveTimeline.folderExit, progress);
@@ -228,7 +226,7 @@ function updateStory() {
   const allEntry = smoothstep(...archiveTimeline.allEntry, progress);
   elements.archiveAll.style.opacity = (allEntry * (1 - archiveExit)).toFixed(3);
   elements.archiveAll.style.transform = `translateY(${(lerp(12, 0, allEntry) - 20 * archiveExit).toFixed(1)}px)`;
-  elements.archiveScrollCue.style.opacity = (smoothstep(...archiveTimeline.cueEntry, progress) * (1 - handoff)).toFixed(3);
+  elements.scrollCue.style.opacity = scrollCueOpacity(progress).toFixed(3);
   const archiveIsInteractive = allEntry > 0.82 && handoff < 0.18;
   setButtonInteractive(elements.archiveAll, archiveIsInteractive);
   elements.archiveAll.classList.toggle("is-ready", archiveIsInteractive);
