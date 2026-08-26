@@ -58,7 +58,7 @@ function setPage(page) {
 
   if (page === "collection") elements.galleryBackLabel.textContent = "返回首页";
   if (page === "detail") {
-    elements.galleryBackLabel.textContent = state.detailScope === "all" ? "返回全部图像" : "返回生成归档";
+    elements.galleryBackLabel.textContent = state.detailScope === "all" ? "返回全部图像" : "返回首页";
   }
 }
 
