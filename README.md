@@ -82,6 +82,11 @@ test/smoke.test.mjs 零依赖冒烟测试（node:test + fetch）
 
 ## 开发约定
 
-- 任何改动后运行 `npm run check`（语法检查 + 冒烟测试）。
+- 可运行 `npm run check`（零依赖冒烟测试 + 语法检查）。
 - 重构只搬移、不改行为；视觉改动需人工验收。
-- 首页产品区使用 `project-drama-data.png`、`project-lingjing-ai.png` 与 `project-loomicc-local-dashboard.jpg` 三张界面证据图；`assets/folder-*.jpg` 是四个既定封面的轻量首页预览，点击后仍按原始归档路径进入详情。额外的悬停预览只在访客开始进入第二幕后加载。服务端只对白名单中的静态素材开放路径。
+
+## 素材与开源
+
+- 本仓库以 MIT 协议开源（见 `LICENSE`）。`assets/` 下七张内容图——四个文件夹封面 `folder-*.jpg` 与三张项目界面证据图 `project-drama-data.png`、`project-lingjing-ai.png`、`project-loomicc-local-dashboard.jpg`——属于本地素材，已加入 `.gitignore` 并从 git 历史中移除，**不随仓库发布**。克隆后需自行补回（或在原环境保留），否则对应区域显示缺图；服务端白名单仍保留这些路径，缺失时按 404 处理（冒烟测试覆盖此约定）。
+- `assets/shanzoon-glyph.svg` 与 `shanzoon-glyph-favicon.svg` 是品牌徽标，随仓库发布。
+- 首页产品区使用上述三张界面证据图；`assets/folder-*.jpg` 是四个既定封面的轻量首页预览，点击后仍按原始归档路径进入详情。额外的悬停预览只在访客开始进入第二幕后加载。服务端只对白名单中的静态素材开放路径。

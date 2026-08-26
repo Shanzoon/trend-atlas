@@ -1,6 +1,7 @@
 import { after, before, describe, it } from "node:test";
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
+import { existsSync } from "node:fs";
 import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -128,8 +129,8 @@ describe("home page", () => {
 });
 
 describe("static assets", () => {
-  it("serves every whitelisted file", async () => {
-    const assets = [
+  it("serves every core whitelisted file", async () => {
+    const coreAssets = [
       "/base.css",
       "/home.css",
       "/systems.css",
@@ -146,6 +147,15 @@ describe("static assets", () => {
       "/utils.js",
       "/assets/shanzoon-glyph.svg",
       "/assets/shanzoon-glyph-favicon.svg",
+    ];
+    for (const asset of coreAssets) {
+      const response = await fetchWithRetry(`${baseUrl}${asset}`);
+      assert.equal(response.status, 200, `${asset} should be served`);
+    }
+  });
+
+  it("serves local content images and 404s for gitignored ones", async () => {
+    const contentImages = [
       "/assets/project-drama-data.png",
       "/assets/project-lingjing-ai.png",
       "/assets/project-loomicc-local-dashboard.jpg",
@@ -154,9 +164,10 @@ describe("static assets", () => {
       "/assets/folder-underground.jpg",
       "/assets/folder-persona.jpg",
     ];
-    for (const asset of assets) {
-      const response = await fetchWithRetry(`${baseUrl}${asset}`);
-      assert.equal(response.status, 200, `${asset} should be served`);
+    for (const image of contentImages) {
+      const expected = existsSync(path.join(appRoot, image)) ? 200 : 404;
+      const response = await fetchWithRetry(`${baseUrl}${image}`);
+      assert.equal(response.status, expected, `${image} should be ${expected} (content assets are gitignored)`);
     }
   });
 });
