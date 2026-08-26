@@ -13,7 +13,7 @@ export const archiveTimeline = {
 
 export const systemsTimeline = {
   bridgeEntry: [0, 0.08],
-  projectStarts: [0.08, 0.4, 0.68],
+  projectStarts: [0, 0.4, 0.68],
   contactEntry: [0.92, 0.98],
 };
 

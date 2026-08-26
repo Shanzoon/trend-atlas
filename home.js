@@ -84,8 +84,8 @@ function updateSystemsStory(staticStory, metrics, titleProgress = 0, handoffY = 
     metrics.systemsMotionDistance,
     metrics.systemsHoldDistances,
   );
-  // Establish the chapter title during the hand-off, then let the first board
-  // arrive after the visitor has registered the new section.
+  // Establish the chapter title during the hand-off. The first board gets a
+  // quiet visual preview near the end so the new scene never reads as empty.
   const bridgeEntry = Math.max(
     smoothstep(...systemsTimeline.bridgeEntry, progress),
     titleProgress,
@@ -98,8 +98,10 @@ function updateSystemsStory(staticStory, metrics, titleProgress = 0, handoffY = 
 
   const starts = systemsTimeline.projectStarts;
   elements.projectSheets.forEach((sheet, index) => {
-    const entryDuration = index === 0 ? 0.18 : 0.12;
-    const entry = smoothstep(starts[index], starts[index] + entryDuration, progress);
+    const entryDuration = 0.12;
+    const timelineEntry = smoothstep(starts[index], starts[index] + entryDuration, progress);
+    const handoffPreview = index === 0 ? 0.22 * smoothstep(0.66, 1, titleProgress) : 0;
+    const entry = Math.max(timelineEntry, handoffPreview);
     const firstCover = index < starts.length - 1 ? smoothstep(starts[index + 1], starts[index + 1] + 0.12, progress) : 0;
     const secondCover = index < starts.length - 2 ? smoothstep(starts[index + 2], starts[index + 2] + 0.12, progress) : 0;
     const direction = index % 2 === 0 ? -1 : 1;

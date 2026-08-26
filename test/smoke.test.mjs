@@ -8,7 +8,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { categoryDefinitions } from "../categories.js";
 import { COLLECTION_PAGE_SIZE, nextCollectionPageEnd } from "../state.js";
-import { progressWithHold, progressWithHolds } from "../timelines.js";
+import { progressWithHold, progressWithHolds, systemsTimeline } from "../timelines.js";
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -26,6 +26,10 @@ let baseUrl;
 let fixtureRoot;
 
 describe("scroll timeline hold", () => {
+  it("starts the first product card as the systems scene begins", () => {
+    assert.deepEqual(systemsTimeline.projectStarts, [0, 0.4, 0.68]);
+  });
+
   it("keeps the original pace around a held key frame and clamps both ends", () => {
     const motionDistance = 1000;
     const holdProgress = 0.84;
