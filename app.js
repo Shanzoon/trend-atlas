@@ -7,6 +7,12 @@ import { hydrateFolderCovers, moveDetail, navigateHome, navigateToArchive, rende
 document.documentElement.classList.add("motion-ready");
 if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 
+function leaveDetail() {
+  if (history.state?.source) history.back();
+  else if (state.detailScope === "all") navigateToArchive();
+  else navigateHome(true, true);
+}
+
 elements.archiveAll.addEventListener("click", () => navigateToArchive());
 elements.collectionMore.addEventListener("click", renderNextCollectionPage);
 elements.galleryBack.addEventListener("click", () => {
@@ -15,9 +21,7 @@ elements.galleryBack.addEventListener("click", () => {
     else navigateHome(true, true);
     return;
   }
-  if (history.state?.source) history.back();
-  else if (state.detailScope === "all") navigateToArchive();
-  else navigateHome(true, true);
+  leaveDetail();
 });
 elements.homeLink.addEventListener("click", (event) => {
   event.preventDefault();
@@ -47,6 +51,10 @@ elements.detailImageWrap.addEventListener("pointerleave", () => {
 
 document.addEventListener("keydown", (event) => {
   if (state.page !== "detail" || event.altKey || event.ctrlKey || event.metaKey) return;
+  if (event.key === "Escape") {
+    leaveDetail();
+    return;
+  }
   if (event.key === "ArrowLeft") moveDetail(-1);
   if (event.key === "ArrowRight") moveDetail(1);
 });
