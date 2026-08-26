@@ -4,7 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const appRoot = path.dirname(fileURLToPath(import.meta.url));
-const archiveRoot = path.resolve(appRoot, "..", "trend-lab");
+const archiveRoot = path.resolve(process.env.ARCHIVE_ROOT || path.join(appRoot, "..", "trend-lab"));
 const port = Number(process.env.PORT || 4173);
 const host = process.env.HOST || "127.0.0.1";
 
@@ -201,6 +201,7 @@ const server = http.createServer(async (request, response) => {
 });
 
 server.listen(port, host, () => {
-  console.log(`Shanzoon is running at http://${host}:${port}`);
+  const actualPort = server.address().port;
+  console.log(`Shanzoon is running at http://${host}:${actualPort}`);
   console.log(`Reading images from ${archiveRoot}`);
 });
