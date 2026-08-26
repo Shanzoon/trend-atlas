@@ -176,7 +176,11 @@ const server = http.createServer(async (request, response) => {
   const staticFiles = {
     "/": "brand.html",
     "/index.html": "brand.html",
-    "/brand.css": "brand.css",
+    "/base.css": "base.css",
+    "/home.css": "home.css",
+    "/systems.css": "systems.css",
+    "/collection.css": "collection.css",
+    "/detail.css": "detail.css",
     "/categories.js": "categories.js",
     "/app.js": "app.js",
     "/views.js": "views.js",

@@ -118,14 +118,23 @@ describe("home page", () => {
       assert.ok(html.includes(`data-category="${definition.id}"`), `missing folder portal for ${definition.id}`);
     }
     assert.ok(html.includes('<script type="module" src="/app.js">'), "expected /app.js module entry");
-    assert.ok(html.includes('href="/brand.css"'), "expected /brand.css stylesheet");
+    const stylesheetOrder = ["/base.css", "/home.css", "/systems.css", "/collection.css", "/detail.css"];
+    const styleIndexes = stylesheetOrder.map((href) => html.indexOf(`href="${href}"`));
+    for (let index = 0; index < styleIndexes.length; index += 1) {
+      assert.ok(styleIndexes[index] !== -1, `expected stylesheet link to ${stylesheetOrder[index]}`);
+      if (index > 0) assert.ok(styleIndexes[index] > styleIndexes[index - 1], `${stylesheetOrder[index]} must come after ${stylesheetOrder[index - 1]}`);
+    }
   });
 });
 
 describe("static assets", () => {
   it("serves every whitelisted file", async () => {
     const assets = [
-      "/brand.css",
+      "/base.css",
+      "/home.css",
+      "/systems.css",
+      "/collection.css",
+      "/detail.css",
       "/categories.js",
       "/app.js",
       "/views.js",

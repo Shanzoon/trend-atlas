@@ -1,0 +1,166 @@
+/* 产品系统场景（sticky 叠层：漫剧有数、灵境 AI 创作平台、Loomicc、联系方式） */
+.home-continuation, .systems-story { position: relative; }
+.systems-deck {
+  position: relative;
+  padding: clamp(112px, 12vw, 176px) clamp(20px, 6vw, 88px) 88px;
+  background-color: var(--night);
+  background-image: radial-gradient(circle, var(--dot) 0.8px, transparent 0.95px);
+  background-size: 21px 21px;
+}
+.systems-bridge {
+  max-width: min(900px, 100%);
+  margin: 0 auto clamp(96px, 12vw, 160px);
+  color: var(--night-ink);
+  text-align: center;
+}
+.systems-bridge h2, .systems-bridge p { margin: 0; }
+.systems-bridge h2 { font-size: var(--type-section); font-weight: var(--weight-display); line-height: var(--leading-display); letter-spacing: 0.025em; word-spacing: 0.08em; white-space: nowrap; }
+.systems-bridge p { max-width: 24em; margin: 16px auto 0; }
+.project-sheet {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: min(1160px, 100%);
+  margin: 0 auto clamp(112px, 13vw, 184px);
+}
+.project-sheet-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  width: min(440px, 100%);
+}
+.project-title, .project-sheet-copy p { margin: 0; }
+.project-title { font-size: var(--type-title); font-weight: var(--weight-display); line-height: var(--leading-title); letter-spacing: -0.035em; text-wrap: balance; }
+.project-sheet-copy p { max-width: none; color: var(--night-muted); font-size: var(--type-body); line-height: var(--leading-copy); letter-spacing: var(--tracking-copy); }
+.project-visit, .project-availability { margin-left: 0; font-family: var(--font-display); font-size: var(--type-eyebrow); letter-spacing: 0.06em; white-space: nowrap; }
+.project-visit { color: var(--night-ink); text-decoration-color: var(--cyan); text-decoration-thickness: 1px; text-underline-offset: 6px; }
+.project-visit:hover { color: var(--cyan); text-decoration-color: var(--rose); }
+.project-visit span { display: inline-block; margin-left: 5px; transition: transform 180ms var(--ease-out); }
+.project-visit:hover span { transform: translate(2px, -2px); }
+.project-availability { color: var(--night-muted); }
+.project-board {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  margin: 0;
+  aspect-ratio: 1586 / 992;
+  border-radius: 14px;
+  background: var(--night-raised);
+  box-shadow: 0 8px 8px oklch(0 0 0 / 0.42);
+  overflow: hidden;
+}
+.project-board img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.loomicc-board {
+  display: grid;
+  grid-template-columns: minmax(176px, 0.28fr) minmax(0, 0.72fr);
+  align-items: center;
+  gap: clamp(18px, 3vw, 46px);
+  padding: clamp(22px, 3vw, 48px);
+  background: oklch(0.085 0.006 250);
+}
+.loomicc-board figcaption { display: flex; flex-direction: column; gap: 14px; }
+.loomicc-board span { font-family: var(--font-display); font-size: var(--type-title); line-height: 1.16; letter-spacing: -0.035em; }
+.loomicc-board img { height: auto; max-height: 100%; object-fit: contain; }
+
+.contact-links { display: flex; flex-wrap: wrap; gap: 12px 34px; margin-top: 96px; font-style: normal; }
+.systems-contact { justify-content: flex-end; width: min(1160px, 100%); margin: 0 auto; }
+.contact-links a { color: var(--night-ink); font-size: var(--type-body); text-decoration-color: oklch(0.82 0.14 195 / 0.6); text-decoration-thickness: 1px; text-underline-offset: 5px; }
+.contact-links a:hover { color: var(--cyan); text-decoration-color: var(--rose); }
+
+@media (min-width: 761px) and (prefers-reduced-motion: no-preference) {
+  .motion-ready .home-continuation {
+    z-index: 2;
+    margin-top: -110dvh;
+  }
+  .motion-ready .systems-story { height: 440dvh; min-height: 2800px; }
+  .motion-ready .systems-deck {
+    position: sticky;
+    top: 0;
+    height: 100dvh;
+    padding: 0;
+    isolation: isolate;
+    overflow: hidden;
+    background: transparent;
+  }
+  .motion-ready .systems-bridge {
+    position: absolute;
+    z-index: 6;
+    left: 50%;
+    top: clamp(64px, 9vh, 96px);
+    width: min(760px, calc(100% - 48px));
+    margin: 0;
+    transform: translateX(-50%);
+    will-change: opacity, filter, transform;
+  }
+  .motion-ready .project-sheet {
+    position: absolute;
+    left: 50%;
+    top: 65%;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: min(1060px, 82vw, calc(48dvh * 1.5988));
+    grid-template-rows: auto auto auto;
+    align-content: center;
+    justify-content: center;
+    justify-items: start;
+    gap: clamp(10px, 1.4vh, 16px);
+    width: 100%;
+    height: 88%;
+    margin: 0;
+    opacity: 0;
+    transform: translate(-50%, -50%) translateY(110px) scale(0.92);
+    transform-origin: center;
+    will-change: opacity, transform;
+  }
+  .motion-ready .project-sheet-copy {
+    position: relative;
+    z-index: 5;
+    grid-column: 1;
+    grid-row: 3;
+    width: min(440px, 100%);
+    will-change: opacity, transform;
+  }
+  .motion-ready .project-board {
+    grid-column: 1;
+    grid-row: 2;
+    width: 100%;
+  }
+  .motion-ready .project-title {
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+    will-change: opacity, transform;
+  }
+  .motion-ready .systems-contact {
+    position: absolute;
+    z-index: 8;
+    right: clamp(28px, 5vw, 76px);
+    bottom: clamp(22px, 3.2vh, 38px);
+    width: auto;
+    margin: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(14px);
+    will-change: opacity, transform;
+  }
+}
+
+@media (max-width: 760px) {
+  .systems-deck { padding: 104px 16px 72px; background-size: 16px 16px; }
+  .systems-bridge { max-width: 100%; margin-bottom: 96px; text-align: left; }
+  .systems-bridge h2 { font-size: clamp(2.7rem, 13vw, 4rem); white-space: normal; }
+  .systems-bridge p { max-width: 18ch; margin: 20px 0 0; }
+  .project-sheet { gap: 18px; margin-bottom: 94px; }
+  .project-sheet-copy { display: block; }
+  .project-title { font-size: clamp(1.55rem, 7vw, 2rem); }
+  .project-sheet-copy p { max-width: 24ch; margin-top: 12px; font-size: 0.92rem; }
+  .project-visit, .project-availability { display: inline-flex; margin: 16px 0 0; font-size: 0.76rem; }
+  .project-board { border-radius: 10px; box-shadow: 0 6px 8px oklch(0 0 0 / 0.4); }
+  .loomicc-board { display: block; padding: 18px; }
+  .loomicc-board figcaption { gap: 8px; margin-bottom: 18px; }
+  .loomicc-board span { font-size: 1.25rem; }
+  .loomicc-board img { width: 100%; }
+  .systems-contact { display: grid; justify-content: stretch; gap: 16px; width: 100%; margin-top: 16px; }
+}
