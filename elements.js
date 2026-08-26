@@ -6,6 +6,8 @@ export const elements = {
   archiveAll: document.querySelector("#archiveAll"),
   dailyArt: document.querySelector("#dailyArt"),
   dailyImage: document.querySelector("#dailyImage"),
+  dailyImageWrap: document.querySelector("#dailyImageWrap"),
+  dailyRefresh: document.querySelector("#dailyRefresh"),
   portals: document.querySelector("#folderPortals"),
   portalButtons: [...document.querySelectorAll(".folder-portal")],
   scrollCue: document.querySelector("#scrollCue"),

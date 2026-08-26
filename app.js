@@ -2,7 +2,7 @@ import { elements } from "./elements.js";
 import { invalidateMotionLayout, scheduleStoryUpdate } from "./home.js";
 import { mobileLayout, reduceMotion } from "./media.js";
 import { state } from "./state.js";
-import { hydrateFolderCovers, moveDetail, navigateHome, navigateToArchive, renderDailyItem, renderNextCollectionPage, routeFromHash } from "./views.js";
+import { hydrateFolderCovers, moveDetail, navigateHome, navigateToArchive, renderDailyItem, renderNextCollectionPage, routeFromHash, switchDailyItem } from "./views.js";
 
 document.documentElement.classList.add("motion-ready");
 if ("scrollRestoration" in history) history.scrollRestoration = "manual";
@@ -23,6 +23,14 @@ elements.homeLink.addEventListener("click", (event) => {
   event.preventDefault();
   navigateHome();
 });
+elements.dailyImageWrap.addEventListener("click", switchDailyItem);
+elements.dailyImageWrap.addEventListener("keydown", (event) => {
+  if (event.key === "Enter" || event.key === " ") {
+    event.preventDefault();
+    switchDailyItem();
+  }
+});
+elements.dailyRefresh.addEventListener("click", switchDailyItem);
 elements.detailPrevious.addEventListener("click", () => moveDetail(-1));
 elements.detailNext.addEventListener("click", () => moveDetail(1));
 

@@ -14,10 +14,42 @@ function hydrateDetailThumbnail(image) {
   detailThumbnailObserver?.unobserve(image);
 }
 
+let dailyDeck = [];
+
+function shuffle(items) {
+  const deck = [...items];
+  for (let index = deck.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [deck[index], deck[swapIndex]] = [deck[swapIndex], deck[index]];
+  }
+  return deck;
+}
+
 function selectDailyItem() {
   const candidates = itemsForScope("01-Dreamscape");
   if (!candidates.length) return null;
   return candidates[hashString(stableDateKey()) % candidates.length];
+}
+
+// 洗牌队列：每次点击换图都保证拿到一张未看过的图，队列耗尽后重新洗牌
+// （排除当前展示项，避免刚换完又点回同一张）。
+function nextDailyItem() {
+  const candidates = itemsForScope("01-Dreamscape");
+  if (!candidates.length) return null;
+  if (candidates.length === 1) return state.dailyItem || candidates[0];
+  if (!dailyDeck.length) {
+    dailyDeck = shuffle(candidates.filter((item) => item !== state.dailyItem));
+  }
+  return dailyDeck.pop();
+}
+
+function displayDailyItem(item) {
+  state.dailyItem = item;
+  elements.dailyArt.hidden = false;
+  elements.dailyImage.src = item.src;
+  elements.dailyImage.alt = `${item.title}，${item.categoryLabel}`;
+  elements.homeStatus.textContent = "";
+  elements.homeStatus.classList.remove("is-error");
 }
 
 function detailHash(scope, item) {
@@ -61,19 +93,25 @@ export function hydrateFolderCovers() {
 }
 
 export function renderDailyItem() {
-  state.dailyItem = selectDailyItem();
-  if (!state.dailyItem) {
+  const item = selectDailyItem();
+  if (!item) {
     elements.dailyArt.hidden = true;
     elements.homeStatus.textContent = "今天暂时没有可用图像";
     elements.homeStatus.classList.add("is-error");
     return;
   }
+  displayDailyItem(item);
+}
 
-  elements.dailyArt.hidden = false;
-  elements.dailyImage.src = state.dailyItem.src;
-  elements.dailyImage.alt = `${state.dailyItem.title}，${state.dailyItem.categoryLabel}`;
-  elements.homeStatus.textContent = "";
-  elements.homeStatus.classList.remove("is-error");
+export function switchDailyItem() {
+  const item = nextDailyItem();
+  if (!item || item === state.dailyItem) return;
+  displayDailyItem(item);
+  if (!reduceMotion.matches) {
+    elements.dailyImageWrap.classList.remove("is-switching");
+    void elements.dailyImageWrap.offsetWidth;
+    elements.dailyImageWrap.classList.add("is-switching");
+  }
 }
 
 function updateCollectionMore() {

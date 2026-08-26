@@ -168,6 +168,7 @@ describe("home page", () => {
     assert.ok(html.includes('<script type="module" src="/app.js">'), "expected /app.js module entry");
     assert.match(html, /<img alt="" loading="lazy" decoding="async" \/>/, "collection images should remain lazy-loaded");
     assert.ok(html.includes('id="collectionMore"'), "expected a manual archive pagination control");
+    assert.ok(html.includes('id="dailyRefresh"'), "expected a daily pick refresh control");
     const stylesheetOrder = ["/base.css", "/home.css", "/systems.css", "/collection.css", "/detail.css"];
     const styleIndexes = stylesheetOrder.map((href) => html.indexOf(`href="${href}"`));
     for (let index = 0; index < styleIndexes.length; index += 1) {
