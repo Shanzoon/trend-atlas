@@ -6,6 +6,61 @@ import { itemsForScope, nextCollectionPageEnd, state } from "./state.js";
 import { hashString, stableDateKey } from "./utils.js";
 
 let dailyDeck = [];
+// 交叉淡入淡出的双层图片：带 is-active 的一层是当前展示层，另一层预载新图后淡入顶替。
+const dailyLayers = [elements.dailyImage, elements.dailyImageIncoming];
+let dailyActiveLayer = dailyLayers[0];
+let dailySwitchSeq = 0;
+let dailyFadeTimer = null;
+const DAILY_CROSSFADE_MS = 320;
+
+function setDailyLayerAccessibility(visibleLayer) {
+  dailyLayers.forEach((layer) => {
+    if (layer === visibleLayer) layer.removeAttribute("aria-hidden");
+    else layer.setAttribute("aria-hidden", "true");
+  });
+}
+
+function setDailyStatus(message = "", isError = false) {
+  elements.homeStatus.textContent = message;
+  elements.homeStatus.classList.toggle("is-error", isError);
+}
+
+function updateDailyControlLabel(item) {
+  elements.dailyImageWrap.setAttribute("aria-label", `当前精选：${item.title}，点击换一张`);
+}
+
+function preloadImage(src) {
+  return new Promise((resolve) => {
+    const probe = new Image();
+    probe.decoding = "async";
+    probe.addEventListener("load", () => resolve(true), { once: true });
+    probe.addEventListener("error", () => resolve(false), { once: true });
+    probe.src = src;
+  });
+}
+
+// 把进行中的淡入快进到终态：新层顶替为当前层，旧层清空待用。
+// 快进期间临时禁用过渡，保证旧图不闪回。
+function finishDailyFade() {
+  if (dailyFadeTimer) {
+    clearTimeout(dailyFadeTimer);
+    dailyFadeTimer = null;
+  }
+  const wrap = elements.dailyImageWrap;
+  if (!wrap.classList.contains("is-crossfading")) return;
+  const outgoing = dailyActiveLayer;
+  const incoming = dailyLayers.find((layer) => layer !== outgoing);
+  dailyLayers.forEach((layer) => { layer.style.transition = "none"; });
+  wrap.classList.remove("is-crossfading");
+  outgoing.classList.remove("is-active");
+  incoming.classList.add("is-active");
+  outgoing.removeAttribute("src");
+  outgoing.alt = "";
+  dailyActiveLayer = incoming;
+  setDailyLayerAccessibility(dailyActiveLayer);
+  void wrap.offsetWidth;
+  dailyLayers.forEach((layer) => { layer.style.transition = ""; });
+}
 
 function shuffle(items) {
   const deck = [...items];
@@ -37,10 +92,12 @@ function nextDailyItem() {
 function displayDailyItem(item) {
   state.dailyItem = item;
   elements.dailyArt.hidden = false;
-  elements.dailyImage.src = item.src;
-  elements.dailyImage.alt = `${item.title}，${item.categoryLabel}`;
-  elements.homeStatus.textContent = "";
-  elements.homeStatus.classList.remove("is-error");
+  dailyActiveLayer.src = item.src;
+  dailyActiveLayer.alt = `${item.title}，${item.categoryLabel}`;
+  dailyActiveLayer.classList.add("is-active");
+  setDailyLayerAccessibility(dailyActiveLayer);
+  updateDailyControlLabel(item);
+  setDailyStatus();
 }
 
 function detailHash(scope, item) {
@@ -138,12 +195,38 @@ export function renderDailyItem() {
 export function switchDailyItem() {
   const item = nextDailyItem();
   if (!item || item === state.dailyItem) return;
-  displayDailyItem(item);
-  if (!reduceMotion.matches) {
-    elements.dailyImageWrap.classList.remove("is-switching");
-    void elements.dailyImageWrap.offsetWidth;
-    elements.dailyImageWrap.classList.add("is-switching");
-  }
+  const seq = ++dailySwitchSeq;
+  // 先预加载新图，加载完成前旧图一直留在画面上，切换全程没有空窗。
+  preloadImage(item.src).then((loaded) => {
+    if (seq !== dailySwitchSeq) {
+      // 已被更新的点击取代：把这张图放回洗牌队列，避免丢失。
+      dailyDeck.push(item);
+      return;
+    }
+    if (!loaded) {
+      setDailyStatus("新图加载失败，当前精选保持不变。请再试一次。", true);
+      return;
+    }
+    state.dailyItem = item;
+    if (reduceMotion.matches) {
+      finishDailyFade();
+      displayDailyItem(item);
+      return;
+    }
+    // 新图已就绪：旧层淡出、新层淡入。
+    finishDailyFade();
+    const wrap = elements.dailyImageWrap;
+    const nextLayer = dailyLayers.find((layer) => layer !== dailyActiveLayer);
+    nextLayer.src = item.src;
+    nextLayer.alt = `${item.title}，${item.categoryLabel}`;
+    setDailyLayerAccessibility(nextLayer);
+    updateDailyControlLabel(item);
+    setDailyStatus();
+    wrap.classList.remove("is-crossfading");
+    void wrap.offsetWidth;
+    wrap.classList.add("is-crossfading");
+    dailyFadeTimer = setTimeout(finishDailyFade, DAILY_CROSSFADE_MS + 60);
+  });
 }
 
 function updateCollectionMore() {
@@ -170,6 +253,10 @@ export function renderNextCollectionPage() {
     image.decoding = "async";
     image.src = item.src;
     image.alt = `${item.title}，${item.categoryLabel}`;
+    if (item.width && item.height) {
+      image.width = item.width;
+      image.height = item.height;
+    }
     card.querySelector("strong").textContent = item.title;
     card.querySelector("small").textContent = item.date;
     // 详情翻页范围跟随当前筛选分类。
@@ -217,6 +304,11 @@ function renderDetail() {
   elements.detailNext.hidden = state.detailIndex >= state.activeItems.length - 1;
 }
 
+function focusPageHeading(heading) {
+  if (!heading) return;
+  requestAnimationFrame(() => heading.focus({ preventScroll: true }));
+}
+
 export function navigateHome(updateHash = true, restorePosition = false) {
   const previousPage = state.page;
   setPage("home");
@@ -224,6 +316,7 @@ export function navigateHome(updateHash = true, restorePosition = false) {
   if (updateHash && location.hash !== "#home") history.pushState({ source: previousPage }, "", "#home");
   if (restorePosition) restoreScroll(state.homeScrollY);
   else window.scrollTo({ top: 0, left: 0 });
+  if (previousPage !== "home") focusPageHeading(elements.brandName);
   scheduleStoryUpdate();
 }
 
@@ -239,6 +332,7 @@ export function navigateToArchive(updateHash = true, restorePosition = false) {
   }
   if (restorePosition) restoreScroll(state.archiveScrollY);
   else window.scrollTo({ top: 0, left: 0 });
+  if (previousPage !== "collection") focusPageHeading(elements.collectionTitle);
 }
 
 function navigateToDetail(item, scope, updateHash = true) {
@@ -259,15 +353,23 @@ function navigateToDetail(item, scope, updateHash = true) {
 
   if (updateHash) history.pushState({ source: previousPage }, "", detailHash(scope, item));
   window.scrollTo({ top: 0, left: 0 });
+  if (previousPage !== "detail") focusPageHeading(elements.detailTitle);
 }
 
 function selectDetail(index, updateHash = true) {
   if (!state.activeItems.length) return;
+  const focusedControl = document.activeElement;
   state.detailIndex = Math.min(Math.max(index, 0), state.activeItems.length - 1);
   renderDetail();
   if (updateHash) {
     const item = state.activeItems[state.detailIndex];
     history.replaceState(history.state, "", detailHash(state.detailScope, item));
+  }
+  if (focusedControl === elements.detailPrevious && elements.detailPrevious.hidden) {
+    (elements.detailNext.hidden ? elements.detailTitle : elements.detailNext).focus({ preventScroll: true });
+  }
+  if (focusedControl === elements.detailNext && elements.detailNext.hidden) {
+    (elements.detailPrevious.hidden ? elements.detailTitle : elements.detailPrevious).focus({ preventScroll: true });
   }
 }
 
@@ -278,9 +380,17 @@ export function moveDetail(direction) {
 export function routeFromHash() {
   if (!state.allItems.length) return;
 
+  const safeDecode = (value) => {
+    try {
+      return decodeURIComponent(value);
+    } catch {
+      return null;
+    }
+  };
+
   const archiveMatch = location.hash.match(/^#archive\/([^/]+)$/);
   if (location.hash === "#archive" || archiveMatch) {
-    const scope = archiveMatch ? decodeURIComponent(archiveMatch[1]) : "all";
+    const scope = archiveMatch ? safeDecode(archiveMatch[1]) : "all";
     if (scope === "all" || categoryFor(scope)) {
       syncCollectionScope(scope);
       navigateToArchive(false, state.page === "detail" && state.detailSource === "collection");
@@ -290,8 +400,8 @@ export function routeFromHash() {
 
   const detailMatch = location.hash.match(/^#detail\/([^/]+)\/(.+)$/);
   if (detailMatch) {
-    const scope = decodeURIComponent(detailMatch[1]);
-    const src = decodeURIComponent(detailMatch[2]);
+    const scope = safeDecode(detailMatch[1]);
+    const src = safeDecode(detailMatch[2]);
     const item = state.allItems.find((candidate) => candidate.src === src);
     if (item && itemsForScope(scope).some((candidate) => candidate.src === src)) {
       navigateToDetail(item, scope, false);
@@ -301,7 +411,7 @@ export function routeFromHash() {
 
   const legacyMatch = location.hash.match(/^#gallery\/(.+)$/);
   if (legacyMatch) {
-    const scope = decodeURIComponent(legacyMatch[1]);
+    const scope = safeDecode(legacyMatch[1]);
     const firstItem = itemsForScope(scope)[0];
     if (firstItem) {
       navigateToDetail(firstItem, scope, false);

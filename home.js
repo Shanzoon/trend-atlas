@@ -36,7 +36,7 @@ function measureMotionLayout() {
 }
 
 function hydrateFolderPreviews() {
-  if (state.folderPreviewsHydrated) return;
+  if (!state.archiveReady || state.folderPreviewsHydrated) return;
   state.folderPreviewsHydrated = true;
   elements.portalButtons.forEach((button) => {
     const definition = categoryFor(button.dataset.category);
@@ -155,10 +155,10 @@ function updateStory() {
     if (state.staticMotionApplied) return;
     updateSystemsStory(true);
     elements.stage.style.setProperty("--stage-scale", "1");
-    elements.portalButtons.forEach((button) => setButtonInteractive(button, true));
-    elements.portals.classList.add("is-ready");
-    setButtonInteractive(elements.archiveAll, true);
-    elements.archiveAll.classList.add("is-ready");
+    elements.portalButtons.forEach((button) => setButtonInteractive(button, state.archiveReady));
+    elements.portals.classList.toggle("is-ready", state.archiveReady);
+    setButtonInteractive(elements.archiveAll, state.archiveReady);
+    elements.archiveAll.classList.toggle("is-ready", state.archiveReady);
     state.staticMotionApplied = true;
     return;
   }
@@ -175,7 +175,7 @@ function updateStory() {
   const bridgeFinalViewportY = elements.systemsBridge.offsetTop;
   const handoffY = lerp(metrics.archiveTitleAnchorY, bridgeFinalViewportY, titleProgress);
   updateSystemsStory(false, metrics, titleProgress, handoffY);
-  if (progress > 0.24) hydrateFolderPreviews();
+  if (state.archiveReady && progress > 0.24) hydrateFolderPreviews();
 
   const gather = smoothstep(...archiveTimeline.gather, progress);
   const folders = smoothstep(...archiveTimeline.folders, progress);
@@ -212,7 +212,7 @@ function updateStory() {
   elements.portalButtons.forEach((button, index) => {
     const local = smoothstep(0.08 * index, 0.6 + 0.07 * index, folders);
     const compositeOpacity = folderOpacity * local;
-    const interactive = interactiveOpacity * local > 0.3;
+    const interactive = state.archiveReady && interactiveOpacity * local > 0.3;
     const gatheredCenter = metrics.portalsWidth * (0.5 + gatheredOffsets[index]);
     const gatherX = (gatheredCenter - metrics.portalOffsets[index]) * handoff;
     const gatherY = lerp(0, -52, handoff);
@@ -232,7 +232,7 @@ function updateStory() {
   elements.archiveAll.style.opacity = (allEntry * (1 - archiveExit)).toFixed(3);
   elements.archiveAll.style.transform = `translateY(${(lerp(12, 0, allEntry) - 20 * archiveExit).toFixed(1)}px)`;
   elements.scrollCue.style.opacity = scrollCueOpacity(progress).toFixed(3);
-  const archiveIsInteractive = allEntry > 0.82 && handoff < 0.18;
+  const archiveIsInteractive = state.archiveReady && allEntry > 0.82 && handoff < 0.18;
   setButtonInteractive(elements.archiveAll, archiveIsInteractive);
   elements.archiveAll.classList.toggle("is-ready", archiveIsInteractive);
 }

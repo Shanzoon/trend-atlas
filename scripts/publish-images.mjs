@@ -51,6 +51,8 @@ export function buildArchive(items, updatedAt = new Date().toISOString()) {
       file: item.webpFile,
       title: titleFromFile(item.webpFile),
       bytes: item.bytes,
+      width: item.width,
+      height: item.height,
       src: item.url,
     });
     itemsByDate.set(item.date, dayItems);
@@ -80,12 +82,17 @@ async function scanSources() {
       const key = `${definition.id}/${parsed.date}__${parsed.webpFile}`;
       if (keys.has(key)) throw new Error(`Duplicate R2 key: ${key}`);
       keys.add(key);
+      const sourcePath = path.join(categoryRoot, entry.name);
+      const { width, height } = await sharp(sourcePath).metadata();
+      if (!width || !height) throw new Error(`Unable to read image dimensions: ${sourcePath}`);
       items.push({
         ...parsed,
         category: definition.id,
         categoryLabel: definition.label,
         key,
-        sourcePath: path.join(categoryRoot, entry.name),
+        sourcePath,
+        width,
+        height,
         url: publicUrlFor(definition.id, entry.name),
       });
     }

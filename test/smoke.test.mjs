@@ -1,8 +1,9 @@
 import { after, before, describe, it } from "node:test";
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
+import http from "node:http";
 import { existsSync } from "node:fs";
-import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { chmod, mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -112,6 +113,23 @@ async function fetchWithRetry(url, options, attempts = 3) {
   throw lastError;
 }
 
+function rawRequest(pathname, hostHeader) {
+  const target = new URL(baseUrl);
+  return new Promise((resolve, reject) => {
+    const request = http.request({
+      hostname: target.hostname,
+      port: target.port,
+      path: pathname,
+      headers: { Host: hostHeader },
+    }, (response) => {
+      response.resume();
+      response.once("end", () => resolve(response));
+    });
+    request.once("error", reject);
+    request.end();
+  });
+}
+
 before(async () => {
   fixtureRoot = await mkdtemp(path.join(tmpdir(), "trend-atlas-test-"));
   for (const [relative, content] of Object.entries(FIXTURE_FILES)) {
@@ -168,6 +186,42 @@ describe("api/archive", () => {
     assert.equal(older.count, 1);
     assert.equal(older.items[0].title, "Night Market");
     assert.equal(older.items[0].categoryLabel, lens.label);
+  });
+
+  it("reports unreadable category directories instead of treating them as empty", async () => {
+    const categoryRoot = path.join(fixtureRoot, dreamscape.id);
+    await chmod(categoryRoot, 0o000);
+    try {
+      const response = await fetchWithRetry(`${baseUrl}/api/archive`);
+      assert.equal(response.status, 500);
+    } finally {
+      await chmod(categoryRoot, 0o755);
+    }
+  });
+});
+
+describe("request parsing", () => {
+  it("keeps serving archive requests when Host is malformed", async () => {
+    const malformedHost = await rawRequest("/api/archive", "[::1");
+    assert.equal(malformedHost.statusCode, 200);
+
+    const healthyRequest = await fetchWithRetry(`${baseUrl}/api/archive`);
+    assert.equal(healthyRequest.status, 200);
+  });
+
+  it("returns 400 for an invalid request URL", async () => {
+    const malformedUrl = await rawRequest("http://[", "localhost");
+    assert.equal(malformedUrl.statusCode, 400);
+  });
+});
+
+describe("systems motion interaction layering", () => {
+  it("does not let the sticky systems deck intercept archive clicks", async () => {
+    const css = await readFile(path.join(appRoot, "systems.css"), "utf8");
+    assert.match(css, /\.motion-ready \.home-continuation\s*\{[^}]*pointer-events:\s*none;/s);
+    assert.match(css, /\.motion-ready \.systems-story\s*\{[^}]*pointer-events:\s*none;/s);
+    assert.match(css, /\.motion-ready \.systems-deck\s*\{[^}]*pointer-events:\s*none;/s);
+    assert.match(css, /\.motion-ready \.project-sheet,\s*\.motion-ready \.systems-contact\s*\{[^}]*pointer-events:\s*auto;/s);
   });
 });
 
@@ -245,6 +299,8 @@ describe("static assets", () => {
     assert.ok(items.length > 0);
     assert.ok(items.every((item) => item.src.startsWith("https://media.shanzoon.art/")));
     assert.ok(items.every((item) => item.src.endsWith(".webp")));
+    assert.ok(items.every((item) => Number.isInteger(item.width) && item.width > 0));
+    assert.ok(items.every((item) => Number.isInteger(item.height) && item.height > 0));
   });
 
   it("serves local content images and 404s for gitignored ones", async () => {

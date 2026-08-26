@@ -27,13 +27,13 @@
       </button>
     </header>
 
-    <main id="mainContent">
+    <main id="mainContent" tabindex="-1">
       <section class="brand-story" id="brandStory" aria-labelledby="brandName">
         <div class="story-sticky">
           <div class="bright-stage" id="brightStage">
             <div class="stage-identity" id="stageIdentity">
               <p class="identity-kicker">张丰 · 个人主页</p>
-              <h1 id="brandName">Shanzoon</h1>
+              <h1 id="brandName" tabindex="-1">Shanzoon</h1>
               <p class="identity-role" lang="en">AI Product · Creative Technology · Visual Systems</p>
               <p class="chapter-subtitle">在技术、图像与叙事之间，<br />把模糊的想法做成真实的东西。</p>
             </div>
@@ -47,11 +47,12 @@
             </div>
 
             <div class="daily-art" id="dailyArt">
-              <span class="daily-image-wrap" id="dailyImageWrap" role="button" tabindex="0" aria-label="换一张 Dreamscape 图像">
-                <img id="dailyImage" alt="" decoding="async" />
+              <span class="daily-image-wrap" id="dailyImageWrap" role="button" tabindex="0" aria-label="当前 Dreamscape 精选，点击换一张">
+                <img class="daily-layer is-active" id="dailyImage" alt="" decoding="async" />
+                <img class="daily-layer" id="dailyImageIncoming" alt="" decoding="async" aria-hidden="true" />
                 <span class="daily-light" aria-hidden="true"></span>
               </span>
-              <button class="daily-refresh" id="dailyRefresh" type="button" aria-label="换一张 Dreamscape 图像">↻</button>
+              <button class="daily-refresh" id="dailyRefresh" type="button" aria-label="随机换一张 Dreamscape 图像">↻</button>
               <span class="daily-caption">
                 <span>DREAMSCAPE PICK</span>
                 <span>AI × VISUAL GENERATION</span>
@@ -140,7 +141,7 @@
       <section class="collection-page" id="collectionPage" hidden aria-labelledby="collectionTitle">
         <header class="collection-heading">
           <p id="collectionCount"></p>
-          <h1 id="collectionTitle">ALL IMAGES</h1>
+          <h1 id="collectionTitle" tabindex="-1">ALL IMAGES</h1>
           <p>完整归档，按最新收录排序。</p>
         </header>
         <div class="collection-filters" id="collectionFilters" role="group" aria-label="按分类筛选图像"></div>
@@ -157,7 +158,7 @@
           </div>
           <div class="detail-copy">
             <span id="detailCounter"></span>
-            <h1 id="detailTitle"></h1>
+            <h1 id="detailTitle" tabindex="-1"></h1>
             <p id="detailMeta"></p>
           </div>
         </div>

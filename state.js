@@ -3,6 +3,7 @@ export const COLLECTION_PAGE_SIZE = 12;
 export const state = {
   days: [],
   allItems: [],
+  archiveReady: false,
   activeItems: [],
   dailyItem: null,
   detailIndex: 0,

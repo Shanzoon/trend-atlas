@@ -76,6 +76,8 @@ async function initialize() {
       .flatMap((day) => day.items.map((item) => ({ ...item, date: day.date })))
       .sort((first, second) => second.date.localeCompare(first.date) || first.title.localeCompare(second.title, "zh-CN"));
     if (!state.allItems.length) throw new Error("归档中没有图片");
+    state.archiveReady = true;
+    invalidateMotionLayout();
     renderDailyItem();
     routeFromHash();
   } catch (error) {

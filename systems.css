@@ -65,8 +65,13 @@
   .motion-ready .home-continuation {
     z-index: 2;
     margin-top: -110dvh;
+    pointer-events: none;
   }
-  .motion-ready .systems-story { height: 520dvh; min-height: calc(2800px + 80dvh); }
+  .motion-ready .systems-story {
+    height: 520dvh;
+    min-height: calc(2800px + 80dvh);
+    pointer-events: none;
+  }
   .motion-ready .systems-deck {
     position: sticky;
     top: 0;
@@ -75,6 +80,13 @@
     isolation: isolate;
     overflow: hidden;
     background: transparent;
+    /* The sticky deck spans the archive hand-off; it must not block folders below it. */
+    pointer-events: none;
+  }
+  /* Motion code enables only the current card/contact with inline pointer events. */
+  .motion-ready .project-sheet,
+  .motion-ready .systems-contact {
+    pointer-events: auto;
   }
   .motion-ready .systems-bridge {
     position: absolute;

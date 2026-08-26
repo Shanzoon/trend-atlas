@@ -43,9 +43,11 @@ async function getArchive() {
     let entries = [];
     try {
       entries = await readdir(categoryRoot, { withFileTypes: true });
-    } catch {
-      // A missing category is equivalent to an empty category.
-      continue;
+    } catch (error) {
+      // A missing category is equivalent to an empty category; other filesystem
+      // failures must reach the request handler instead of looking like no data.
+      if (error?.code === "ENOENT") continue;
+      throw error;
     }
 
     for (const entry of entries.filter((candidate) => candidate.isFile()).sort((a, b) => a.name.localeCompare(b.name))) {
@@ -137,7 +139,14 @@ async function safeMediaPath(pathname) {
 }
 
 const server = http.createServer(async (request, response) => {
-  const url = new URL(request.url || "/", `http://${request.headers.host || "localhost"}`);
+  let url;
+  try {
+    // Request Host is untrusted input and is unnecessary for routing.
+    url = new URL(request.url || "/", "http://localhost");
+  } catch {
+    send(response, 400, "Invalid request URL");
+    return;
+  }
 
   if (request.method !== "GET") {
     send(response, 405, "Method not allowed");

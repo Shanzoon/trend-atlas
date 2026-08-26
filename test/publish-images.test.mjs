@@ -24,6 +24,8 @@ describe("incremental image publisher", () => {
         date: "2026-08-27",
         webpFile: "hottest-01-street.webp",
         bytes: 20,
+        width: 1600,
+        height: 900,
         url: "https://media.shanzoon.art/02-Lens/2026-08-27__hottest-01-street.webp",
       },
       {
@@ -32,12 +34,16 @@ describe("incremental image publisher", () => {
         date: "2026-08-28",
         webpFile: "interesting-01-new-work.webp",
         bytes: 10,
+        width: 1024,
+        height: 1536,
         url: "https://media.shanzoon.art/01-Dreamscape/2026-08-28__interesting-01-new-work.webp",
       },
     ], "2026-08-28T00:00:00.000Z");
 
     assert.deepEqual(archive.days.map((day) => day.date), ["2026-08-28", "2026-08-27"]);
     assert.equal(archive.days[0].items[0].title, "New Work");
+    assert.equal(archive.days[0].items[0].width, 1024);
+    assert.equal(archive.days[0].items[0].height, 1536);
     assert.equal(archive.days[0].items[0].src, "https://media.shanzoon.art/01-Dreamscape/2026-08-28__interesting-01-new-work.webp");
   });
 });

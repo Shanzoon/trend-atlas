@@ -1,6 +1,6 @@
 {
   "archive": "trend-lab",
-  "updatedAt": "2026-08-26T18:16:05.468Z",
+  "updatedAt": "2026-08-26T19:53:06.880Z",
   "days": [
     {
       "date": "2026-08-27",
@@ -13,6 +13,8 @@
           "file": "import-04.webp",
           "title": "Import 04",
           "bytes": 99902,
+          "width": 1122,
+          "height": 1402,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-27__import-04.webp"
         },
         {
@@ -22,6 +24,8 @@
           "file": "character-41.webp",
           "title": "Character 41",
           "bytes": 156390,
+          "width": 1024,
+          "height": 1536,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-27__character-41.webp"
         },
         {
@@ -31,6 +35,8 @@
           "file": "character-42.webp",
           "title": "Character 42",
           "bytes": 69588,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-27__character-42.webp"
         },
         {
@@ -40,6 +46,8 @@
           "file": "character-43.webp",
           "title": "Character 43",
           "bytes": 105420,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-27__character-43.webp"
         },
         {
@@ -49,6 +57,8 @@
           "file": "character-44.webp",
           "title": "Character 44",
           "bytes": 74238,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-27__character-44.webp"
         },
         {
@@ -58,6 +68,8 @@
           "file": "character-45.webp",
           "title": "Character 45",
           "bytes": 121016,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-27__character-45.webp"
         },
         {
@@ -67,6 +79,8 @@
           "file": "character-46.webp",
           "title": "Character 46",
           "bytes": 99540,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-27__character-46.webp"
         },
         {
@@ -76,6 +90,8 @@
           "file": "character-47.webp",
           "title": "Character 47",
           "bytes": 79480,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-27__character-47.webp"
         },
         {
@@ -85,6 +101,8 @@
           "file": "character-48.webp",
           "title": "Character 48",
           "bytes": 117300,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-27__character-48.webp"
         },
         {
@@ -94,6 +112,8 @@
           "file": "character-49.webp",
           "title": "Character 49",
           "bytes": 102902,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-27__character-49.webp"
         },
         {
@@ -103,6 +123,8 @@
           "file": "character-50.webp",
           "title": "Character 50",
           "bytes": 71006,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-27__character-50.webp"
         }
       ]
@@ -118,6 +140,8 @@
           "file": "illustration-01.webp",
           "title": "Illustration 01",
           "bytes": 128246,
+          "width": 1448,
+          "height": 1086,
           "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-01.webp"
         },
         {
@@ -127,6 +151,8 @@
           "file": "illustration-02.webp",
           "title": "Illustration 02",
           "bytes": 113766,
+          "width": 1448,
+          "height": 1086,
           "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-02.webp"
         },
         {
@@ -136,6 +162,8 @@
           "file": "illustration-03.webp",
           "title": "Illustration 03",
           "bytes": 59782,
+          "width": 1448,
+          "height": 1086,
           "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-03.webp"
         },
         {
@@ -145,6 +173,8 @@
           "file": "illustration-04.webp",
           "title": "Illustration 04",
           "bytes": 72608,
+          "width": 1448,
+          "height": 1086,
           "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-04.webp"
         },
         {
@@ -154,6 +184,8 @@
           "file": "illustration-05.webp",
           "title": "Illustration 05",
           "bytes": 64618,
+          "width": 1448,
+          "height": 1086,
           "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-05.webp"
         },
         {
@@ -163,6 +195,8 @@
           "file": "illustration-06.webp",
           "title": "Illustration 06",
           "bytes": 205132,
+          "width": 1448,
+          "height": 1086,
           "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-06.webp"
         },
         {
@@ -172,6 +206,8 @@
           "file": "illustration-07.webp",
           "title": "Illustration 07",
           "bytes": 46044,
+          "width": 1448,
+          "height": 1086,
           "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-07.webp"
         },
         {
@@ -181,6 +217,8 @@
           "file": "illustration-08.webp",
           "title": "Illustration 08",
           "bytes": 202336,
+          "width": 1448,
+          "height": 1086,
           "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-08.webp"
         },
         {
@@ -190,6 +228,8 @@
           "file": "illustration-09.webp",
           "title": "Illustration 09",
           "bytes": 85970,
+          "width": 1448,
+          "height": 1086,
           "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-09.webp"
         },
         {
@@ -199,6 +239,8 @@
           "file": "illustration-10.webp",
           "title": "Illustration 10",
           "bytes": 94144,
+          "width": 1448,
+          "height": 1086,
           "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-10.webp"
         },
         {
@@ -208,6 +250,8 @@
           "file": "illustration-11.webp",
           "title": "Illustration 11",
           "bytes": 83092,
+          "width": 1448,
+          "height": 1086,
           "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-11.webp"
         },
         {
@@ -217,6 +261,8 @@
           "file": "illustration-12.webp",
           "title": "Illustration 12",
           "bytes": 73586,
+          "width": 1448,
+          "height": 1086,
           "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-12.webp"
         },
         {
@@ -226,6 +272,8 @@
           "file": "illustration-13.webp",
           "title": "Illustration 13",
           "bytes": 158286,
+          "width": 1448,
+          "height": 1086,
           "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-13.webp"
         },
         {
@@ -235,6 +283,8 @@
           "file": "illustration-14.webp",
           "title": "Illustration 14",
           "bytes": 166998,
+          "width": 1448,
+          "height": 1086,
           "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-14.webp"
         },
         {
@@ -244,6 +294,8 @@
           "file": "illustration-15.webp",
           "title": "Illustration 15",
           "bytes": 172626,
+          "width": 1448,
+          "height": 1086,
           "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-15.webp"
         },
         {
@@ -253,6 +305,8 @@
           "file": "illustration-16.webp",
           "title": "Illustration 16",
           "bytes": 108108,
+          "width": 1448,
+          "height": 1086,
           "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-16.webp"
         }
       ]
@@ -268,6 +322,8 @@
           "file": "hottest-02-torn-nightshift-notice.webp",
           "title": "Torn Nightshift Notice",
           "bytes": 518520,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-17__hottest-02-torn-nightshift-notice.webp"
         },
         {
@@ -277,6 +333,8 @@
           "file": "interesting-03-sleeveless-record-repair.webp",
           "title": "Sleeveless Record Repair",
           "bytes": 369618,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-17__interesting-03-sleeveless-record-repair.webp"
         },
         {
@@ -286,6 +344,8 @@
           "file": "niche-01-folded-vellum-weather-station.webp",
           "title": "Folded Vellum Weather Station",
           "bytes": 112424,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-17__niche-01-folded-vellum-weather-station.webp"
         },
         {
@@ -295,6 +355,8 @@
           "file": "niche-02-glitch-rug-diver.webp",
           "title": "Glitch Rug Diver",
           "bytes": 495496,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-17__niche-02-glitch-rug-diver.webp"
         },
         {
@@ -304,6 +366,8 @@
           "file": "niche-04-halftone-print-archive-nightwatch.webp",
           "title": "Halftone Print Archive Nightwatch",
           "bytes": 556888,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-17__niche-04-halftone-print-archive-nightwatch.webp"
         },
         {
@@ -313,6 +377,8 @@
           "file": "hottest-01-drama-club-elevator.webp",
           "title": "Drama Club Elevator",
           "bytes": 77886,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-17__hottest-01-drama-club-elevator.webp"
         },
         {
@@ -322,6 +388,8 @@
           "file": "hottest-04-silver-raindrop-ticket-booth.webp",
           "title": "Silver Raindrop Ticket Booth",
           "bytes": 156854,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-17__hottest-04-silver-raindrop-ticket-booth.webp"
         }
       ]
@@ -337,6 +405,8 @@
           "file": "hottest-02.webp",
           "title": "Hottest 02",
           "bytes": 382350,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-16__hottest-02.webp"
         },
         {
@@ -346,6 +416,8 @@
           "file": "hottest-03.webp",
           "title": "Hottest 03",
           "bytes": 169076,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-16__hottest-03.webp"
         },
         {
@@ -355,6 +427,8 @@
           "file": "interesting-03.webp",
           "title": "Interesting 03",
           "bytes": 130312,
+          "width": 1402,
+          "height": 1122,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-16__interesting-03.webp"
         },
         {
@@ -364,6 +438,8 @@
           "file": "character-04.webp",
           "title": "Character 04",
           "bytes": 91500,
+          "width": 1024,
+          "height": 1536,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-16__character-04.webp"
         },
         {
@@ -373,6 +449,8 @@
           "file": "hottest-01.webp",
           "title": "Hottest 01",
           "bytes": 156330,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-16__hottest-01.webp"
         },
         {
@@ -382,6 +460,8 @@
           "file": "hottest-04.webp",
           "title": "Hottest 04",
           "bytes": 200264,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-16__hottest-04.webp"
         },
         {
@@ -391,6 +471,8 @@
           "file": "niche-02.webp",
           "title": "Niche 02",
           "bytes": 187104,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-16__niche-02.webp"
         },
         {
@@ -400,6 +482,8 @@
           "file": "niche-03.webp",
           "title": "Niche 03",
           "bytes": 188158,
+          "width": 1024,
+          "height": 1536,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-16__niche-03.webp"
         },
         {
@@ -409,6 +493,8 @@
           "file": "niche-04.webp",
           "title": "Niche 04",
           "bytes": 278638,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-16__niche-04.webp"
         }
       ]
@@ -424,6 +510,8 @@
           "file": "hottest-04.webp",
           "title": "Hottest 04",
           "bytes": 141574,
+          "width": 1402,
+          "height": 1122,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-15__hottest-04.webp"
         },
         {
@@ -433,6 +521,8 @@
           "file": "interesting-01.webp",
           "title": "Interesting 01",
           "bytes": 230754,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-15__interesting-01.webp"
         },
         {
@@ -442,6 +532,8 @@
           "file": "niche-01.webp",
           "title": "Niche 01",
           "bytes": 303002,
+          "width": 1122,
+          "height": 1402,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-15__niche-01.webp"
         },
         {
@@ -451,6 +543,8 @@
           "file": "hottest-01.webp",
           "title": "Hottest 01",
           "bytes": 93814,
+          "width": 1402,
+          "height": 1122,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-15__hottest-01.webp"
         },
         {
@@ -460,6 +554,8 @@
           "file": "hottest-03.webp",
           "title": "Hottest 03",
           "bytes": 144792,
+          "width": 1122,
+          "height": 1402,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-15__hottest-03.webp"
         },
         {
@@ -469,6 +565,8 @@
           "file": "interesting-03.webp",
           "title": "Interesting 03",
           "bytes": 165068,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-15__interesting-03.webp"
         },
         {
@@ -478,6 +576,8 @@
           "file": "niche-02.webp",
           "title": "Niche 02",
           "bytes": 242270,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-15__niche-02.webp"
         },
         {
@@ -487,6 +587,8 @@
           "file": "niche-03.webp",
           "title": "Niche 03",
           "bytes": 173304,
+          "width": 1024,
+          "height": 1536,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-15__niche-03.webp"
         },
         {
@@ -496,6 +598,8 @@
           "file": "niche-04.webp",
           "title": "Niche 04",
           "bytes": 232570,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-15__niche-04.webp"
         }
       ]
@@ -511,6 +615,8 @@
           "file": "interesting-01.webp",
           "title": "Interesting 01",
           "bytes": 72526,
+          "width": 1316,
+          "height": 1195,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-14__interesting-01.webp"
         },
         {
@@ -520,6 +626,8 @@
           "file": "interesting-02.webp",
           "title": "Interesting 02",
           "bytes": 487022,
+          "width": 1024,
+          "height": 1536,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-14__interesting-02.webp"
         },
         {
@@ -529,6 +637,8 @@
           "file": "interesting-03.webp",
           "title": "Interesting 03",
           "bytes": 195494,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-14__interesting-03.webp"
         },
         {
@@ -538,6 +648,8 @@
           "file": "interesting-04.webp",
           "title": "Interesting 04",
           "bytes": 242004,
+          "width": 1402,
+          "height": 1122,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-14__interesting-04.webp"
         },
         {
@@ -547,6 +659,8 @@
           "file": "niche-03.webp",
           "title": "Niche 03",
           "bytes": 407816,
+          "width": 1024,
+          "height": 1536,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-14__niche-03.webp"
         },
         {
@@ -556,6 +670,8 @@
           "file": "niche-04.webp",
           "title": "Niche 04",
           "bytes": 293588,
+          "width": 1402,
+          "height": 1122,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-14__niche-04.webp"
         },
         {
@@ -565,6 +681,8 @@
           "file": "hottest-01.webp",
           "title": "Hottest 01",
           "bytes": 71064,
+          "width": 1024,
+          "height": 1536,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-14__hottest-01.webp"
         },
         {
@@ -574,6 +692,8 @@
           "file": "hottest-02.webp",
           "title": "Hottest 02",
           "bytes": 159454,
+          "width": 1024,
+          "height": 1536,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-14__hottest-02.webp"
         },
         {
@@ -583,6 +703,8 @@
           "file": "hottest-03.webp",
           "title": "Hottest 03",
           "bytes": 100670,
+          "width": 1122,
+          "height": 1402,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-14__hottest-03.webp"
         },
         {
@@ -592,6 +714,8 @@
           "file": "niche-01.webp",
           "title": "Niche 01",
           "bytes": 227772,
+          "width": 1024,
+          "height": 1536,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-14__niche-01.webp"
         },
         {
@@ -601,6 +725,8 @@
           "file": "niche-02.webp",
           "title": "Niche 02",
           "bytes": 411322,
+          "width": 1402,
+          "height": 1122,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-14__niche-02.webp"
         }
       ]
@@ -616,6 +742,8 @@
           "file": "hottest-02.webp",
           "title": "Hottest 02",
           "bytes": 606662,
+          "width": 1024,
+          "height": 1536,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-13__hottest-02.webp"
         },
         {
@@ -625,6 +753,8 @@
           "file": "interesting-01.webp",
           "title": "Interesting 01",
           "bytes": 239806,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-13__interesting-01.webp"
         },
         {
@@ -634,6 +764,8 @@
           "file": "interesting-02.webp",
           "title": "Interesting 02",
           "bytes": 305256,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-13__interesting-02.webp"
         },
         {
@@ -643,6 +775,8 @@
           "file": "niche-01.webp",
           "title": "Niche 01",
           "bytes": 468876,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-13__niche-01.webp"
         },
         {
@@ -652,6 +786,8 @@
           "file": "niche-03.webp",
           "title": "Niche 03",
           "bytes": 233046,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-13__niche-03.webp"
         },
         {
@@ -661,6 +797,8 @@
           "file": "hottest-03.webp",
           "title": "Hottest 03",
           "bytes": 165300,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-13__hottest-03.webp"
         },
         {
@@ -670,6 +808,8 @@
           "file": "niche-02.webp",
           "title": "Niche 02",
           "bytes": 129450,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-13__niche-02.webp"
         },
         {
@@ -679,6 +819,8 @@
           "file": "niche-04.webp",
           "title": "Niche 04",
           "bytes": 146628,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-13__niche-04.webp"
         }
       ]
@@ -694,6 +836,8 @@
           "file": "hottest-03.webp",
           "title": "Hottest 03",
           "bytes": 172822,
+          "width": 1024,
+          "height": 1536,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-12__hottest-03.webp"
         },
         {
@@ -703,6 +847,8 @@
           "file": "hottest-04.webp",
           "title": "Hottest 04",
           "bytes": 432556,
+          "width": 1122,
+          "height": 1402,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-12__hottest-04.webp"
         },
         {
@@ -712,6 +858,8 @@
           "file": "interesting-01.webp",
           "title": "Interesting 01",
           "bytes": 225980,
+          "width": 1024,
+          "height": 1536,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-12__interesting-01.webp"
         },
         {
@@ -721,6 +869,8 @@
           "file": "interesting-04.webp",
           "title": "Interesting 04",
           "bytes": 109120,
+          "width": 1402,
+          "height": 1122,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-12__interesting-04.webp"
         },
         {
@@ -730,6 +880,8 @@
           "file": "niche-02.webp",
           "title": "Niche 02",
           "bytes": 248264,
+          "width": 1122,
+          "height": 1402,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-12__niche-02.webp"
         },
         {
@@ -739,6 +891,8 @@
           "file": "niche-03.webp",
           "title": "Niche 03",
           "bytes": 263870,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-12__niche-03.webp"
         },
         {
@@ -748,6 +902,8 @@
           "file": "niche-01.webp",
           "title": "Niche 01",
           "bytes": 94716,
+          "width": 1122,
+          "height": 1402,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-12__niche-01.webp"
         },
         {
@@ -757,6 +913,8 @@
           "file": "niche-04.webp",
           "title": "Niche 04",
           "bytes": 185394,
+          "width": 1314,
+          "height": 1197,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-12__niche-04.webp"
         }
       ]
@@ -772,6 +930,8 @@
           "file": "hottest-01.webp",
           "title": "Hottest 01",
           "bytes": 325692,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-11__hottest-01.webp"
         },
         {
@@ -781,6 +941,8 @@
           "file": "interesting-01.webp",
           "title": "Interesting 01",
           "bytes": 169870,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-11__interesting-01.webp"
         },
         {
@@ -790,6 +952,8 @@
           "file": "interesting-03.webp",
           "title": "Interesting 03",
           "bytes": 103692,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-11__interesting-03.webp"
         },
         {
@@ -799,6 +963,8 @@
           "file": "interesting-04.webp",
           "title": "Interesting 04",
           "bytes": 225448,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-11__interesting-04.webp"
         },
         {
@@ -808,6 +974,8 @@
           "file": "niche-01.webp",
           "title": "Niche 01",
           "bytes": 131994,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-11__niche-01.webp"
         },
         {
@@ -817,6 +985,8 @@
           "file": "niche-02.webp",
           "title": "Niche 02",
           "bytes": 149926,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-11__niche-02.webp"
         },
         {
@@ -826,6 +996,8 @@
           "file": "character-04.webp",
           "title": "Character 04",
           "bytes": 108444,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-11__character-04.webp"
         },
         {
@@ -835,6 +1007,8 @@
           "file": "hottest-02.webp",
           "title": "Hottest 02",
           "bytes": 448102,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-11__hottest-02.webp"
         },
         {
@@ -844,6 +1018,8 @@
           "file": "hottest-04.webp",
           "title": "Hottest 04",
           "bytes": 233988,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-11__hottest-04.webp"
         }
       ]
@@ -859,6 +1035,8 @@
           "file": "interesting-03.webp",
           "title": "Interesting 03",
           "bytes": 157874,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-10__interesting-03.webp"
         },
         {
@@ -868,6 +1046,8 @@
           "file": "niche-04.webp",
           "title": "Niche 04",
           "bytes": 249768,
+          "width": 1402,
+          "height": 1122,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-10__niche-04.webp"
         },
         {
@@ -877,6 +1057,8 @@
           "file": "hottest-01.webp",
           "title": "Hottest 01",
           "bytes": 172054,
+          "width": 1122,
+          "height": 1402,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-10__hottest-01.webp"
         },
         {
@@ -886,6 +1068,8 @@
           "file": "hottest-03.webp",
           "title": "Hottest 03",
           "bytes": 154264,
+          "width": 1024,
+          "height": 1536,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-10__hottest-03.webp"
         },
         {
@@ -895,6 +1079,8 @@
           "file": "niche-01.webp",
           "title": "Niche 01",
           "bytes": 158706,
+          "width": 1402,
+          "height": 1122,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-10__niche-01.webp"
         },
         {
@@ -904,6 +1090,8 @@
           "file": "niche-02.webp",
           "title": "Niche 02",
           "bytes": 138526,
+          "width": 1402,
+          "height": 1122,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-10__niche-02.webp"
         },
         {
@@ -913,6 +1101,8 @@
           "file": "niche-03.webp",
           "title": "Niche 03",
           "bytes": 163018,
+          "width": 1402,
+          "height": 1122,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-10__niche-03.webp"
         }
       ]
@@ -928,6 +1118,8 @@
           "file": "interesting-04.webp",
           "title": "Interesting 04",
           "bytes": 160352,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-09__interesting-04.webp"
         },
         {
@@ -937,6 +1129,8 @@
           "file": "niche-01.webp",
           "title": "Niche 01",
           "bytes": 288722,
+          "width": 1024,
+          "height": 1536,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-09__niche-01.webp"
         },
         {
@@ -946,6 +1140,8 @@
           "file": "niche-04.webp",
           "title": "Niche 04",
           "bytes": 166132,
+          "width": 1402,
+          "height": 1122,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-09__niche-04.webp"
         },
         {
@@ -955,6 +1151,8 @@
           "file": "hottest-01.webp",
           "title": "Hottest 01",
           "bytes": 159842,
+          "width": 1122,
+          "height": 1402,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-09__hottest-01.webp"
         },
         {
@@ -964,6 +1162,8 @@
           "file": "hottest-02.webp",
           "title": "Hottest 02",
           "bytes": 218416,
+          "width": 1024,
+          "height": 1535,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-09__hottest-02.webp"
         },
         {
@@ -973,6 +1173,8 @@
           "file": "hottest-03.webp",
           "title": "Hottest 03",
           "bytes": 192738,
+          "width": 1023,
+          "height": 1537,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-09__hottest-03.webp"
         },
         {
@@ -982,6 +1184,8 @@
           "file": "interesting-02.webp",
           "title": "Interesting 02",
           "bytes": 138962,
+          "width": 1402,
+          "height": 1122,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-09__interesting-02.webp"
         },
         {
@@ -991,6 +1195,8 @@
           "file": "character-03.webp",
           "title": "Character 03",
           "bytes": 54730,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-03.webp"
         },
         {
@@ -1000,6 +1206,8 @@
           "file": "character-04.webp",
           "title": "Character 04",
           "bytes": 164782,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-04.webp"
         },
         {
@@ -1009,6 +1217,8 @@
           "file": "character-05.webp",
           "title": "Character 05",
           "bytes": 183316,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-05.webp"
         },
         {
@@ -1018,6 +1228,8 @@
           "file": "character-06.webp",
           "title": "Character 06",
           "bytes": 122796,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-06.webp"
         },
         {
@@ -1027,6 +1239,8 @@
           "file": "character-07.webp",
           "title": "Character 07",
           "bytes": 114006,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-07.webp"
         },
         {
@@ -1036,6 +1250,8 @@
           "file": "character-08.webp",
           "title": "Character 08",
           "bytes": 102490,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-08.webp"
         },
         {
@@ -1045,6 +1261,8 @@
           "file": "character-09.webp",
           "title": "Character 09",
           "bytes": 119268,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-09.webp"
         },
         {
@@ -1054,6 +1272,8 @@
           "file": "character-10.webp",
           "title": "Character 10",
           "bytes": 167988,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-10.webp"
         },
         {
@@ -1063,6 +1283,8 @@
           "file": "character-11.webp",
           "title": "Character 11",
           "bytes": 87096,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-11.webp"
         },
         {
@@ -1072,6 +1294,8 @@
           "file": "character-12.webp",
           "title": "Character 12",
           "bytes": 86984,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-12.webp"
         },
         {
@@ -1081,6 +1305,8 @@
           "file": "character-13.webp",
           "title": "Character 13",
           "bytes": 115640,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-13.webp"
         },
         {
@@ -1090,6 +1316,8 @@
           "file": "character-14.webp",
           "title": "Character 14",
           "bytes": 82760,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-14.webp"
         },
         {
@@ -1099,6 +1327,8 @@
           "file": "character-15.webp",
           "title": "Character 15",
           "bytes": 131284,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-15.webp"
         },
         {
@@ -1108,6 +1338,8 @@
           "file": "character-16.webp",
           "title": "Character 16",
           "bytes": 74690,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-16.webp"
         },
         {
@@ -1117,6 +1349,8 @@
           "file": "character-17.webp",
           "title": "Character 17",
           "bytes": 82044,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-17.webp"
         },
         {
@@ -1126,6 +1360,8 @@
           "file": "character-18.webp",
           "title": "Character 18",
           "bytes": 121308,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-18.webp"
         },
         {
@@ -1135,6 +1371,8 @@
           "file": "character-19.webp",
           "title": "Character 19",
           "bytes": 95646,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-19.webp"
         },
         {
@@ -1144,6 +1382,8 @@
           "file": "character-20.webp",
           "title": "Character 20",
           "bytes": 85182,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-20.webp"
         },
         {
@@ -1153,6 +1393,8 @@
           "file": "character-21.webp",
           "title": "Character 21",
           "bytes": 118438,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-21.webp"
         },
         {
@@ -1162,6 +1404,8 @@
           "file": "character-22.webp",
           "title": "Character 22",
           "bytes": 100712,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-22.webp"
         },
         {
@@ -1171,6 +1415,8 @@
           "file": "character-23.webp",
           "title": "Character 23",
           "bytes": 97552,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-23.webp"
         },
         {
@@ -1180,6 +1426,8 @@
           "file": "character-24.webp",
           "title": "Character 24",
           "bytes": 142138,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-24.webp"
         },
         {
@@ -1189,6 +1437,8 @@
           "file": "character-25.webp",
           "title": "Character 25",
           "bytes": 86436,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-25.webp"
         },
         {
@@ -1198,6 +1448,8 @@
           "file": "character-26.webp",
           "title": "Character 26",
           "bytes": 68208,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-26.webp"
         },
         {
@@ -1207,6 +1459,8 @@
           "file": "character-27.webp",
           "title": "Character 27",
           "bytes": 128442,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-27.webp"
         },
         {
@@ -1216,6 +1470,8 @@
           "file": "character-28.webp",
           "title": "Character 28",
           "bytes": 114914,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-28.webp"
         },
         {
@@ -1225,6 +1481,8 @@
           "file": "character-29.webp",
           "title": "Character 29",
           "bytes": 68918,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-29.webp"
         },
         {
@@ -1234,6 +1492,8 @@
           "file": "character-30.webp",
           "title": "Character 30",
           "bytes": 133346,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-30.webp"
         },
         {
@@ -1243,6 +1503,8 @@
           "file": "character-31.webp",
           "title": "Character 31",
           "bytes": 79996,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-31.webp"
         },
         {
@@ -1252,6 +1514,8 @@
           "file": "character-32.webp",
           "title": "Character 32",
           "bytes": 91668,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-32.webp"
         },
         {
@@ -1261,6 +1525,8 @@
           "file": "character-33.webp",
           "title": "Character 33",
           "bytes": 126934,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-33.webp"
         },
         {
@@ -1270,6 +1536,8 @@
           "file": "character-34.webp",
           "title": "Character 34",
           "bytes": 137552,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-34.webp"
         },
         {
@@ -1279,6 +1547,8 @@
           "file": "character-35.webp",
           "title": "Character 35",
           "bytes": 98564,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-35.webp"
         },
         {
@@ -1288,6 +1558,8 @@
           "file": "character-36.webp",
           "title": "Character 36",
           "bytes": 102116,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-36.webp"
         },
         {
@@ -1297,6 +1569,8 @@
           "file": "character-37.webp",
           "title": "Character 37",
           "bytes": 147320,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-37.webp"
         },
         {
@@ -1306,6 +1580,8 @@
           "file": "character-38.webp",
           "title": "Character 38",
           "bytes": 172128,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-38.webp"
         },
         {
@@ -1315,6 +1591,8 @@
           "file": "character-39.webp",
           "title": "Character 39",
           "bytes": 125574,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-39.webp"
         },
         {
@@ -1324,6 +1602,8 @@
           "file": "character-40.webp",
           "title": "Character 40",
           "bytes": 90910,
+          "width": 1086,
+          "height": 1448,
           "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-40.webp"
         }
       ]
@@ -1339,6 +1619,8 @@
           "file": "i03_particle_post_office.webp",
           "title": "I03_particle_post_office",
           "bytes": 204396,
+          "width": 1402,
+          "height": 1122,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-08__i03_particle_post_office.webp"
         },
         {
@@ -1348,6 +1630,8 @@
           "file": "i04_lost_idea_repair.webp",
           "title": "I04_lost_idea_repair",
           "bytes": 258460,
+          "width": 1393,
+          "height": 1129,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-08__i04_lost_idea_repair.webp"
         },
         {
@@ -1357,6 +1641,8 @@
           "file": "n03_folded_city_book.webp",
           "title": "N03_folded_city_book",
           "bytes": 229596,
+          "width": 1403,
+          "height": 1121,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-08__n03_folded_city_book.webp"
         },
         {
@@ -1366,6 +1652,8 @@
           "file": "c02_punk_ballet_footmaker.webp",
           "title": "C02_punk_ballet_footmaker",
           "bytes": 139006,
+          "width": 1024,
+          "height": 1536,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-08__c02_punk_ballet_footmaker.webp"
         },
         {
@@ -1375,6 +1663,8 @@
           "file": "c03_analog_weather_witness.webp",
           "title": "C03_analog_weather_witness",
           "bytes": 93400,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-08__c03_analog_weather_witness.webp"
         },
         {
@@ -1384,6 +1674,8 @@
           "file": "h01_empathy_toy_orbit.webp",
           "title": "H01_empathy_toy_orbit",
           "bytes": 93880,
+          "width": 1402,
+          "height": 1122,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-08__h01_empathy_toy_orbit.webp"
         },
         {
@@ -1393,6 +1685,8 @@
           "file": "h03_courtside_coastal_prep.webp",
           "title": "H03_courtside_coastal_prep",
           "bytes": 214120,
+          "width": 1024,
+          "height": 1536,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-08__h03_courtside_coastal_prep.webp"
         },
         {
@@ -1402,6 +1696,8 @@
           "file": "i01_reality_warp_archive.webp",
           "title": "I01_reality_warp_archive",
           "bytes": 198346,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-08__i01_reality_warp_archive.webp"
         },
         {
@@ -1411,6 +1707,8 @@
           "file": "i02_five_tone_lanterns.webp",
           "title": "I02_five_tone_lanterns",
           "bytes": 221582,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-08__i02_five_tone_lanterns.webp"
         },
         {
@@ -1420,6 +1718,8 @@
           "file": "n01_projected_ceramic_guardian.webp",
           "title": "N01_projected_ceramic_guardian",
           "bytes": 180052,
+          "width": 1024,
+          "height": 1536,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-08__n01_projected_ceramic_guardian.webp"
         },
         {
@@ -1429,6 +1729,8 @@
           "file": "n04_anonymous_vinyl_constellation.webp",
           "title": "N04_anonymous_vinyl_constellation",
           "bytes": 60222,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-08__n04_anonymous_vinyl_constellation.webp"
         }
       ]
@@ -1444,6 +1746,8 @@
           "file": "interesting-01-orbit-laundromat.webp",
           "title": "Orbit Laundromat",
           "bytes": 207918,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-07__interesting-01-orbit-laundromat.webp"
         },
         {
@@ -1453,6 +1757,8 @@
           "file": "interesting-02-accidental-museum.webp",
           "title": "Accidental Museum",
           "bytes": 114314,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-07__interesting-02-accidental-museum.webp"
         },
         {
@@ -1462,6 +1768,8 @@
           "file": "interesting-03-tea-tide.webp",
           "title": "Tea Tide",
           "bytes": 97880,
+          "width": 1199,
+          "height": 1312,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-07__interesting-03-tea-tide.webp"
         },
         {
@@ -1471,6 +1779,8 @@
           "file": "interesting-04-weather-vending.webp",
           "title": "Weather Vending",
           "bytes": 148366,
+          "width": 1402,
+          "height": 1122,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-07__interesting-04-weather-vending.webp"
         },
         {
@@ -1480,6 +1790,8 @@
           "file": "hottest-01-sleeve-activism.webp",
           "title": "Sleeve Activism",
           "bytes": 192284,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-07__hottest-01-sleeve-activism.webp"
         },
         {
@@ -1489,6 +1801,8 @@
           "file": "hottest-02-art-creator-live.webp",
           "title": "Art Creator Live",
           "bytes": 142060,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-07__hottest-02-art-creator-live.webp"
         },
         {
@@ -1498,6 +1812,8 @@
           "file": "hottest-03-five-colours-now.webp",
           "title": "Five Colours Now",
           "bytes": 226950,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-07__hottest-03-five-colours-now.webp"
         },
         {
@@ -1507,6 +1823,8 @@
           "file": "hottest-04-digital-dunescape.webp",
           "title": "Digital Dunescape",
           "bytes": 215116,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-07__hottest-04-digital-dunescape.webp"
         },
         {
@@ -1516,6 +1834,8 @@
           "file": "niche-01-book-reef.webp",
           "title": "Book Reef",
           "bytes": 215648,
+          "width": 1477,
+          "height": 1065,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-07__niche-01-book-reef.webp"
         },
         {
@@ -1525,6 +1845,8 @@
           "file": "niche-02-woven-weather.webp",
           "title": "Woven Weather",
           "bytes": 278084,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-07__niche-02-woven-weather.webp"
         },
         {
@@ -1534,6 +1856,8 @@
           "file": "niche-03-saltwater-plate.webp",
           "title": "Saltwater Plate",
           "bytes": 234376,
+          "width": 1402,
+          "height": 1122,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-07__niche-03-saltwater-plate.webp"
         },
         {
@@ -1543,6 +1867,8 @@
           "file": "niche-04-botanical-xray.webp",
           "title": "Botanical Xray",
           "bytes": 342638,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-07__niche-04-botanical-xray.webp"
         }
       ]
@@ -1558,6 +1884,8 @@
           "file": "hottest-04-interactive-portrait.webp",
           "title": "Interactive Portrait",
           "bytes": 357868,
+          "width": 1024,
+          "height": 1536,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-06__hottest-04-interactive-portrait.webp"
         },
         {
@@ -1567,6 +1895,8 @@
           "file": "interesting-03-teacup-weather.webp",
           "title": "Teacup Weather",
           "bytes": 104886,
+          "width": 1402,
+          "height": 1122,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-06__interesting-03-teacup-weather.webp"
         },
         {
@@ -1576,6 +1906,8 @@
           "file": "niche-02-cyanotype-laundry.webp",
           "title": "Cyanotype Laundry",
           "bytes": 228350,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-06__niche-02-cyanotype-laundry.webp"
         },
         {
@@ -1585,6 +1917,8 @@
           "file": "hottest-01-2016-bedroom.webp",
           "title": "2016 Bedroom",
           "bytes": 143406,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-06__hottest-01-2016-bedroom.webp"
         },
         {
@@ -1594,6 +1928,8 @@
           "file": "hottest-02-motion-stretch.webp",
           "title": "Motion Stretch",
           "bytes": 122168,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-06__hottest-02-motion-stretch.webp"
         },
         {
@@ -1603,6 +1939,8 @@
           "file": "niche-01-straw-marquetry.webp",
           "title": "Straw Marquetry",
           "bytes": 238802,
+          "width": 1402,
+          "height": 1122,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-06__niche-01-straw-marquetry.webp"
         },
         {
@@ -1612,6 +1950,8 @@
           "file": "niche-03-kinetic-paper.webp",
           "title": "Kinetic Paper",
           "bytes": 90396,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-06__niche-03-kinetic-paper.webp"
         },
         {
@@ -1621,6 +1961,8 @@
           "file": "niche-04-thermal-ceramics.webp",
           "title": "Thermal Ceramics",
           "bytes": 96246,
+          "width": 1402,
+          "height": 1122,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-06__niche-04-thermal-ceramics.webp"
         }
       ]
@@ -1636,6 +1978,8 @@
           "file": "hottest-02.webp",
           "title": "Hottest 02",
           "bytes": 192160,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-05__hottest-02.webp"
         },
         {
@@ -1645,6 +1989,8 @@
           "file": "interesting-02.webp",
           "title": "Interesting 02",
           "bytes": 232696,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-05__interesting-02.webp"
         },
         {
@@ -1654,6 +2000,8 @@
           "file": "hottest-01.webp",
           "title": "Hottest 01",
           "bytes": 107034,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-05__hottest-01.webp"
         },
         {
@@ -1663,6 +2011,8 @@
           "file": "hottest-04.webp",
           "title": "Hottest 04",
           "bytes": 396672,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-05__hottest-04.webp"
         },
         {
@@ -1672,6 +2022,8 @@
           "file": "interesting-04.webp",
           "title": "Interesting 04",
           "bytes": 137172,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-05__interesting-04.webp"
         },
         {
@@ -1681,6 +2033,8 @@
           "file": "niche-01.webp",
           "title": "Niche 01",
           "bytes": 178082,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-05__niche-01.webp"
         },
         {
@@ -1690,6 +2044,8 @@
           "file": "niche-02.webp",
           "title": "Niche 02",
           "bytes": 122232,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-05__niche-02.webp"
         },
         {
@@ -1699,6 +2055,8 @@
           "file": "niche-03.webp",
           "title": "Niche 03",
           "bytes": 107680,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-05__niche-03.webp"
         },
         {
@@ -1708,6 +2066,8 @@
           "file": "niche-04.webp",
           "title": "Niche 04",
           "bytes": 419844,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-05__niche-04.webp"
         }
       ]
@@ -1723,6 +2083,8 @@
           "file": "hottest-01-butter-eclipse.webp",
           "title": "Butter Eclipse",
           "bytes": 109148,
+          "width": 1024,
+          "height": 1536,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-04__hottest-01-butter-eclipse.webp"
         },
         {
@@ -1732,6 +2094,8 @@
           "file": "hottest-04-dorm-coast.webp",
           "title": "Dorm Coast",
           "bytes": 171410,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-04__hottest-04-dorm-coast.webp"
         },
         {
@@ -1741,6 +2105,8 @@
           "file": "niche-02-riso-snail.webp",
           "title": "Riso Snail",
           "bytes": 558276,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-04__niche-02-riso-snail.webp"
         },
         {
@@ -1750,6 +2116,8 @@
           "file": "hottest-02-summerween.webp",
           "title": "Summerween",
           "bytes": 154212,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-04__hottest-02-summerween.webp"
         },
         {
@@ -1759,6 +2127,8 @@
           "file": "interesting-03-nap-courtyard.webp",
           "title": "Nap Courtyard",
           "bytes": 262770,
+          "width": 1535,
+          "height": 1024,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-04__interesting-03-nap-courtyard.webp"
         },
         {
@@ -1768,6 +2138,8 @@
           "file": "interesting-04-bamboo-ticket.webp",
           "title": "Bamboo Ticket",
           "bytes": 210874,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-04__interesting-04-bamboo-ticket.webp"
         },
         {
@@ -1777,6 +2149,8 @@
           "file": "niche-01-photo-zine.webp",
           "title": "Photo Zine",
           "bytes": 177204,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-04__niche-01-photo-zine.webp"
         },
         {
@@ -1786,6 +2160,8 @@
           "file": "niche-03-photo-scroll.webp",
           "title": "Photo Scroll",
           "bytes": 213354,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-04__niche-03-photo-scroll.webp"
         }
       ]
@@ -1801,6 +2177,8 @@
           "file": "character-03-tai-si.webp",
           "title": "Tai Si",
           "bytes": 186422,
+          "width": 1024,
+          "height": 1536,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-03__character-03-tai-si.webp"
         },
         {
@@ -1810,6 +2188,8 @@
           "file": "hottest-02-mended-nebula.webp",
           "title": "Mended Nebula",
           "bytes": 464120,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-03__hottest-02-mended-nebula.webp"
         },
         {
@@ -1819,6 +2199,8 @@
           "file": "interesting-01-cloud-clock.webp",
           "title": "Cloud Clock",
           "bytes": 166158,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-03__interesting-01-cloud-clock.webp"
         },
         {
@@ -1828,6 +2210,8 @@
           "file": "interesting-02-vending-opera.webp",
           "title": "Vending Opera",
           "bytes": 186682,
+          "width": 1024,
+          "height": 1536,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-03__interesting-02-vending-opera.webp"
         },
         {
@@ -1837,6 +2221,8 @@
           "file": "interesting-03-watermelon-planet.webp",
           "title": "Watermelon Planet",
           "bytes": 212260,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-03__interesting-03-watermelon-planet.webp"
         },
         {
@@ -1846,6 +2232,8 @@
           "file": "niche-01-zine-observatory.webp",
           "title": "Zine Observatory",
           "bytes": 371704,
+          "width": 1024,
+          "height": 1536,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-03__niche-01-zine-observatory.webp"
         },
         {
@@ -1855,6 +2243,8 @@
           "file": "niche-02-sprouting-ring.webp",
           "title": "Sprouting Ring",
           "bytes": 116896,
+          "width": 1024,
+          "height": 1536,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-03__niche-02-sprouting-ring.webp"
         },
         {
@@ -1864,6 +2254,8 @@
           "file": "niche-03-root-tip-lab.webp",
           "title": "Root Tip Lab",
           "bytes": 322522,
+          "width": 1024,
+          "height": 1535,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-03__niche-03-root-tip-lab.webp"
         },
         {
@@ -1873,6 +2265,8 @@
           "file": "niche-04-pocket-station.webp",
           "title": "Pocket Station",
           "bytes": 212344,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-03__niche-04-pocket-station.webp"
         },
         {
@@ -1882,6 +2276,8 @@
           "file": "hottest-01-2016-repair-shop.webp",
           "title": "2016 Repair Shop",
           "bytes": 165780,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-03__hottest-01-2016-repair-shop.webp"
         },
         {
@@ -1891,6 +2287,8 @@
           "file": "hottest-03-everyday-exhibit.webp",
           "title": "Everyday Exhibit",
           "bytes": 102170,
+          "width": 1024,
+          "height": 1536,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-03__hottest-03-everyday-exhibit.webp"
         },
         {
@@ -1900,6 +2298,8 @@
           "file": "hottest-04-black-swan-rehearsal.webp",
           "title": "Black Swan Rehearsal",
           "bytes": 94482,
+          "width": 1024,
+          "height": 1535,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-03__hottest-04-black-swan-rehearsal.webp"
         },
         {
@@ -1909,6 +2309,8 @@
           "file": "import-01-rainy-window.webp",
           "title": "Rainy Window",
           "bytes": 110078,
+          "width": 941,
+          "height": 1672,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-03__import-01-rainy-window.webp"
         },
         {
@@ -1918,6 +2320,8 @@
           "file": "import-02-ccd-party.webp",
           "title": "Ccd Party",
           "bytes": 147120,
+          "width": 941,
+          "height": 1672,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-03__import-02-ccd-party.webp"
         },
         {
@@ -1927,6 +2331,8 @@
           "file": "import-03.webp",
           "title": "Import 03",
           "bytes": 162560,
+          "width": 941,
+          "height": 1672,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-03__import-03.webp"
         }
       ]
@@ -1942,6 +2348,8 @@
           "file": "hottest-02-festival-surprise.webp",
           "title": "Festival Surprise",
           "bytes": 346990,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-02__hottest-02-festival-surprise.webp"
         },
         {
@@ -1951,6 +2359,8 @@
           "file": "hottest-04-sisters-recreate.webp",
           "title": "Sisters Recreate",
           "bytes": 159482,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-02__hottest-04-sisters-recreate.webp"
         },
         {
@@ -1960,6 +2370,8 @@
           "file": "interesting-02-sister-wardrobe.webp",
           "title": "Sister Wardrobe",
           "bytes": 164396,
+          "width": 1536,
+          "height": 1024,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-02__interesting-02-sister-wardrobe.webp"
         },
         {
@@ -1969,6 +2381,8 @@
           "file": "interesting-03-perseid-party.webp",
           "title": "Perseid Party",
           "bytes": 193354,
+          "width": 1535,
+          "height": 1024,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-02__interesting-03-perseid-party.webp"
         },
         {
@@ -1978,6 +2392,8 @@
           "file": "niche-01-archive-indexer.webp",
           "title": "Archive Indexer",
           "bytes": 148452,
+          "width": 1024,
+          "height": 1536,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-02__niche-01-archive-indexer.webp"
         }
       ]
@@ -1993,6 +2409,8 @@
           "file": "character-03-avatar-tailor.webp",
           "title": "Avatar Tailor",
           "bytes": 227930,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__character-03-avatar-tailor.webp"
         },
         {
@@ -2002,6 +2420,8 @@
           "file": "hottest-02-cyber-expo.webp",
           "title": "Cyber Expo",
           "bytes": 241398,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__hottest-02-cyber-expo.webp"
         },
         {
@@ -2011,6 +2431,8 @@
           "file": "hottest-04-minimal-tactile.webp",
           "title": "Minimal Tactile",
           "bytes": 104928,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__hottest-04-minimal-tactile.webp"
         },
         {
@@ -2020,6 +2442,8 @@
           "file": "interesting-01-teacup-weather.webp",
           "title": "Teacup Weather",
           "bytes": 191426,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__interesting-01-teacup-weather.webp"
         },
         {
@@ -2029,6 +2453,8 @@
           "file": "interesting-02-chair-parade.webp",
           "title": "Chair Parade",
           "bytes": 319466,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__interesting-02-chair-parade.webp"
         },
         {
@@ -2038,6 +2464,8 @@
           "file": "interesting-03-window-wardrobe.webp",
           "title": "Window Wardrobe",
           "bytes": 143014,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__interesting-03-window-wardrobe.webp"
         },
         {
@@ -2047,6 +2475,8 @@
           "file": "interesting-04-moss-keyboard.webp",
           "title": "Moss Keyboard",
           "bytes": 205854,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__interesting-04-moss-keyboard.webp"
         },
         {
@@ -2056,6 +2486,8 @@
           "file": "niche-01-lacquer-meteorology.webp",
           "title": "Lacquer Meteorology",
           "bytes": 229844,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__niche-01-lacquer-meteorology.webp"
         },
         {
@@ -2065,6 +2497,8 @@
           "file": "niche-02-weaving-architecture.webp",
           "title": "Weaving Architecture",
           "bytes": 445976,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__niche-02-weaving-architecture.webp"
         },
         {
@@ -2074,6 +2508,8 @@
           "file": "niche-03-sound-ceramics.webp",
           "title": "Sound Ceramics",
           "bytes": 369542,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__niche-03-sound-ceramics.webp"
         },
         {
@@ -2083,6 +2519,8 @@
           "file": "niche-04-urban-village-map.webp",
           "title": "Urban Village Map",
           "bytes": 348280,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__niche-04-urban-village-map.webp"
         },
         {
@@ -2092,6 +2530,8 @@
           "file": "hottest-01-avatar-cinema.webp",
           "title": "Avatar Cinema",
           "bytes": 125790,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-01__hottest-01-avatar-cinema.webp"
         },
         {
@@ -2101,6 +2541,8 @@
           "file": "hottest-03-authored-wall.webp",
           "title": "Authored Wall",
           "bytes": 314358,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/02-Lens/2026-08-01__hottest-03-authored-wall.webp"
         }
       ]
@@ -2116,6 +2558,8 @@
           "file": "interesting-01-girl-grip-orbit.webp",
           "title": "Girl Grip Orbit",
           "bytes": 84914,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-07-31__interesting-01-girl-grip-orbit.webp"
         },
         {
@@ -2125,6 +2569,8 @@
           "file": "interesting-02-zero-shadow.webp",
           "title": "Zero Shadow",
           "bytes": 142680,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-07-31__interesting-02-zero-shadow.webp"
         },
         {
@@ -2134,6 +2580,8 @@
           "file": "interesting-03-modular-oasis.webp",
           "title": "Modular Oasis",
           "bytes": 324566,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-07-31__interesting-03-modular-oasis.webp"
         },
         {
@@ -2143,6 +2591,8 @@
           "file": "interesting-04-bangladesh-demand.webp",
           "title": "Bangladesh Demand",
           "bytes": 428920,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-07-31__interesting-04-bangladesh-demand.webp"
         },
         {
@@ -2152,6 +2602,8 @@
           "file": "niche-01-living-identity.webp",
           "title": "Living Identity",
           "bytes": 351836,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-07-31__niche-01-living-identity.webp"
         },
         {
@@ -2161,6 +2613,8 @@
           "file": "niche-04-handdrawn-bodygame.webp",
           "title": "Handdrawn Bodygame",
           "bytes": 464642,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/01-Dreamscape/2026-07-31__niche-04-handdrawn-bodygame.webp"
         },
         {
@@ -2170,6 +2624,8 @@
           "file": "hottest-01-worldcup-lifestyle.webp",
           "title": "Worldcup Lifestyle",
           "bytes": 206576,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/02-Lens/2026-07-31__hottest-01-worldcup-lifestyle.webp"
         },
         {
@@ -2179,6 +2635,8 @@
           "file": "hottest-03-single-take-trucker.webp",
           "title": "Single Take Trucker",
           "bytes": 86894,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/02-Lens/2026-07-31__hottest-03-single-take-trucker.webp"
         },
         {
@@ -2188,6 +2646,8 @@
           "file": "hottest-04-sauna-core.webp",
           "title": "Sauna Core",
           "bytes": 146096,
+          "width": 1254,
+          "height": 1254,
           "src": "https://media.shanzoon.art/02-Lens/2026-07-31__hottest-04-sauna-core.webp"
         }
       ]
@@ -2203,6 +2663,8 @@
           "file": "character-02.webp",
           "title": "Character 02",
           "bytes": 114384,
+          "width": 864,
+          "height": 1821,
           "src": "https://media.shanzoon.art/04-Persona/2026-07-30__character-02.webp"
         }
       ]
@@ -2218,6 +2680,8 @@
           "file": "character-01.webp",
           "title": "Character 01",
           "bytes": 51628,
+          "width": 1122,
+          "height": 1402,
           "src": "https://media.shanzoon.art/04-Persona/2026-07-11__character-01.webp"
         }
       ]

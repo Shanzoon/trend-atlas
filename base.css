@@ -65,6 +65,7 @@ body {
 button, a { font: inherit; -webkit-tap-highlight-color: transparent; }
 button { color: inherit; }
 h1, h2, h3 { font-family: var(--font-display); font-weight: var(--weight-display); }
+:where(main, h1)[tabindex="-1"]:focus { outline: none; }
 .chapter-subtitle {
   color: var(--chapter-subtitle-ink);
   font-family: var(--font-copy);
