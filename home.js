@@ -2,17 +2,34 @@ import { categoryFor } from "./categories.js";
 import { elements } from "./elements.js";
 import { mobileLayout, reduceMotion } from "./media.js";
 import { itemsForScope, state } from "./state.js";
-import { archiveTimeline, systemsTimeline } from "./timelines.js";
+import { archiveTimeline, progressWithHold, progressWithHolds, systemsTimeline } from "./timelines.js";
 import { clamp, clearMotionStyles, lerp, setButtonInteractive, setContainerInteractive, smoothstep } from "./utils.js";
+
+const ARCHIVE_STAGE_SCALE = 0.84;
 
 function measureMotionLayout() {
   const storyTop = elements.story.offsetTop;
   const systemsTop = elements.systemsStory.getBoundingClientRect().top + scrollY;
+  const storyDistance = Math.max(1, elements.story.offsetHeight - innerHeight);
+  const holdDistance = innerHeight * 0.5;
+  const systemsHoldDistances = [
+    [0.30, innerHeight * 0.30],
+    [0.61, innerHeight * 0.30],
+    [0.89, innerHeight * 0.20],
+  ];
+  const systemsHoldDistance = systemsHoldDistances.reduce((total, [, distance]) => total + distance, 0);
+  const archiveAnchorY = elements.stage.offsetTop
+    + elements.stage.offsetHeight * (1 - ARCHIVE_STAGE_SCALE) / 2
+    + elements.archiveCopy.offsetTop * ARCHIVE_STAGE_SCALE;
   return {
     storyTop,
-    storyDistance: Math.max(1, elements.story.offsetHeight - innerHeight),
+    storyDistance,
+    motionDistance: Math.max(1, storyDistance - holdDistance),
+    holdDistance,
     systemsTop,
-    systemsDistance: Math.max(1, elements.systemsStory.offsetHeight - innerHeight),
+    systemsMotionDistance: Math.max(1, elements.systemsStory.offsetHeight - innerHeight - systemsHoldDistance),
+    systemsHoldDistances,
+    archiveTitleAnchorY: archiveAnchorY,
     portalsWidth: elements.portals.clientWidth,
     portalOffsets: elements.portalButtons.map((button) => button.offsetLeft),
   };
@@ -43,7 +60,7 @@ function hydrateFolderPreviews() {
   });
 }
 
-function updateSystemsStory(staticStory, metrics, brandProgress = 0) {
+function updateSystemsStory(staticStory, metrics, titleProgress = 0, handoffY = 0) {
   if (staticStory) {
     clearMotionStyles(elements.systemsBridge);
     elements.projectSheets.forEach((sheet) => {
@@ -62,16 +79,22 @@ function updateSystemsStory(staticStory, metrics, brandProgress = 0) {
     return;
   }
 
-  const progress = clamp((scrollY - metrics.systemsTop) / metrics.systemsDistance);
+  const progress = progressWithHolds(
+    scrollY - metrics.systemsTop,
+    metrics.systemsMotionDistance,
+    metrics.systemsHoldDistances,
+  );
   // Establish the chapter title during the hand-off, then let the first board
   // arrive after the visitor has registered the new section.
   const bridgeEntry = Math.max(
     smoothstep(...systemsTimeline.bridgeEntry, progress),
-    smoothstep(...archiveTimeline.bridgeHandoff, brandProgress),
+    titleProgress,
   );
+  const systemsDeck = elements.systemsBridge.offsetParent;
+  const deckTop = Math.max(0, systemsDeck ? systemsDeck.getBoundingClientRect().top : 0);
   elements.systemsBridge.style.opacity = bridgeEntry.toFixed(3);
   elements.systemsBridge.style.filter = `blur(${lerp(5, 0, bridgeEntry).toFixed(2)}px)`;
-  elements.systemsBridge.style.transform = `translateX(-50%) translateY(${lerp(18, 0, bridgeEntry).toFixed(1)}px)`;
+  elements.systemsBridge.style.transform = `translateX(-50%) translateY(${(handoffY - deckTop - elements.systemsBridge.offsetTop).toFixed(1)}px)`;
 
   const starts = systemsTimeline.projectStarts;
   elements.projectSheets.forEach((sheet, index) => {
@@ -140,15 +163,23 @@ function updateStory() {
 
   state.staticMotionApplied = false;
   const metrics = state.motionMetrics || (state.motionMetrics = measureMotionLayout());
-  const progress = clamp((scrollY - metrics.storyTop) / metrics.storyDistance);
-  updateSystemsStory(false, metrics, progress);
+  const progress = progressWithHold(
+    scrollY - metrics.storyTop,
+    metrics.motionDistance,
+    archiveTimeline.handoff[0],
+    metrics.holdDistance,
+  );
+  const titleProgress = smoothstep(...archiveTimeline.titleHandoff, progress);
+  const bridgeFinalViewportY = elements.systemsBridge.offsetTop;
+  const handoffY = lerp(metrics.archiveTitleAnchorY, bridgeFinalViewportY, titleProgress);
+  updateSystemsStory(false, metrics, titleProgress, handoffY);
   if (progress > 0.24) hydrateFolderPreviews();
 
   const gather = smoothstep(...archiveTimeline.gather, progress);
   const folders = smoothstep(...archiveTimeline.folders, progress);
   const handoff = smoothstep(...archiveTimeline.handoff, progress);
 
-  elements.stage.style.setProperty("--stage-scale", lerp(1, 0.84, gather).toFixed(4));
+  elements.stage.style.setProperty("--stage-scale", lerp(1, ARCHIVE_STAGE_SCALE, gather).toFixed(4));
   elements.identity.style.left = `${lerp(7, 25, gather)}%`;
   elements.identity.style.top = `${lerp(50, 17, gather)}%`;
   elements.identity.style.width = `${lerp(38, 50, gather)}%`;
@@ -158,10 +189,12 @@ function updateStory() {
   elements.identity.style.opacity = (1 - identityExit).toFixed(3);
   elements.identity.style.filter = `blur(${lerp(0, 5, identityExit).toFixed(2)}px)`;
   elements.identity.style.transform = `translateY(-50%) translateY(${lerp(0, -10, identityExit).toFixed(1)}px) scale(${lerp(1, 0.97, identityExit).toFixed(3)})`;
-  const archiveExit = smoothstep(...archiveTimeline.archiveExit, progress);
+  const archiveExit = titleProgress;
   elements.archiveCopy.style.opacity = (archiveEntry * (1 - archiveExit)).toFixed(3);
   elements.archiveCopy.style.filter = `blur(${(lerp(5, 0, archiveEntry) + lerp(0, 4, archiveExit)).toFixed(2)}px)`;
-  elements.archiveCopy.style.transform = `translateX(-50%) translateY(${(lerp(12, 0, archiveEntry) - 34 * archiveExit).toFixed(1)}px)`;
+  const archiveEntryY = lerp(12, 0, archiveEntry);
+  const archiveHandoffY = (handoffY - metrics.archiveTitleAnchorY) / ARCHIVE_STAGE_SCALE;
+  elements.archiveCopy.style.transform = `translateX(-50%) translateY(${(archiveEntryY + archiveHandoffY).toFixed(1)}px)`;
 
   const artOpacity = 1 - smoothstep(...archiveTimeline.artExit, progress);
   elements.dailyArt.style.opacity = artOpacity.toFixed(3);
@@ -170,8 +203,13 @@ function updateStory() {
 
   const rotations = [-11, -4, 6, 12];
   const gatheredOffsets = [-0.16, -0.055, 0.065, 0.17];
+  const folderExit = smoothstep(...archiveTimeline.folderExit, progress);
+  const folderOpacity = folders * (1 - folderExit);
+  let foldersAreInteractive = false;
   elements.portalButtons.forEach((button, index) => {
     const local = smoothstep(0.08 * index, 0.6 + 0.07 * index, folders);
+    const compositeOpacity = folderOpacity * local;
+    const interactive = compositeOpacity > 0.55;
     const gatheredCenter = metrics.portalsWidth * (0.5 + gatheredOffsets[index]);
     const gatherX = (gatheredCenter - metrics.portalOffsets[index]) * handoff;
     const gatherY = lerp(0, -52, handoff);
@@ -179,11 +217,11 @@ function updateStory() {
     const folderRotation = rotations[index] * lerp(1, 0.55, handoff);
     button.style.opacity = local.toFixed(3);
     button.style.transform = `translate(-50%, -50%) translate(${gatherX.toFixed(1)}px, ${(lerp(120, 0, local) + gatherY).toFixed(1)}px) scale(${(lerp(0.72, 1, local) * folderScale).toFixed(3)}) rotate(${folderRotation.toFixed(2)}deg)`;
-    setButtonInteractive(button, folders > 0.72 && handoff < 0.18);
+    setButtonInteractive(button, interactive);
+    foldersAreInteractive ||= interactive;
   });
-  const folderExit = smoothstep(...archiveTimeline.folderExit, progress);
-  elements.portals.style.opacity = (folders * (1 - folderExit)).toFixed(3);
-  elements.portals.classList.toggle("is-ready", folders > 0.72 && handoff < 0.18);
+  elements.portals.style.opacity = folderOpacity.toFixed(3);
+  elements.portals.classList.toggle("is-ready", foldersAreInteractive);
 
   const allEntry = smoothstep(...archiveTimeline.allEntry, progress);
   elements.archiveAll.style.opacity = (allEntry * (1 - archiveExit)).toFixed(3);

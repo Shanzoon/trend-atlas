@@ -9,7 +9,10 @@ const archiveRoot = path.resolve(process.env.ARCHIVE_ROOT || path.join(appRoot, 
 const port = Number(process.env.PORT || 4173);
 const host = process.env.HOST || "127.0.0.1";
 
-const titlePrefixPattern = new RegExp(`^(${Object.keys(categories).map((id) => id.split("-")[1]).join("|")})-\\d+-`);
+// 分类文件夹名已是英文（01-Dreamscape …），不再携带旧前缀；文件名里的
+// interesting/hottest/niche/character/illustration/import 属于磁盘命名旧前缀，标题仍需剥离。
+const titlePrefixPattern = /^(?:interesting|hottest|niche|character|illustration|import)-\d+-/;
+const flatArchiveFilePattern = /^(\d{4}-\d{2}-\d{2})__(.+\.(?:png|jpe?g|webp))$/i;
 
 const mimeTypes = {
   ".html": "text/html; charset=utf-8",
@@ -32,23 +35,25 @@ function titleFromFile(file) {
     .join(" ");
 }
 
-async function getDay(date) {
-  const items = [];
+async function getArchive() {
+  const itemsByDate = new Map();
 
   for (const [folder, label] of Object.entries(categories)) {
-    const categoryRoot = path.join(archiveRoot, folder, date);
-    let files = [];
+    const categoryRoot = path.join(archiveRoot, folder);
+    let entries = [];
     try {
-      files = await readdir(categoryRoot, { withFileTypes: true });
+      entries = await readdir(categoryRoot, { withFileTypes: true });
     } catch {
+      // A missing category is equivalent to an empty category.
       continue;
     }
 
-    for (const file of files
-      .filter((entry) => entry.isFile() && /\.(png|jpe?g|webp)$/i.test(entry.name))
-      .map((entry) => entry.name)
-      .sort()) {
-      const details = await stat(path.join(categoryRoot, file));
+    for (const entry of entries.filter((candidate) => candidate.isFile()).sort((a, b) => a.name.localeCompare(b.name))) {
+      const match = entry.name.match(flatArchiveFilePattern);
+      if (!match) continue;
+      const [, date, file] = match;
+      const details = await stat(path.join(categoryRoot, entry.name));
+      const items = itemsByDate.get(date) || [];
       items.push({
         id: `${folder}/${file}`,
         category: folder,
@@ -58,27 +63,13 @@ async function getDay(date) {
         bytes: details.size,
         src: `/media/${encodeURIComponent(date)}/${encodeURIComponent(folder)}/${encodeURIComponent(file)}`,
       });
+      itemsByDate.set(date, items);
     }
   }
 
-  return { date, count: items.length, items };
-}
-
-async function getArchive() {
-  const dateSet = new Set();
-  for (const folder of Object.keys(categories)) {
-    try {
-      const entries = await readdir(path.join(archiveRoot, folder), { withFileTypes: true });
-      for (const entry of entries) {
-        if (entry.isDirectory() && /^\d{4}-\d{2}-\d{2}$/.test(entry.name)) dateSet.add(entry.name);
-      }
-    } catch {
-      // A missing category is equivalent to an empty category.
-    }
-  }
-  const dates = [...dateSet].sort().reverse();
-
-  const days = await Promise.all(dates.map(getDay));
+  const days = [...itemsByDate.entries()]
+    .sort(([left], [right]) => right.localeCompare(left))
+    .map(([date, items]) => ({ date, count: items.length, items }));
   return { archive: "trend-lab", updatedAt: new Date().toISOString(), days };
 }
 
@@ -121,12 +112,11 @@ async function safeMediaPath(pathname) {
   ) {
     return null;
   }
-  const resolved = path.resolve(archiveRoot, category, date, file);
+  const resolved = path.resolve(archiveRoot, category, `${date}__${file}`);
   if (!resolved.startsWith(`${archiveRoot}${path.sep}`)) return null;
 
   const components = [
     path.join(archiveRoot, category),
-    path.join(archiveRoot, category, date),
     resolved,
   ];
   for (const component of components) {
@@ -194,7 +184,7 @@ const server = http.createServer(async (request, response) => {
     "/assets/shanzoon-glyph-favicon.svg": "assets/shanzoon-glyph-favicon.svg",
     "/assets/project-drama-data.png": "assets/project-drama-data.png",
     "/assets/project-lingjing-ai.png": "assets/project-lingjing-ai.png",
-    "/assets/project-loomicc-local-dashboard.jpg": "assets/project-loomicc-local-dashboard.jpg",
+    "/assets/project-loomicc-card-v2.png": "assets/project-loomicc-card-v2.png",
     "/assets/folder-wonder.jpg": "assets/folder-wonder.jpg",
     "/assets/folder-current.jpg": "assets/folder-current.jpg",
     "/assets/folder-underground.jpg": "assets/folder-underground.jpg",

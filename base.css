@@ -29,7 +29,7 @@
   --type-page: clamp(3.2rem, 7vw, 6rem);
   --type-section: clamp(2.75rem, 5vw, 4.5rem);
   --type-feature: clamp(1.7rem, 3vw, 3.2rem);
-  --type-title: clamp(1.45rem, 2.5vw, 2.15rem);
+  --type-title: clamp(1.23rem, 2.125vw, 1.83rem);
   --type-subtitle: clamp(1rem, 1.4vw, 1.25rem);
   --type-body: clamp(0.875rem, 1.05vw, 1rem);
   --type-small: clamp(0.75rem, 0.85vw, 0.84rem);
@@ -145,7 +145,6 @@ button:focus-visible, a:focus-visible { outline: none; }
 
 @media (min-width: 761px) and (prefers-reduced-motion: no-preference) {
   html {
-    scroll-snap-type: y proximity;
     overscroll-behavior-y: none;
   }
 }

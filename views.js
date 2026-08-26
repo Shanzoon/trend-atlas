@@ -2,8 +2,17 @@ import { categoryFor } from "./categories.js";
 import { elements } from "./elements.js";
 import { scheduleStoryUpdate } from "./home.js";
 import { reduceMotion } from "./media.js";
-import { itemsForScope, state } from "./state.js";
+import { itemsForScope, nextCollectionPageEnd, state } from "./state.js";
 import { hashString, stableDateKey } from "./utils.js";
+
+let detailThumbnailObserver;
+
+function hydrateDetailThumbnail(image) {
+  if (!image?.dataset.src) return;
+  image.src = image.dataset.src;
+  delete image.dataset.src;
+  detailThumbnailObserver?.unobserve(image);
+}
 
 function selectDailyItem() {
   if (!state.allItems.length) return null;
@@ -66,34 +75,75 @@ export function renderDailyItem() {
   elements.homeStatus.classList.remove("is-error");
 }
 
-function renderCollection() {
-  elements.collectionCount.textContent = `${state.allItems.length} 张图像`;
-  elements.collectionGrid.replaceChildren();
+function updateCollectionMore() {
+  const hasMore = state.collectionRenderedCount < state.allItems.length;
+  elements.collectionMore.hidden = !hasMore;
+  elements.collectionMore.setAttribute(
+    "aria-label",
+    `加载更多图像，已显示 ${state.collectionRenderedCount} 张，共 ${state.allItems.length} 张`,
+  );
+}
 
-  if (!state.allItems.length) {
-    const empty = document.createElement("p");
-    empty.className = "empty-collection";
-    empty.textContent = "归档中暂时还没有图像。";
-    elements.collectionGrid.append(empty);
-    return;
-  }
+export function renderNextCollectionPage() {
+  const pageEnd = nextCollectionPageEnd(state.collectionRenderedCount, state.allItems.length);
+  const fragment = document.createDocumentFragment();
 
-  state.allItems.forEach((item) => {
+  state.allItems.slice(state.collectionRenderedCount, pageEnd).forEach((item) => {
     const card = elements.itemTemplate.content.firstElementChild.cloneNode(true);
     const image = card.querySelector("img");
     card.dataset.category = item.category;
     card.setAttribute("aria-label", `查看 ${item.title}，归档于 ${item.date}`);
+    image.loading = "lazy";
+    image.decoding = "async";
     image.src = item.src;
     image.alt = `${item.title}，${item.categoryLabel}`;
     card.querySelector("strong").textContent = item.title;
     card.querySelector("small").textContent = item.date;
     card.addEventListener("click", () => navigateToDetail(item, "all"));
-    elements.collectionGrid.append(card);
+    fragment.append(card);
   });
+
+  elements.collectionGrid.append(fragment);
+  state.collectionRenderedCount = pageEnd;
+  updateCollectionMore();
+}
+
+function renderCollection() {
+  elements.collectionCount.textContent = `${state.allItems.length} 张图像`;
+
+  if (!state.allItems.length) {
+    if (!elements.collectionGrid.childElementCount) {
+      const empty = document.createElement("p");
+      empty.className = "empty-collection";
+      empty.textContent = "归档中暂时还没有图像。";
+      elements.collectionGrid.append(empty);
+    }
+    updateCollectionMore();
+    return;
+  }
+
+  if (!state.collectionRenderedCount) renderNextCollectionPage();
+  else updateCollectionMore();
 }
 
 function renderDetailStrip() {
   elements.detailStrip.replaceChildren();
+  detailThumbnailObserver?.takeRecords();
+  detailThumbnailObserver?.disconnect();
+  detailThumbnailObserver = null;
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver((entries) => {
+      if (observer !== detailThumbnailObserver) return;
+      entries.forEach((entry) => {
+        const image = entry.target;
+        if (!entry.isIntersecting || !image.isConnected) return;
+        hydrateDetailThumbnail(image);
+        observer.unobserve(image);
+      });
+    }, { root: elements.detailStrip, rootMargin: "200px" });
+    detailThumbnailObserver = observer;
+  }
+
   state.activeItems.forEach((item, index) => {
     const button = document.createElement("button");
     const image = document.createElement("img");
@@ -102,12 +152,22 @@ function renderDetailStrip() {
     button.role = "option";
     button.setAttribute("aria-label", `查看 ${item.title}`);
     button.setAttribute("aria-selected", "false");
-    image.src = item.src;
     image.alt = "";
     image.loading = "lazy";
     image.decoding = "async";
+    image.dataset.src = item.src;
+    if (Math.abs(index - state.detailIndex) <= 2) {
+      hydrateDetailThumbnail(image);
+    } else {
+      detailThumbnailObserver?.observe(image);
+    }
     button.append(image);
-    button.addEventListener("click", () => selectDetail(index));
+    button.addEventListener("focus", () => hydrateDetailThumbnail(image));
+    button.addEventListener("pointerenter", () => hydrateDetailThumbnail(image));
+    button.addEventListener("click", () => {
+      hydrateDetailThumbnail(image);
+      selectDetail(index);
+    });
     elements.detailStrip.append(button);
   });
   state.renderedStripScope = state.detailScope;
@@ -126,7 +186,7 @@ function renderDetail() {
   elements.detailTitle.textContent = item.title;
   elements.detailCounter.textContent = `${String(state.detailIndex + 1).padStart(2, "0")} / ${String(state.activeItems.length).padStart(2, "0")}`;
   elements.detailMeta.textContent = `${item.categoryLabel} · ${item.date}`;
-  document.title = `${item.title} · shanzoon.art`;
+  document.title = "shanzoon.art";
 
   const thumbnails = [...elements.detailStrip.querySelectorAll(".detail-thumb")];
   thumbnails.forEach((thumbnail, index) => {
@@ -136,6 +196,7 @@ function renderDetail() {
   });
 
   const selectedThumbnail = thumbnails[state.detailIndex];
+  hydrateDetailThumbnail(selectedThumbnail?.querySelector("img"));
   requestAnimationFrame(() => {
     selectedThumbnail?.scrollIntoView({ behavior: reduceMotion.matches ? "auto" : "smooth", block: "nearest", inline: "center" });
   });
@@ -156,7 +217,7 @@ export function navigateToArchive(updateHash = true, restorePosition = false) {
   if (previousPage === "home") state.homeScrollY = scrollY;
   setPage("collection");
   renderCollection();
-  document.title = "All Images · shanzoon.art";
+  document.title = "shanzoon.art";
   if (updateHash && location.hash !== "#archive") history.pushState({ source: previousPage }, "", "#archive");
   if (restorePosition) restoreScroll(state.archiveScrollY);
   else window.scrollTo({ top: 0, left: 0 });

@@ -2,12 +2,13 @@ import { elements } from "./elements.js";
 import { invalidateMotionLayout, scheduleStoryUpdate } from "./home.js";
 import { mobileLayout, reduceMotion } from "./media.js";
 import { state } from "./state.js";
-import { hydrateFolderCovers, moveDetail, navigateHome, navigateToArchive, renderDailyItem, routeFromHash } from "./views.js";
+import { hydrateFolderCovers, moveDetail, navigateHome, navigateToArchive, renderDailyItem, renderNextCollectionPage, routeFromHash } from "./views.js";
 
 document.documentElement.classList.add("motion-ready");
 if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 
 elements.archiveAll.addEventListener("click", () => navigateToArchive());
+elements.collectionMore.addEventListener("click", renderNextCollectionPage);
 elements.galleryBack.addEventListener("click", () => {
   if (state.page === "collection") {
     if (history.state?.source === "home") history.back();

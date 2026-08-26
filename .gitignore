@@ -5,3 +5,6 @@ node_modules/
 assets/folder-*.jpg
 assets/project-*.png
 assets/project-*.jpg
+
+# Wrangler 本地缓存
+.wrangler/

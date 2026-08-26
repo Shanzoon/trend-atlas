@@ -24,6 +24,7 @@ export const elements = {
   collectionPage: document.querySelector("#collectionPage"),
   collectionCount: document.querySelector("#collectionCount"),
   collectionGrid: document.querySelector("#collectionGrid"),
+  collectionMore: document.querySelector("#collectionMore"),
   galleryBack: document.querySelector("#galleryBack"),
   galleryBackLabel: document.querySelector("#galleryBackLabel"),
   itemTemplate: document.querySelector("#collectionItemTemplate"),

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="oklch(0.055 0 0)" />
-    <meta name="description" content="Shanzoon，在技术、图像与叙事之间，把模糊的想法做成真实的东西。" />
+    <meta name="description" content="张丰（Shanzoon）的个人主页：在技术、图像与叙事之间，把模糊的想法做成真实的东西。" />
     <link rel="icon" type="image/svg+xml" href="/assets/shanzoon-glyph-favicon.svg" />
     <title>shanzoon.art</title>
     <link rel="stylesheet" href="/base.css" />
@@ -32,9 +32,10 @@
         <div class="story-sticky">
           <div class="bright-stage" id="brightStage">
             <div class="stage-identity" id="stageIdentity">
+              <p class="identity-kicker">张丰 · 个人主页</p>
               <h1 id="brandName">Shanzoon</h1>
+              <p class="identity-role" lang="en">AI Product · Creative Technology · Visual Systems</p>
               <p class="chapter-subtitle">在技术、图像与叙事之间，<br />把模糊的想法做成真实的东西。</p>
-              <span class="slogan-translation" lang="en">Between technology, image and narrative, I make vague ideas real.</span>
             </div>
 
             <div class="archive-copy" id="archiveCopy">
@@ -50,26 +51,33 @@
                 <img id="dailyImage" alt="" decoding="async" />
                 <span class="daily-light" aria-hidden="true"></span>
               </span>
+              <span class="daily-caption">
+                <span>MY DAILY PICK</span>
+                <span>AI × VISUAL GENERATION</span>
+              </span>
             </div>
 
             <div class="folder-portals" id="folderPortals" aria-label="四个图像文件夹">
-              <button class="folder-portal" data-category="01-interesting" type="button" aria-label="打开 WONDER，有趣图库" tabindex="-1">
-                <span class="folder-object"><span class="folder-back"></span><span class="folder-image"><img alt="" /></span><span class="folder-front"><span class="folder-label">WONDER</span></span></span>
+              <button class="folder-portal" data-category="01-Dreamscape" type="button" aria-label="打开 Dreamscape 图库" tabindex="-1">
+                <span class="folder-object"><span class="folder-back"></span><span class="folder-image"><img alt="" /></span><span class="folder-front"><span class="folder-label">DREAMSCAPE</span></span></span>
               </button>
-              <button class="folder-portal" data-category="02-hottest" type="button" aria-label="打开 CURRENT，最热图库" tabindex="-1">
-                <span class="folder-object"><span class="folder-back"></span><span class="folder-image"><img alt="" /></span><span class="folder-front"><span class="folder-label">CURRENT</span></span></span>
+              <button class="folder-portal" data-category="02-Lens" type="button" aria-label="打开 Lens 图库" tabindex="-1">
+                <span class="folder-object"><span class="folder-back"></span><span class="folder-image"><img alt="" /></span><span class="folder-front"><span class="folder-label">LENS</span></span></span>
               </button>
-              <button class="folder-portal" data-category="03-niche" type="button" aria-label="打开 UNDERGROUND，小众图库" tabindex="-1">
-                <span class="folder-object"><span class="folder-back"></span><span class="folder-image"><img alt="" /></span><span class="folder-front"><span class="folder-label">UNDERGROUND</span></span></span>
+              <button class="folder-portal" data-category="03-Ink" type="button" aria-label="打开 Ink 图库" tabindex="-1">
+                <span class="folder-object"><span class="folder-back"></span><span class="folder-image"><img alt="" /></span><span class="folder-front"><span class="folder-label">INK</span></span></span>
               </button>
-              <button class="folder-portal" data-category="04-best-character" type="button" aria-label="打开 PERSONA，角色图库" tabindex="-1">
+              <button class="folder-portal" data-category="04-Persona" type="button" aria-label="打开 Persona 图库" tabindex="-1">
                 <span class="folder-object"><span class="folder-back"></span><span class="folder-image"><img alt="" /></span><span class="folder-front"><span class="folder-label">PERSONA</span></span></span>
               </button>
             </div>
 
-            <div class="scroll-cue" id="scrollCue" aria-hidden="true"><span></span></div>
-            <div class="scroll-cue archive-scroll-cue" id="archiveScrollCue" aria-hidden="true"><span></span></div>
-            <p class="home-status" id="homeStatus" role="status">正在挑选今天的图像</p>
+            <div class="scroll-cue" id="scrollCue" aria-hidden="true">
+              <span class="scroll-cue-label">ENTER ARCHIVE</span>
+              <span class="scroll-cue-mouse"></span>
+            </div>
+            <div class="scroll-cue archive-scroll-cue" id="archiveScrollCue" aria-hidden="true"><span class="scroll-cue-mouse"></span></div>
+            <p class="home-status" id="homeStatus" role="status">我正在挑选今天的图像</p>
           </div>
         </div>
       </section>
@@ -81,19 +89,6 @@
               <h2 id="systemsTitle">LIVE PRODUCTS</h2>
               <p class="chapter-subtitle">从发现方向，<br />到构建真正运行的产品。</p>
             </div>
-
-            <article class="project-sheet project-drama" data-project-sheet>
-              <h3 class="project-title">漫剧有数</h3>
-
-              <figure class="project-board">
-                <img src="/assets/project-drama-data.png" width="1586" height="992" loading="lazy" decoding="async" alt="漫剧有数海外漫剧数据与 AI 内容洞察平台，展示 YouTube 长视频数据界面" />
-              </figure>
-
-              <div class="project-sheet-copy">
-                <p>从平台数据中发现正在形成的内容方向。</p>
-                <a class="project-visit" data-project-link href="https://manjuyoushu.com" target="_blank" rel="noopener noreferrer" tabindex="-1">访问漫剧有数 <span aria-hidden="true">↗</span></a>
-              </div>
-            </article>
 
             <article class="project-sheet project-lingjing" data-project-sheet>
               <h3 class="project-title">灵境 AI 创作平台</h3>
@@ -108,18 +103,28 @@
               </div>
             </article>
 
-            <article class="project-sheet project-loomicc" data-project-sheet>
-              <h3 class="project-title">Loomicc</h3>
+            <article class="project-sheet project-drama" data-project-sheet>
+              <h3 class="project-title">漫剧有数</h3>
 
-              <figure class="project-board loomicc-board">
-                <figcaption>
-                  <span>本地运行<br />基础设施</span>
-                </figcaption>
-                <img src="/assets/project-loomicc-local-dashboard.jpg" width="1265" height="720" loading="lazy" decoding="async" alt="Loomicc Gateway 的本地深色运行总览界面" />
+              <figure class="project-board">
+                <img src="/assets/project-drama-data.png" width="1586" height="992" loading="lazy" decoding="async" alt="漫剧有数海外漫剧数据与 AI 内容洞察平台，展示 YouTube 长视频数据界面" />
               </figure>
 
               <div class="project-sheet-copy">
-                <p>让生成工具与创作资产留在本地持续运行。</p>
+                <p>从平台数据中发现正在形成的内容方向。</p>
+                <a class="project-visit" data-project-link href="https://manjuyoushu.com" target="_blank" rel="noopener noreferrer" tabindex="-1">访问漫剧有数 <span aria-hidden="true">↗</span></a>
+              </div>
+            </article>
+
+            <article class="project-sheet project-loomicc" data-project-sheet>
+              <h3 class="project-title">Loomicc</h3>
+
+              <figure class="project-board">
+                <img src="/assets/project-loomicc-card-v2.png" width="1536" height="1024" loading="lazy" decoding="async" alt="Loomicc 图片生成与视觉资产管理工作台，展示结构化提示词、图片资产库和生成元信息" />
+              </figure>
+
+              <div class="project-sheet-copy">
+                <p>把生图、筛选、提示词与视觉资产管理收进一个本地工作台。</p>
                 <span class="project-availability">LOCAL PROTOTYPE</span>
               </div>
             </article>
@@ -139,6 +144,7 @@
           <p>完整归档，按最新收录排序。</p>
         </header>
         <div class="collection-grid" id="collectionGrid"></div>
+        <button class="collection-more" id="collectionMore" type="button" hidden>LOAD MORE</button>
       </section>
 
       <section class="detail-page" id="detailPage" hidden aria-labelledby="detailTitle">

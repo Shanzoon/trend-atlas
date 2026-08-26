@@ -7,18 +7,65 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { categoryDefinitions } from "../categories.js";
+import { COLLECTION_PAGE_SIZE, nextCollectionPageEnd } from "../state.js";
+import { progressWithHold, progressWithHolds } from "../timelines.js";
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
+const [dreamscape, lens] = categoryDefinitions;
+
 const FIXTURE_FILES = {
-  "01-interesting/2026-08-17/interesting-04-moonlight-diner-double-sunrise.png": "moonlight fixture bytes",
-  "02-hottest/2026-08-08/hottest-01-night-market.png": "night market fixture bytes",
+  [`${dreamscape.id}/2026-08-17__interesting-04-moonlight-diner-double-sunrise.png`]: "moonlight fixture bytes",
+  [`${lens.id}/2026-08-08__hottest-01-night-market.png`]: "night market fixture bytes",
+  "_runs/2026-08-18/ignored-run-image.png": "run artifact bytes",
 };
 
 let server;
 let serverOutput = "";
 let baseUrl;
 let fixtureRoot;
+
+describe("scroll timeline hold", () => {
+  it("keeps the original pace around a held key frame and clamps both ends", () => {
+    const motionDistance = 1000;
+    const holdProgress = 0.84;
+    const holdDistance = 500;
+
+    assert.equal(progressWithHold(420, motionDistance, holdProgress, holdDistance), 0.42);
+    assert.equal(progressWithHold(840, motionDistance, holdProgress, holdDistance), holdProgress);
+    assert.equal(progressWithHold(1100, motionDistance, holdProgress, holdDistance), holdProgress);
+    assert.equal(progressWithHold(1440, motionDistance, holdProgress, holdDistance), 0.94);
+    assert.equal(progressWithHold(-1, motionDistance, holdProgress, holdDistance), 0);
+    assert.equal(progressWithHold(2000, motionDistance, holdProgress, holdDistance), 1);
+  });
+
+  it("keeps the original pace through multiple held key frames", () => {
+    const motionDistance = 1000;
+    const holds = [[0.30, 300], [0.61, 300], [0.89, 200]];
+
+    assert.equal(progressWithHolds(300, motionDistance, holds), 0.30);
+    assert.equal(progressWithHolds(600, motionDistance, holds), 0.30);
+    assert.equal(progressWithHolds(700, motionDistance, holds), 0.40);
+    assert.equal(progressWithHolds(910, motionDistance, holds), 0.61);
+    assert.equal(progressWithHolds(1210, motionDistance, holds), 0.61);
+    assert.equal(progressWithHolds(1310, motionDistance, holds), 0.71);
+    assert.equal(progressWithHolds(1490, motionDistance, holds), 0.89);
+    assert.equal(progressWithHolds(1690, motionDistance, holds), 0.89);
+    assert.equal(progressWithHolds(1790, motionDistance, holds), 0.99);
+    assert.equal(progressWithHolds(-1, motionDistance, holds), 0);
+    assert.equal(progressWithHolds(1800, motionDistance, holds), 1);
+  });
+});
+
+describe("collection pagination", () => {
+  it("reveals archive images in bounded pages", () => {
+    const total = 287;
+    assert.equal(nextCollectionPageEnd(0, total), COLLECTION_PAGE_SIZE);
+    assert.equal(nextCollectionPageEnd(COLLECTION_PAGE_SIZE, total), COLLECTION_PAGE_SIZE * 2);
+    assert.equal(nextCollectionPageEnd(280, total), total);
+    assert.equal(nextCollectionPageEnd(total, total), total);
+  });
+});
 
 function waitForReady(timeoutMs = 8000) {
   return new Promise((resolve, reject) => {
@@ -94,17 +141,17 @@ describe("api/archive", () => {
     assert.equal(latest.items.length, 1);
 
     const moonlight = latest.items[0];
-    assert.equal(moonlight.id, "01-interesting/interesting-04-moonlight-diner-double-sunrise.png");
-    assert.equal(moonlight.category, "01-interesting");
-    assert.equal(moonlight.categoryLabel, categoryDefinitions.find((c) => c.id === "01-interesting").label);
+    assert.equal(moonlight.id, `${dreamscape.id}/interesting-04-moonlight-diner-double-sunrise.png`);
+    assert.equal(moonlight.category, dreamscape.id);
+    assert.equal(moonlight.categoryLabel, dreamscape.label);
     assert.equal(moonlight.title, "Moonlight Diner Double Sunrise");
-    assert.equal(moonlight.src, "/media/2026-08-17/01-interesting/interesting-04-moonlight-diner-double-sunrise.png");
+    assert.equal(moonlight.src, `/media/2026-08-17/${dreamscape.id}/interesting-04-moonlight-diner-double-sunrise.png`);
     assert.equal(moonlight.bytes, Buffer.byteLength("moonlight fixture bytes"));
 
     assert.equal(older.date, "2026-08-08");
     assert.equal(older.count, 1);
     assert.equal(older.items[0].title, "Night Market");
-    assert.equal(older.items[0].categoryLabel, categoryDefinitions.find((c) => c.id === "02-hottest").label);
+    assert.equal(older.items[0].categoryLabel, lens.label);
   });
 });
 
@@ -119,6 +166,8 @@ describe("home page", () => {
       assert.ok(html.includes(`data-category="${definition.id}"`), `missing folder portal for ${definition.id}`);
     }
     assert.ok(html.includes('<script type="module" src="/app.js">'), "expected /app.js module entry");
+    assert.match(html, /<img alt="" loading="lazy" decoding="async" \/>/, "collection images should remain lazy-loaded");
+    assert.ok(html.includes('id="collectionMore"'), "expected a manual archive pagination control");
     const stylesheetOrder = ["/base.css", "/home.css", "/systems.css", "/collection.css", "/detail.css"];
     const styleIndexes = stylesheetOrder.map((href) => html.indexOf(`href="${href}"`));
     for (let index = 0; index < styleIndexes.length; index += 1) {
@@ -158,7 +207,7 @@ describe("static assets", () => {
     const contentImages = [
       "/assets/project-drama-data.png",
       "/assets/project-lingjing-ai.png",
-      "/assets/project-loomicc-local-dashboard.jpg",
+      "/assets/project-loomicc-card-v2.png",
       "/assets/folder-wonder.jpg",
       "/assets/folder-current.jpg",
       "/assets/folder-underground.jpg",
@@ -174,7 +223,7 @@ describe("static assets", () => {
 
 describe("media endpoint", () => {
   it("serves a valid fixture image", async () => {
-    const response = await fetchWithRetry(`${baseUrl}/media/2026-08-08/02-hottest/hottest-01-night-market.png`);
+    const response = await fetchWithRetry(`${baseUrl}/media/2026-08-08/${lens.id}/hottest-01-night-market.png`);
     assert.equal(response.status, 200);
     assert.match(response.headers.get("content-type"), /image\/png/);
     const body = await response.arrayBuffer();
@@ -184,8 +233,8 @@ describe("media endpoint", () => {
   it("rejects invalid and traversal paths", async () => {
     for (const badPath of [
       "/media/nope",
-      "/media/2026-08-08/02-hottest/..%2Fhottest-01-night-market.png",
-      "/media/2026-08-08/02-hottest/%2e%2e/hottest-01-night-market.png",
+      `/media/2026-08-08/${lens.id}/..%2Fhottest-01-night-market.png`,
+      `/media/2026-08-08/${lens.id}/%2e%2e/hottest-01-night-market.png`,
     ]) {
       const response = await fetchWithRetry(`${baseUrl}${badPath}`);
       assert.equal(response.status, 400, `${badPath} should be rejected`);

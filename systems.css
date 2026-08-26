@@ -1,4 +1,4 @@
-/* 产品系统场景（sticky 叠层：漫剧有数、灵境 AI 创作平台、Loomicc、联系方式） */
+/* 产品系统场景（sticky 叠层：灵境 AI 创作平台、漫剧有数、Loomicc、联系方式） */
 .home-continuation, .systems-story { position: relative; }
 .systems-deck {
   position: relative;
@@ -52,17 +52,7 @@
   overflow: hidden;
 }
 .project-board img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.loomicc-board {
-  display: grid;
-  grid-template-columns: minmax(176px, 0.28fr) minmax(0, 0.72fr);
-  align-items: center;
-  gap: clamp(18px, 3vw, 46px);
-  padding: clamp(22px, 3vw, 48px);
-  background: oklch(0.085 0.006 250);
-}
-.loomicc-board figcaption { display: flex; flex-direction: column; gap: 14px; }
-.loomicc-board span { font-family: var(--font-display); font-size: var(--type-title); line-height: 1.16; letter-spacing: -0.035em; }
-.loomicc-board img { height: auto; max-height: 100%; object-fit: contain; }
+.project-loomicc .project-board img { object-fit: contain; }
 
 .contact-links { display: flex; flex-wrap: wrap; gap: 12px 34px; margin-top: 96px; font-style: normal; }
 .systems-contact { justify-content: flex-end; width: min(1160px, 100%); margin: 0 auto; }
@@ -74,8 +64,7 @@
     z-index: 2;
     margin-top: -110dvh;
   }
-  .motion-ready .systems-story { height: 440dvh; min-height: 2800px; }
-  .systems-story { scroll-snap-align: start; }
+  .motion-ready .systems-story { height: 520dvh; min-height: calc(2800px + 80dvh); }
   .motion-ready .systems-deck {
     position: sticky;
     top: 0;
@@ -98,7 +87,7 @@
   .motion-ready .project-sheet {
     position: absolute;
     left: 50%;
-    top: 65%;
+    top: 60%;
     z-index: 2;
     display: grid;
     grid-template-columns: min(1060px, 82vw, calc(48dvh * 1.5988));
@@ -148,6 +137,13 @@
   }
 }
 
+/* 矮视口（≤800px 高）下卡片组再下移一档，避免卡片标题与章节副标题相撞 */
+@media (min-width: 761px) and (max-height: 800px) and (prefers-reduced-motion: no-preference) {
+  .motion-ready .project-sheet {
+    top: 64%;
+  }
+}
+
 @media (max-width: 760px) {
   .systems-deck { padding: 104px 16px 72px; background-size: 16px 16px; }
   .systems-bridge { max-width: 100%; margin-bottom: 96px; text-align: left; }
@@ -159,9 +155,5 @@
   .project-sheet-copy p { max-width: 24ch; margin-top: 12px; font-size: 0.92rem; }
   .project-visit, .project-availability { display: inline-flex; margin: 16px 0 0; font-size: 0.76rem; }
   .project-board { border-radius: 10px; box-shadow: 0 6px 8px oklch(0 0 0 / 0.4); }
-  .loomicc-board { display: block; padding: 18px; }
-  .loomicc-board figcaption { gap: 8px; margin-bottom: 18px; }
-  .loomicc-board span { font-size: 1.25rem; }
-  .loomicc-board img { width: 100%; }
   .systems-contact { display: grid; justify-content: stretch; gap: 16px; width: 100%; margin-top: 16px; }
 }

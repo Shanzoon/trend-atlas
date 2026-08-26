@@ -1,10 +1,11 @@
 // 分类配置单一来源：server.mjs 与前端模块共用。
 // brand.html 中四个文件夹按钮的 data-category 必须与这里的 id 一致（由冒烟测试校验）。
+// id 即 trend-lab 下的分类文件夹名。
 export const categoryDefinitions = [
-  { id: "01-interesting", label: "有趣", cover: "/media/2026-08-17/01-interesting/interesting-04-moonlight-diner-double-sunrise.png", preview: "/assets/folder-wonder.jpg" },
-  { id: "02-hottest", label: "最热", cover: "/media/2026-08-08/02-hottest/h02_night_market_kite_mender.png", preview: "/assets/folder-current.jpg" },
-  { id: "03-niche", label: "小众", cover: "/media/2026-08-08/03-niche/n03_folded_city_book.png", preview: "/assets/folder-underground.jpg" },
-  { id: "04-best-character", label: "角色", cover: "/media/2026-08-08/04-best-character/c02_punk_ballet_footmaker.png", preview: "/assets/folder-persona.jpg" },
+  { id: "01-Dreamscape", label: "Dreamscape", cover: "/media/2026-08-17/01-Dreamscape/interesting-03-sleeveless-record-repair.png", preview: "/assets/folder-wonder.jpg" },
+  { id: "02-Lens", label: "Lens", cover: "/media/2026-08-17/02-Lens/hottest-04-silver-raindrop-ticket-booth.png", preview: "/assets/folder-current.jpg" },
+  { id: "03-Ink", label: "Ink", cover: "/media/2026-08-26/03-Ink/illustration-01.png", preview: "/assets/folder-underground.jpg" },
+  { id: "04-Persona", label: "Persona", cover: "/media/2026-08-27/04-Persona/character-41.png", preview: "/assets/folder-persona.jpg" },
 ];
 
 export const categories = Object.fromEntries(categoryDefinitions.map(({ id, label }) => [id, label]));
