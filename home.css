@@ -155,7 +155,8 @@
 
 .folder-portals { position: absolute; z-index: 3; inset: 20% 5% 4%; opacity: 0; pointer-events: none; }
 .folder-portals.is-ready { pointer-events: auto; }
-.folder-portal { position: absolute; padding: 0; border: 0; background: transparent; cursor: pointer; opacity: 0; transform-origin: 50% 84%; will-change: transform, opacity; }
+.folder-portal { position: absolute; padding: 0; border: 0; background: transparent; cursor: pointer; opacity: 0; transform-origin: 50% 84%; will-change: transform, opacity; pointer-events: none; }
+.folder-portal:not(:disabled) { pointer-events: auto; }
 .folder-portal:nth-child(1) { left: 17%; top: 58%; width: 27%; height: 43%; }
 .folder-portal:nth-child(2) { left: 39%; top: 58%; width: 21%; height: 53%; }
 .folder-portal:nth-child(3) { left: 63%; top: 60%; width: 31%; height: 39%; }
@@ -206,7 +207,6 @@
   will-change: opacity, transform;
 }
 .archive-all.is-ready { pointer-events: auto; }
-.folder-portal:disabled { pointer-events: none; }
 .folder-portal:disabled, .archive-all:disabled { cursor: default; }
 .archive-all:hover { border-color: oklch(0.92 0.008 356.8 / 0.72); background: oklch(0.19 0.008 356.8); transform: translateY(-2px); }
 .archive-all:active { transform: scale(0.97); }

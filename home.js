@@ -11,7 +11,7 @@ function measureMotionLayout() {
   const storyTop = elements.story.offsetTop;
   const systemsTop = elements.systemsStory.getBoundingClientRect().top + scrollY;
   const storyDistance = Math.max(1, elements.story.offsetHeight - innerHeight);
-  const holdDistance = innerHeight * 0.5;
+  const holdDistance = innerHeight * 0.35;
   const systemsHoldDistances = [
     [0.30, innerHeight * 0.30],
     [0.61, innerHeight * 0.30],
@@ -205,11 +205,14 @@ function updateStory() {
   const gatheredOffsets = [-0.16, -0.055, 0.065, 0.17];
   const folderExit = smoothstep(...archiveTimeline.folderExit, progress);
   const folderOpacity = folders * (1 - folderExit);
+  // 交互窗口比视觉淡出更宽：淡出到 0.92 之后才允许关闭点击，避免"看得见但点不动"。
+  const interactiveExit = smoothstep(0.92, 1, progress);
+  const interactiveOpacity = folders * (1 - interactiveExit);
   let foldersAreInteractive = false;
   elements.portalButtons.forEach((button, index) => {
     const local = smoothstep(0.08 * index, 0.6 + 0.07 * index, folders);
     const compositeOpacity = folderOpacity * local;
-    const interactive = compositeOpacity > 0.55;
+    const interactive = interactiveOpacity * local > 0.3;
     const gatheredCenter = metrics.portalsWidth * (0.5 + gatheredOffsets[index]);
     const gatherX = (gatheredCenter - metrics.portalOffsets[index]) * handoff;
     const gatherY = lerp(0, -52, handoff);
@@ -221,7 +224,9 @@ function updateStory() {
     foldersAreInteractive ||= interactive;
   });
   elements.portals.style.opacity = folderOpacity.toFixed(3);
-  elements.portals.classList.toggle("is-ready", foldersAreInteractive);
+  // 容器只要有任何可见度就吃住点击（防止穿透到每日图片触发换图）；
+  // 按钮自身再按 interactive 门控。
+  elements.portals.classList.toggle("is-ready", folderOpacity > 0.01 || foldersAreInteractive);
 
   const allEntry = smoothstep(...archiveTimeline.allEntry, progress);
   elements.archiveAll.style.opacity = (allEntry * (1 - archiveExit)).toFixed(3);
