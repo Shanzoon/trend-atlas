@@ -1,13 +1,22 @@
-# Shanzoon
+# Trend Atlas
 
-Shanzoon 的品牌型个人主页：夜间黑色舞台 + 每日精选图像 + 四个图像文件夹入口 + 滚动驱动的作品系统展示。本地 `../trend-lab/<分类>/YYYY-MM-DD__<原文件名>` 是图片事实源；发布脚本把公开副本转换为 WebP 上传到 Cloudflare R2，并生成前端读取的 `archive.json`，不会改写原图。
+Shanzoon 的生成式视觉归档与 AI 创作产品展示：以每日精选、四类视觉文件夹和滚动驱动的项目场景，把持续创作、作品归档与产品思考组织在同一套体验中。
+
+## 项目亮点
+
+- 每日精选与四类生成式视觉归档，支持瀑布流和线性详情浏览。
+- 以滚动场景展示真实产品系统，并明确区分公开产品、本地原型与作品证据。
+- 公开图片增量转换为 WebP 并发布到 Cloudflare R2，前端通过 `archive.json` 读取。
+- 支持键盘、触控、减少动态效果，并以 WCAG 2.2 AA 为目标。
 
 品牌调性：夜间、收敛、精确。界面像一间从安静的暗色波点中浮现的黑棚舞台；只展示真实存在的作品证据，不设简历、履历或商业化入口。
 
-## 启动
+## 本地启动
 
 ```bash
-cd /Users/shanzoon/Developer/imageboard/trend-atlas
+git clone https://github.com/Shanzoon/trend-atlas.git
+cd trend-atlas
+npm install
 npm run dev
 ```
 
