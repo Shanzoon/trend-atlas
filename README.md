@@ -29,7 +29,7 @@ npm run dev
 npm run publish:images:dry
 ```
 
-确认后运行 `npm run publish:images`：脚本将新增图片转换为 WebP、上传，并在构建侧为全部图片生成或保留 ThumbHash 元数据后更新 `archive.json`；不会生成额外低清图，也不会删除或覆盖本地原图和既有 R2 对象。
+确认后运行 `npm run publish:images`：脚本将新增图片转换为 WebP、上传，并在构建侧为全部图片生成或保留 ThumbHash 元数据后更新 `archive.json`；不会生成额外低清图，也不会删除或覆盖本地原图。所有公网 404 候选都会由 R2 直接复核，脚本探测到未入清单的同名对象或无法确认的状态时会立即中止，避免正常发布流程覆盖既有对象；同一工作目录内的正式发布也会通过锁文件串行执行。
 
 ## 验证
 

@@ -2,7 +2,7 @@
 
 import { spawn } from "node:child_process";
 import { existsSync } from "node:fs";
-import { mkdir, mkdtemp, readFile, readdir, rename, rm, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, open, readFile, readdir, rename, rm, stat, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -13,6 +13,7 @@ import { categoryDefinitions } from "../categories.js";
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SOURCE_ROOT = path.resolve(process.env.ARCHIVE_ROOT || path.join(appRoot, "..", "trend-lab"));
 const MANIFEST_PATH = path.join(appRoot, "archive.json");
+const PUBLISH_LOCK_PATH = path.join(appRoot, ".publish-images.lock");
 const BUCKET = "shanzoon-me-art-image";
 const MEDIA_ORIGIN = "https://media.shanzoon.art";
 const WEBP_QUALITY = 84;
@@ -196,6 +197,82 @@ function runWrangler(args) {
   });
 }
 
+async function inspectR2Object(item) {
+  const temporaryRoot = await mkdtemp(path.join(tmpdir(), "trend-atlas-r2-inspect-"));
+  const outputPath = path.join(temporaryRoot, "object");
+  try {
+    await runWrangler([
+      "r2", "object", "get", `${BUCKET}/${item.key}`,
+      "--file", outputPath,
+      "--remote",
+    ]);
+    return { exists: true, bytes: (await stat(outputPath)).size };
+  } catch (error) {
+    if (/specified key does not exist/i.test(error.message)) return { exists: false };
+    throw error;
+  } finally {
+    await rm(temporaryRoot, { recursive: true, force: true });
+  }
+}
+
+export async function confirmMissingObjects(items, statuses, previous, inspect = inspectR2Object) {
+  const historicalUrls = new Set((previous?.days || []).flatMap((day) => day.items || [])
+    .map((item) => item.src)
+    .filter(Boolean));
+  const confirmed = statuses.map((status) => ({ ...status }));
+  const missingIndexes = items.map((item, index) => ({ item, index }))
+    .filter(({ index }) => !confirmed[index].exists);
+
+  await mapLimit(missingIndexes, 2, async ({ item, index }) => {
+    let directStatus;
+    try {
+      directStatus = await inspect(item);
+    } catch (error) {
+      throw new Error(`Unable to verify R2 object ${item.key}; refusing to publish: ${error.message}`);
+    }
+    if (!directStatus.exists) return;
+    if (!historicalUrls.has(item.url)) {
+      throw new Error(`R2 object ${item.key} exists outside archive.json; refusing to overwrite or index unknown content.`);
+    }
+    confirmed[index] = directStatus;
+  });
+  return confirmed;
+}
+
+export async function assertR2ObjectAbsent(item, inspect = inspectR2Object) {
+  let directStatus;
+  try {
+    directStatus = await inspect(item);
+  } catch (error) {
+    throw new Error(`Unable to recheck R2 object ${item.key}; refusing to upload: ${error.message}`);
+  }
+  if (directStatus.exists) {
+    throw new Error(`R2 object ${item.key} appeared before upload; refusing to overwrite it.`);
+  }
+}
+
+export async function acquirePublishLock(lockPath = PUBLISH_LOCK_PATH) {
+  let handle;
+  try {
+    handle = await open(lockPath, "wx");
+    await handle.writeFile(`${process.pid}\n${new Date().toISOString()}\n`);
+  } catch (error) {
+    if (handle) {
+      await handle.close();
+      await rm(lockPath, { force: true });
+    }
+    if (error.code === "EEXIST") {
+      throw new Error(`Another image publish is already running (${lockPath}). If no publisher is active, remove the stale lock and retry.`);
+    }
+    throw error;
+  }
+
+  return async () => {
+    await handle.close();
+    await rm(lockPath, { force: true });
+  };
+}
+
 async function upload(item, webpPath) {
   let lastError;
   for (let attempt = 1; attempt <= 3; attempt += 1) {
@@ -254,47 +331,55 @@ export async function main(args = process.argv.slice(2)) {
   const unknown = args.filter((argument) => argument !== "--dry-run");
   if (unknown.length) throw new Error(`Unknown argument: ${unknown.join(", ")}`);
 
-  let previous;
+  const releasePublishLock = dryRun ? null : await acquirePublishLock();
   try {
-    previous = JSON.parse(await readFile(MANIFEST_PATH, "utf8"));
-  } catch (error) {
-    if (error.code !== "ENOENT") throw error;
-  }
 
-  const items = await scanSources();
-  const [statuses, thumbhashes] = await Promise.all([
-    mapLimit(items, 12, probeRemote),
-    prepareThumbHashes(items, previous),
-  ]);
-  const missing = items.filter((_, index) => !statuses[index].exists);
-
-  console.log(`Found ${items.length} source PNGs; ${missing.length} new image(s).`);
-  console.log(`Prepared ${items.length} ThumbHashes (${thumbhashes.generated} generated, ${thumbhashes.preserved} preserved).`);
-  if (dryRun) {
-    for (const item of missing) console.log(`Would upload ${item.key}`);
-    return { found: items.length, uploaded: 0, missing: missing.length, dryRun: true, thumbhashes };
-  }
-
-  const temporaryRoot = await mkdtemp(path.join(tmpdir(), "trend-atlas-publish-"));
-  try {
-    for (let index = 0; index < items.length; index += 1) {
-      if (statuses[index].exists) {
-        items[index].bytes = statuses[index].bytes;
-        continue;
-      }
-      const item = items[index];
-      const webpPath = path.join(temporaryRoot, item.key);
-      await mkdir(path.dirname(webpPath), { recursive: true });
-      await sharp(item.sourcePath).webp({ quality: WEBP_QUALITY, effort: 5, smartSubsample: true }).toFile(webpPath);
-      await upload(item, webpPath);
-      item.bytes = await verifyUploaded(item);
-      console.log(`Uploaded ${item.key}`);
+    let previous;
+    try {
+      previous = JSON.parse(await readFile(MANIFEST_PATH, "utf8"));
+    } catch (error) {
+      if (error.code !== "ENOENT") throw error;
     }
-    const manifestChanged = await writeManifest(items);
-    console.log(`Verified ${items.length} images. archive.json ${manifestChanged ? "updated" : "unchanged"}.`);
-    return { found: items.length, uploaded: missing.length, missing: 0, dryRun: false, manifestChanged };
+
+    const items = await scanSources();
+    const [publicStatuses, thumbhashes] = await Promise.all([
+      mapLimit(items, 12, probeRemote),
+      prepareThumbHashes(items, previous),
+    ]);
+    const statuses = await confirmMissingObjects(items, publicStatuses, previous);
+    const missing = items.filter((_, index) => !statuses[index].exists);
+
+    console.log(`Found ${items.length} source PNGs; ${missing.length} new image(s).`);
+    console.log(`Prepared ${items.length} ThumbHashes (${thumbhashes.generated} generated, ${thumbhashes.preserved} preserved).`);
+    if (dryRun) {
+      for (const item of missing) console.log(`Would upload ${item.key}`);
+      return { found: items.length, uploaded: 0, missing: missing.length, dryRun: true, thumbhashes };
+    }
+
+    const temporaryRoot = await mkdtemp(path.join(tmpdir(), "trend-atlas-publish-"));
+    try {
+      for (let index = 0; index < items.length; index += 1) {
+        if (statuses[index].exists) {
+          items[index].bytes = statuses[index].bytes;
+          continue;
+        }
+        const item = items[index];
+        const webpPath = path.join(temporaryRoot, item.key);
+        await mkdir(path.dirname(webpPath), { recursive: true });
+        await sharp(item.sourcePath).webp({ quality: WEBP_QUALITY, effort: 5, smartSubsample: true }).toFile(webpPath);
+        await assertR2ObjectAbsent(item);
+        await upload(item, webpPath);
+        item.bytes = await verifyUploaded(item);
+        console.log(`Uploaded ${item.key}`);
+      }
+      const manifestChanged = await writeManifest(items);
+      console.log(`Verified ${items.length} images. archive.json ${manifestChanged ? "updated" : "unchanged"}.`);
+      return { found: items.length, uploaded: missing.length, missing: 0, dryRun: false, manifestChanged };
+    } finally {
+      await rm(temporaryRoot, { recursive: true, force: true });
+    }
   } finally {
-    await rm(temporaryRoot, { recursive: true, force: true });
+    if (releasePublishLock) await releasePublishLock();
   }
 }
 

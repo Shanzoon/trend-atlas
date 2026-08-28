@@ -11,6 +11,7 @@ assets/2026-08-26__illustration-12.png
 
 # Wrangler 本地缓存
 .wrangler/
+.publish-images.lock
 
 # 工具产物与本地文档
 .impeccable/
