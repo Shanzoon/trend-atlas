@@ -36,6 +36,7 @@ export const elements = {
   galleryBackLabel: document.querySelector("#galleryBackLabel"),
   itemTemplate: document.querySelector("#collectionItemTemplate"),
   detailPage: document.querySelector("#detailPage"),
+  detailMedia: document.querySelector("#detailMedia"),
   detailImage: document.querySelector("#detailImage"),
   detailImageIncoming: document.querySelector("#detailImageIncoming"),
   detailPlaceholder: document.querySelector("#detailPlaceholder"),

@@ -13,7 +13,7 @@ import { progressWithHold, progressWithHolds, scrollCueOpacity, systemsTimeline 
 import { thumbHashToRGBA as decodeLocalThumbHash } from "../thumbhash.js";
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const ASSET_VERSION = "20260829-template-thumbhash1";
+const ASSET_VERSION = "20260829-thumbhashfix1";
 
 const [dreamscape, lens] = categoryDefinitions;
 
@@ -95,6 +95,7 @@ describe("image loading contract", () => {
     assert.match(views, /await loadAndDecodeImage\(targetLayer, item/);
     assert.match(views, /const MAX_ADJACENT_PRELOADS = 2;/);
     assert.match(views, /const SWITCH_INTENT_DELAY_MS = 40;/);
+    assert.match(views, /const DETAIL_LAYER_RELEASE_DELAY_MS = 180;/);
     assert.match(views, /state\.detailTargetIndex = targetIndex;[\s\S]*await loadAndDecodeImage[\s\S]*state\.detailIndex = targetIndex;/);
     assert.ok(dailyRequest.indexOf("await waitForSettledSwitchIntent()") < dailyRequest.indexOf("const targetLayer"), "daily target layer must be chosen after rapid intent settles");
     assert.ok(detailRequest.indexOf("await waitForSettledSwitchIntent()") < detailRequest.indexOf("const targetLayer"), "detail target layer must be chosen after rapid intent settles");
@@ -102,6 +103,10 @@ describe("image loading contract", () => {
     assert.doesNotMatch(detailRequest, /if \(hasVisibleImage\)\s*\{\s*await waitForSettledSwitchIntent/);
     assert.doesNotMatch(views, /new Image\s*\(/, "switching should reuse the two DOM image layers");
     assert.doesNotMatch(views, /offsetWidth/, "image transitions should not force synchronous layout");
+    assert.match(detailRequest, /releaseInactiveLayer\(outgoing,[\s\S]*DETAIL_LAYER_RELEASE_DELAY_MS\)/, "detail source cleanup must wait until the fade ends");
+    assert.match(detailRequest, /cancelImageLoad\(targetLayer, true\)/, "failed detail targets must release broken sources");
+    assert.doesNotMatch(dailyRequest, /dailyDeck\.push\(item\)/, "a failed daily image must not become the next target again");
+    assert.match(dailyRequest, /dailyDeck = shuffle\(itemsForScope\(dailyCategoryId\)[\s\S]*candidate !== item[\s\S]*高清图加载失败：/, "cold daily failures must prepare another configured target and update the control label");
   });
 
   it("shows the target ThumbHash and metadata before the final image request settles", async () => {
@@ -113,9 +118,13 @@ describe("image loading contract", () => {
 
     assert.ok(dailyRequest.indexOf("showImagePlaceholder") < dailyRequest.indexOf("await waitForSettledSwitchIntent()"));
     assert.ok(detailRequest.indexOf("showImagePlaceholder") < detailRequest.indexOf("await waitForSettledSwitchIntent()"));
+    assert.ok(detailRequest.indexOf("setDetailAspect(item)") < detailRequest.indexOf("showImagePlaceholder"), "the target media box must update before its ThumbHash is shown");
     assert.ok(detailRequest.indexOf("updateDetailMetadata(item, targetIndex)") < detailRequest.indexOf("await waitForSettledSwitchIntent()"));
     assert.match(views, /renderThumbHash\(canvas, item\.thumbhash\)/);
-    assert.match(detailCss, /\.detail-image-wrap\s*\{[^}]*width:\s*100%;[^}]*height:\s*100%;/s);
+    assert.match(detailCss, /\.detail-media\s*\{[^}]*width:\s*100%;[^}]*height:\s*100%;[^}]*max-height:\s*100%;[^}]*aspect-ratio:\s*var\(--detail-aspect/s);
+    assert.match(detailCss, /\.detail-media\s*\{[^}]*overflow:\s*hidden;/s);
+    assert.doesNotMatch(detailCss, /\.detail-image-wrap\s*\{[^}]*background:/s, "the stable detail stage must not render as an image frame");
+    assert.match(views, /const width = Math\.min\(availableWidth, availableHeight \* ratio\);[\s\S]*detailMedia\.style\.width[\s\S]*detailMedia\.style\.height/, "the target media box must fit both available dimensions");
     assert.match(base, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.image-load-sweep\s*\{\s*display:\s*none;/);
   });
 
@@ -315,6 +324,9 @@ describe("home page", () => {
     assert.ok(html.includes('id="detailImageIncoming"'), "detail switching should have a reusable decoded incoming layer");
     assert.ok(html.includes('id="dailyPlaceholder"'), "daily switching should expose a ThumbHash canvas");
     assert.ok(html.includes('id="detailPlaceholder"'), "detail switching should expose a ThumbHash canvas");
+    assert.ok(html.includes('id="detailMedia"'), "detail switching should expose one target-sized media box");
+    assert.match(html, /<div class="detail-media"[^>]*>[\s\S]*id="detailImage"[\s\S]*id="detailPlaceholder"[\s\S]*id="detailLoadSweep"[\s\S]*<\/div>/, "detail image, placeholder, and sweep must share one media box");
+    assert.doesNotMatch(html, /class="daily-layer is-active"[^>]*id="dailyImage"/, "an empty daily layer must not start visible");
     assert.ok(html.includes('id="detailRetry"'), "detail failures should expose a retry control");
     assert.ok(html.includes('id="detailLiveStatus"'), "detail feedback should expose a live region outside the busy image wrapper");
     assert.ok(html.indexOf('id="detailPrevious"') < html.indexOf('class="detail-layout"'), "detail navigation should sit outside the artwork layout");
