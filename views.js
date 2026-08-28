@@ -1,10 +1,10 @@
-import { categoryDefinitions, categoryFor } from "./categories.js?v=20260829-loadingfallback1";
-import { elements } from "./elements.js?v=20260829-loadingfallback1";
-import { scheduleStoryUpdate } from "./home.js?v=20260829-loadingfallback1";
-import { siteConfig } from "./site.js?v=20260829-loadingfallback1";
-import { itemsForScope, nextCollectionPageEnd, state } from "./state.js?v=20260829-loadingfallback1";
-import { renderThumbHash } from "./thumbhash.js?v=20260829-loadingfallback1";
-import { hashString, stableDateKey } from "./utils.js?v=20260829-loadingfallback1";
+import { categoryDefinitions, categoryFor } from "./categories.js?v=20260829-detailstage1";
+import { elements } from "./elements.js?v=20260829-detailstage1";
+import { scheduleStoryUpdate } from "./home.js?v=20260829-detailstage1";
+import { siteConfig } from "./site.js?v=20260829-detailstage1";
+import { itemsForScope, nextCollectionPageEnd, state } from "./state.js?v=20260829-detailstage1";
+import { renderThumbHash } from "./thumbhash.js?v=20260829-detailstage1";
+import { hashString, stableDateKey } from "./utils.js?v=20260829-detailstage1";
 
 let dailyDeck = [];
 const dailyLayers = [elements.dailyImage, elements.dailyImageIncoming];
@@ -522,9 +522,16 @@ function updateDetailMetadata(item, index) {
 function setDetailAspect(item) {
   if (item?.width && item?.height) {
     elements.detailImageWrap.style.setProperty("--detail-aspect", `${item.width} / ${item.height}`);
-    const availableWidth = elements.detailImageWrap.clientWidth;
-    const availableHeight = elements.detailImageWrap.clientHeight;
-    if (availableWidth && availableHeight) {
+    // 桌面并排：媒体宽度预算扣除展签列宽与间距，保证“画 + 展签”悬挂单元不溢出墙面；
+    // 移动堆叠：媒体独占整行，高度只由宽度与比例决定，视口上限交给 CSS max-height。
+    const stacked = getComputedStyle(elements.detailStage).flexDirection === "column";
+    const copyWidth = stacked
+      ? 0
+      : elements.detailCopy.getBoundingClientRect().width
+        + parseFloat(getComputedStyle(elements.detailStage).columnGap || 0);
+    const availableWidth = elements.detailImageWrap.clientWidth - copyWidth;
+    const availableHeight = stacked ? Number.POSITIVE_INFINITY : elements.detailImageWrap.clientHeight;
+    if (availableWidth > 0 && availableHeight > 0) {
       const ratio = item.width / item.height;
       const width = Math.min(availableWidth, availableHeight * ratio);
       elements.detailMedia.style.width = `${width}px`;

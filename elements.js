@@ -48,6 +48,8 @@ export const elements = {
   detailCounter: document.querySelector("#detailCounter"),
   detailMeta: document.querySelector("#detailMeta"),
   detailImageWrap: document.querySelector("#detailImageWrap"),
+  detailStage: document.querySelector("#detailStage"),
+  detailCopy: document.querySelector(".detail-copy"),
   detailPrevious: document.querySelector("#detailPrevious"),
   detailNext: document.querySelector("#detailNext"),
 };

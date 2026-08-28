@@ -1,9 +1,9 @@
-import { elements } from "./elements.js?v=20260829-loadingfallback1";
-import { invalidateMotionLayout, scheduleStoryUpdate } from "./home.js?v=20260829-loadingfallback1";
-import { mobileLayout, reduceMotion } from "./media.js?v=20260829-loadingfallback1";
-import { applySiteConfig, siteConfig } from "./site.js?v=20260829-loadingfallback1";
-import { state } from "./state.js?v=20260829-loadingfallback1";
-import { hydrateFolderCovers, initCollectionFilters, moveDetail, navigateHome, navigateToArchive, renderNextCollectionPage, retryDetailImage, routeFromHash, switchDailyItem } from "./views.js?v=20260829-loadingfallback1";
+import { elements } from "./elements.js?v=20260829-detailstage1";
+import { invalidateMotionLayout, scheduleStoryUpdate } from "./home.js?v=20260829-detailstage1";
+import { mobileLayout, reduceMotion } from "./media.js?v=20260829-detailstage1";
+import { applySiteConfig, siteConfig } from "./site.js?v=20260829-detailstage1";
+import { state } from "./state.js?v=20260829-detailstage1";
+import { hydrateFolderCovers, initCollectionFilters, moveDetail, navigateHome, navigateToArchive, renderNextCollectionPage, retryDetailImage, routeFromHash, switchDailyItem } from "./views.js?v=20260829-detailstage1";
 
 let configurationError;
 try {
@@ -49,13 +49,13 @@ elements.detailPrevious.addEventListener("click", () => moveDetail(-1));
 elements.detailNext.addEventListener("click", () => moveDetail(1));
 elements.detailRetry.addEventListener("click", retryDetailImage);
 
-elements.detailImageWrap.addEventListener("pointermove", (event) => {
+elements.detailMedia.addEventListener("pointermove", (event) => {
   if (reduceMotion.matches) return;
-  const rect = elements.detailImageWrap.getBoundingClientRect();
+  const rect = elements.detailMedia.getBoundingClientRect();
   elements.detailImageWrap.style.setProperty("--detail-ry", `${((event.clientX - rect.left) / rect.width - 0.5) * 3}deg`);
   elements.detailImageWrap.style.setProperty("--detail-rx", `${(0.5 - (event.clientY - rect.top) / rect.height) * 3}deg`);
 });
-elements.detailImageWrap.addEventListener("pointerleave", () => {
+elements.detailMedia.addEventListener("pointerleave", () => {
   elements.detailImageWrap.style.setProperty("--detail-rx", "0deg");
   elements.detailImageWrap.style.setProperty("--detail-ry", "0deg");
 });

@@ -13,7 +13,7 @@ import { progressWithHold, progressWithHolds, scrollCueOpacity, systemsTimeline 
 import { thumbHashToRGBA as decodeLocalThumbHash } from "../thumbhash.js";
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const ASSET_VERSION = "20260829-loadingfallback1";
+const ASSET_VERSION = "20260829-detailstage1";
 
 const [dreamscape, lens] = categoryDefinitions;
 
@@ -150,6 +150,18 @@ describe("image loading contract", () => {
     assert.doesNotMatch(base, /thumbhash-develop/, "ThumbHash should not animate as a separate loading beat");
     assert.doesNotMatch(detailCss, /\.detail-image-wrap\.is-loading[^}]*\.detail-load-state/, "detail loading must not render a second visible loading treatment");
     assert.match(base, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.image-load-sweep\s*\{\s*display:\s*none;/);
+  });
+
+  it("keeps detail loading and pointer feedback scoped to the rendered media", async () => {
+    const app = await readFile(path.join(appRoot, "app.js"), "utf8");
+    const html = await readFile(path.join(appRoot, "brand.html"), "utf8");
+    const detailMedia = html.slice(html.indexOf('<div class="detail-media"'), html.indexOf('<div class="detail-copy"'));
+
+    assert.match(detailMedia, /id="detailLoadSweep"[\s\S]*class="detail-load-state"[\s\S]*id="detailRetry"/, "detail failure controls must remain inside the actual media box");
+    assert.match(app, /elements\.detailMedia\.addEventListener\("pointermove"/);
+    assert.match(app, /const rect = elements\.detailMedia\.getBoundingClientRect\(\);/);
+    assert.match(app, /elements\.detailMedia\.addEventListener\("pointerleave"/);
+    assert.doesNotMatch(app, /elements\.detailImageWrap\.addEventListener\("pointer(?:move|leave)"/, "detail copy and surrounding whitespace must not tilt the image");
   });
 
   it("defers folder cover requests until the archive scene approaches", async () => {

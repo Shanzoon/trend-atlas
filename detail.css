@@ -20,9 +20,8 @@
   grid-column: 1;
   grid-row: 1;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) var(--detail-copy-width);
-  gap: var(--detail-gap);
-  align-items: end;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: stretch;
   justify-content: center;
   width: 100%;
   height: 100%;
@@ -31,6 +30,8 @@
   min-width: 0;
   min-height: 0;
 }
+/* 墙面：画与展签组成一个悬挂单元，挂在墙面正中（视线高度），不落到底；
+   展签底边与画底边通过 flex-end 共线，单元整体随画在墙内居中。 */
 .detail-image-wrap {
   position: relative;
   display: grid;
@@ -43,6 +44,14 @@
   min-height: 0;
   perspective: 1400px;
 }
+.detail-stage {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: var(--detail-gap);
+  min-width: 0;
+  max-width: 100%;
+}
 .detail-media {
   position: relative;
   display: grid;
@@ -54,6 +63,7 @@
   aspect-ratio: var(--detail-aspect, 4 / 3);
   border-radius: 8px;
   overflow: hidden;
+  flex: 0 0 auto;
 }
 .detail-image-wrap .detail-layer {
   position: absolute;
@@ -72,7 +82,6 @@
 }
 .detail-image-wrap .detail-layer.is-active { opacity: 1; }
 .detail-image-wrap .detail-layer:not([src]) { visibility: hidden; }
-.detail-image-wrap.is-empty { width: 100%; }
 .detail-load-state { position: absolute; z-index: 4; inset: 50% auto auto 50%; display: grid; justify-items: center; gap: 12px; width: min(280px, calc(100% - 32px)); color: var(--night-muted); font-size: var(--type-small); text-align: center; transform: translate(-50%, -50%); pointer-events: none; }
 .detail-load-state p { margin: 0; }
 .detail-load-state p:empty { display: none; }
@@ -104,10 +113,13 @@
 .detail-nav:hover { color: var(--night-ink); transform: translateY(-50%) scale(1.08); }
 .detail-nav:active { transform: translateY(-50%) scale(0.94); }
 .detail-nav[hidden] { display: none; }
-.detail-copy { align-self: end; padding-bottom: 2px; }
+.detail-copy { flex: 0 0 auto; width: var(--detail-copy-width); }
 .detail-copy > span { color: var(--rose); font-family: var(--font-display); font-size: var(--type-eyebrow); font-variant-numeric: tabular-nums; letter-spacing: 0.08em; }
 .detail-copy h1 { margin: 14px 0 12px; font-size: var(--type-feature); line-height: var(--leading-title); letter-spacing: -0.03em; text-wrap: balance; overflow-wrap: anywhere; }
 .detail-copy p { margin: 0; color: var(--night-muted); font-size: var(--type-small); line-height: var(--leading-copy); }
+/* 视觉底边对齐：meta 是最后一行，收敛行高使行框下沿贴近字形视觉下沿，
+   从而与图片视觉底边落在同一条水平线上（锚点：画底边，展签随画挂于墙面中央）。 */
+#detailMeta { line-height: 1.1; }
 @media (min-width: 761px) and (prefers-reduced-motion: no-preference) {
   .detail-page { scroll-snap-align: start; }
 }
@@ -119,10 +131,11 @@
 @media (max-width: 760px) {
   .detail-page { display: block; height: auto; min-height: 100dvh; padding: 92px 16px max(20px, env(safe-area-inset-bottom)); overflow: visible; }
   .detail-layout { display: flex; flex-direction: column; gap: 24px; align-items: stretch; width: 100%; max-height: none; }
-  .detail-image-wrap { width: 100%; max-width: 100%; height: min(56vh, 520px); max-height: none; }
-  .detail-media { max-height: 100%; }
+  /* 移动端改为上下堆叠：图片在上（高度由 CSS max-height 封顶），展签换行在下。 */
+  .detail-image-wrap { place-items: stretch; width: 100%; max-width: 100%; height: auto; max-height: none; }
+  .detail-stage { flex-direction: column; align-items: stretch; gap: 24px; max-width: 100%; }
+  .detail-media { max-height: min(56vh, 520px); }
   .detail-image-wrap .detail-layer { max-height: 100%; }
-  .detail-image-wrap.is-empty { width: 100%; max-width: 100%; }
   .detail-nav { width: 44px; height: 52px; font-size: 2rem; }
   .detail-nav.previous { left: 6px; }
   .detail-nav.next { right: 6px; }
