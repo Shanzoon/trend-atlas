@@ -1,0 +1,16 @@
+{
+  "archive": "example",
+  "updatedAt": "2026-08-29T00:00:00.000Z",
+  "days": [
+    {
+      "date": "2026-08-29",
+      "count": 4,
+      "items": [
+        { "id": "01-Dreamscape/example-dreamscape.svg", "category": "01-Dreamscape", "categoryLabel": "Dreamscape", "file": "example-dreamscape.svg", "title": "Replace This Dreamscape", "width": 1200, "height": 900, "src": "/assets/example-dreamscape.svg" },
+        { "id": "02-Lens/example-lens.svg", "category": "02-Lens", "categoryLabel": "Lens", "file": "example-lens.svg", "title": "Replace This Lens Image", "width": 1200, "height": 900, "src": "/assets/example-lens.svg" },
+        { "id": "03-Ink/example-ink.svg", "category": "03-Ink", "categoryLabel": "Ink", "file": "example-ink.svg", "title": "Replace This Illustration", "width": 1200, "height": 900, "src": "/assets/example-ink.svg" },
+        { "id": "04-Persona/example-persona.svg", "category": "04-Persona", "categoryLabel": "Persona", "file": "example-persona.svg", "title": "Replace This Persona", "width": 1200, "height": 900, "src": "/assets/example-persona.svg" }
+      ]
+    }
+  ]
+}

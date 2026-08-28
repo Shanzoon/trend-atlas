@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title">
+  <title id="title">Dreamscape placeholder artwork</title>
+  <defs><linearGradient id="g" x2="1" y2="1"><stop stop-color="#231b45"/><stop offset="1" stop-color="#eb6f92"/></linearGradient></defs>
+  <rect width="1200" height="900" fill="url(#g)"/><circle cx="790" cy="300" r="190" fill="#f6c177" opacity=".85"/><path d="M0 720 390 390l220 210 170-150 420 340v110H0z" fill="#111318" opacity=".8"/><text x="64" y="80" fill="#fff" font-family="sans-serif" font-size="42" letter-spacing="8">DREAMSCAPE · REPLACE ME</text>
+</svg>

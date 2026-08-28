@@ -3,9 +3,12 @@ import { lstat, readFile, readdir, realpath, stat } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { categories } from "./categories.js";
+import { siteConfig, siteProfile } from "./site-profile.js";
+import { validateSiteConfig } from "./site.js";
 
 const appRoot = path.dirname(fileURLToPath(import.meta.url));
-const archiveRoot = path.resolve(process.env.ARCHIVE_ROOT || path.join(appRoot, "..", "trend-lab"));
+validateSiteConfig(siteConfig);
+const archiveRoot = path.resolve(appRoot, process.env.ARCHIVE_ROOT || siteConfig.publishing?.sourceRoot || path.join("..", "trend-lab"));
 const port = Number(process.env.PORT || 4173);
 const host = process.env.HOST || "127.0.0.1";
 
@@ -39,7 +42,18 @@ async function getArchive() {
   const itemsByDate = new Map();
 
   for (const [folder, label] of Object.entries(categories)) {
-    const categoryRoot = path.join(archiveRoot, folder);
+    const configuredCategoryRoot = path.resolve(archiveRoot, folder);
+    if (!configuredCategoryRoot.startsWith(`${archiveRoot}${path.sep}`)) throw new Error(`分类目录越出归档根目录：${folder}`);
+    let categoryRoot;
+    try {
+      if ((await lstat(configuredCategoryRoot)).isSymbolicLink()) throw new Error(`归档分类目录不能是符号链接：${configuredCategoryRoot}`);
+      const [actualRoot, actualCategoryRoot] = await Promise.all([realpath(archiveRoot), realpath(configuredCategoryRoot)]);
+      if (!actualCategoryRoot.startsWith(`${actualRoot}${path.sep}`)) throw new Error(`分类目录越出归档根目录：${folder}`);
+      categoryRoot = actualCategoryRoot;
+    } catch (error) {
+      if (error?.code === "ENOENT") continue;
+      throw error;
+    }
     let entries = [];
     try {
       entries = await readdir(categoryRoot, { withFileTypes: true });
@@ -78,7 +92,9 @@ async function getArchive() {
 function send(response, status, body, contentType = "text/plain; charset=utf-8") {
   response.writeHead(status, {
     "Content-Type": contentType,
-    "Cache-Control": contentType.startsWith("image/") ? "public, max-age=86400" : "no-cache",
+    // The local server favors edit/refresh clarity; production caching belongs
+    // to the static host and object storage configuration.
+    "Cache-Control": "no-cache",
     "X-Content-Type-Options": "nosniff",
   });
   response.end(body);
@@ -153,6 +169,14 @@ const server = http.createServer(async (request, response) => {
     return;
   }
 
+  if (siteProfile === "owner" && (url.pathname === "/" || url.pathname === "/brand.html") && !url.searchParams.has("profile")) {
+    url.pathname = "/brand.html";
+    url.searchParams.set("profile", "owner");
+    response.writeHead(302, { Location: `${url.pathname}${url.search}`, "Cache-Control": "no-cache" });
+    response.end();
+    return;
+  }
+
   if (url.pathname === "/api/archive") {
     try {
       send(response, 200, JSON.stringify(await getArchive()), "application/json; charset=utf-8");
@@ -172,16 +196,50 @@ const server = http.createServer(async (request, response) => {
     return;
   }
 
+  if (url.pathname.startsWith("/assets/")) {
+    let relativePath;
+    try {
+      relativePath = decodeURIComponent(url.pathname.slice(1));
+    } catch {
+      send(response, 400, "Invalid asset path");
+      return;
+    }
+    const assetsRoot = path.join(appRoot, "assets");
+    const assetPath = path.resolve(appRoot, relativePath);
+    if (!assetPath.startsWith(`${assetsRoot}${path.sep}`)) {
+      send(response, 400, "Invalid asset path");
+      return;
+    }
+    try {
+      const [actualRoot, actualAsset] = await Promise.all([realpath(assetsRoot), realpath(assetPath)]);
+      if (!actualAsset.startsWith(`${actualRoot}${path.sep}`)) {
+        send(response, 400, "Invalid asset path");
+        return;
+      }
+    } catch (error) {
+      send(response, error.code === "ENOENT" ? 404 : 400, error.code === "ENOENT" ? "Not found" : "Invalid asset path");
+      return;
+    }
+    await serveFile(response, assetPath);
+    return;
+  }
+
   const staticFiles = {
     "/": "brand.html",
-    "/index.html": "brand.html",
+    "/index.html": "index.html",
+    "/brand.html": "brand.html",
     "/archive.json": "archive.json",
+    "/archive.example.json": "archive.example.json",
     "/base.css": "base.css",
     "/home.css": "home.css",
     "/systems.css": "systems.css",
     "/collection.css": "collection.css",
     "/detail.css": "detail.css",
     "/categories.js": "categories.js",
+    "/site.config.js": "site.config.js",
+    "/site.config.owner.js": "site.config.owner.js",
+    "/site-profile.js": "site-profile.js",
+    "/site.js": "site.js",
     "/app.js": "app.js",
     "/views.js": "views.js",
     "/home.js": "home.js",
@@ -191,11 +249,6 @@ const server = http.createServer(async (request, response) => {
     "/timelines.js": "timelines.js",
     "/thumbhash.js": "thumbhash.js",
     "/utils.js": "utils.js",
-    "/assets/shanzoon-glyph.svg": "assets/shanzoon-glyph.svg",
-    "/assets/shanzoon-glyph-favicon.svg": "assets/shanzoon-glyph-favicon.svg",
-    "/assets/project-drama-data.png": "assets/project-drama-data.png",
-    "/assets/project-lingjing-ai.png": "assets/project-lingjing-ai.png",
-    "/assets/project-loomicc-card-v2.png": "assets/project-loomicc-card-v2.png",
   };
   const staticFile = staticFiles[url.pathname];
   if (!staticFile) {
@@ -207,6 +260,6 @@ const server = http.createServer(async (request, response) => {
 
 server.listen(port, host, () => {
   const actualPort = server.address().port;
-  console.log(`Shanzoon is running at http://${host}:${actualPort}`);
+  console.log(`${siteConfig.site.signature} is running at http://${host}:${actualPort}`);
   console.log(`Reading images from ${archiveRoot}`);
 });

@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title">
+  <title id="title">Persona placeholder artwork</title>
+  <rect width="1200" height="900" fill="#191b26"/><circle cx="600" cy="350" r="220" fill="#f6c177"/><path d="M420 740c20-190 110-280 180-280s160 90 180 280" fill="#56e0d4"/><circle cx="525" cy="335" r="24" fill="#191b26"/><circle cx="675" cy="335" r="24" fill="#191b26"/><path d="M520 420q80 70 160 0" fill="none" stroke="#191b26" stroke-width="18"/><text x="64" y="80" fill="#fff" font-family="sans-serif" font-size="42" letter-spacing="8">PERSONA · REPLACE ME</text>
+</svg>

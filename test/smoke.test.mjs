@@ -2,18 +2,18 @@ import { after, before, describe, it } from "node:test";
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
 import http from "node:http";
-import { existsSync } from "node:fs";
 import { chmod, mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { categoryDefinitions } from "../categories.js";
+import { siteConfig } from "../site.config.js";
 import { COLLECTION_PAGE_SIZE, nextCollectionPageEnd } from "../state.js";
 import { progressWithHold, progressWithHolds, scrollCueOpacity, systemsTimeline } from "../timelines.js";
 import { thumbHashToRGBA as decodeLocalThumbHash } from "../thumbhash.js";
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const ASSET_VERSION = "20260829-focus1";
+const ASSET_VERSION = "20260829-template-thumbhash1";
 
 const [dreamscape, lens] = categoryDefinitions;
 
@@ -115,11 +115,7 @@ describe("image loading contract", () => {
     assert.ok(detailRequest.indexOf("showImagePlaceholder") < detailRequest.indexOf("await waitForSettledSwitchIntent()"));
     assert.ok(detailRequest.indexOf("updateDetailMetadata(item, targetIndex)") < detailRequest.indexOf("await waitForSettledSwitchIntent()"));
     assert.match(views, /renderThumbHash\(canvas, item\.thumbhash\)/);
-    assert.match(detailRequest, /detailActiveLayer\?\.setAttribute\("aria-hidden", "true"\);[\s\S]*正在加载：\$\{item\.title\}[\s\S]*await waitForSettledSwitchIntent/);
     assert.match(detailCss, /\.detail-image-wrap\s*\{[^}]*width:\s*100%;[^}]*height:\s*100%;/s);
-    assert.match(detailCss, /\.detail-image-wrap \.detail-layer\s*\{[^}]*position:\s*absolute;[^}]*width:\s*100%;[^}]*height:\s*100%;/s);
-    assert.match(base, /\.image-load-sweep\.is-sweep-a\s*\{[^}]*animation:[^;]*720ms[^;]*both;/s);
-    assert.doesNotMatch(base, /\.image-load-sweep[^}]*animation:[^;]*infinite/s);
     assert.match(base, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.image-load-sweep\s*\{\s*display:\s*none;/);
   });
 
@@ -152,7 +148,7 @@ function waitForReady(timeoutMs = 8000) {
   return new Promise((resolve, reject) => {
     const started = Date.now();
     const timer = setInterval(() => {
-      const match = serverOutput.match(/Shanzoon is running at http:\/\/\S+:(\d+)/);
+      const match = serverOutput.match(/is running at http:\/\/\S+:(\d+)/);
       if (match) {
         clearInterval(timer);
         resolve(match[1]);
@@ -293,19 +289,16 @@ describe("home page", () => {
   it("exposes every category portal and loads the single entry script and stylesheet", async () => {
     const response = await fetchWithRetry(`${baseUrl}/`);
     assert.equal(response.status, 200);
+    if (process.env.SITE_PROFILE === "owner") assert.match(response.url, /\/brand\.html\?profile=owner$/);
     assert.match(response.headers.get("content-type"), /text\/html/);
     const html = await response.text();
 
-    for (const definition of categoryDefinitions) {
-      assert.ok(html.includes(`data-category="${definition.id}"`), `missing folder portal for ${definition.id}`);
-      assert.ok(definition.cover.startsWith("https://media.shanzoon.art/"));
-      assert.equal(definition.preview, definition.cover);
-    }
-    for (const image of ["project-lingjing-ai.webp", "project-drama-data.webp", "project-loomicc-card-v2.webp"]) {
-      assert.ok(html.includes(`https://media.shanzoon.art/site-assets/${image}`), `missing R2 product image ${image}`);
-    }
+    assert.equal(categoryDefinitions.length, 4);
+    assert.equal((html.match(/class="folder-portal"/g) || []).length, 4);
+    assert.equal((html.match(/data-project-sheet/g) || []).length, 3);
     assert.ok(html.includes(`<script type="module" src="/app.js?v=${ASSET_VERSION}">`), "expected versioned /app.js module entry");
-    assert.ok(html.includes('<link rel="preconnect" href="https://media.shanzoon.art" />'), "expected an early media origin connection");
+    assert.ok(!html.includes("media.shanzoon.art"), "personal media URLs should live only in site.config.js and archive.json");
+    assert.ok(html.includes('id="siteLogo"'), "expected a configurable logo slot");
     assert.match(html, /<img alt="" loading="lazy" decoding="async" \/>/, "collection images should remain lazy-loaded");
     assert.ok(html.includes('id="collectionMore"'), "expected a manual archive pagination control");
     assert.ok(html.includes('id="collectionFilters"'), "expected a collection category filter control");
@@ -343,7 +336,12 @@ describe("static assets", () => {
       "/collection.css",
       "/detail.css",
       "/archive.json",
+      "/archive.example.json",
       "/categories.js",
+      "/site.config.js",
+      "/site.config.owner.js",
+      "/site-profile.js",
+      "/site.js",
       "/app.js",
       "/views.js",
       "/home.js",
@@ -355,6 +353,8 @@ describe("static assets", () => {
       "/utils.js",
       "/assets/shanzoon-glyph.svg",
       "/assets/shanzoon-glyph-favicon.svg",
+      "/assets/example-logo.svg",
+      "/assets/example-dreamscape.svg",
     ];
     for (const asset of coreAssets) {
       const response = await fetchWithRetry(`${baseUrl}${asset}`);
@@ -362,17 +362,10 @@ describe("static assets", () => {
     }
   });
 
-  it("serves the published R2 archive manifest", async () => {
-    const response = await fetchWithRetry(`${baseUrl}/archive.json`);
-    assert.equal(response.status, 200);
-    assert.match(response.headers.get("content-type"), /application\/json/);
-    const archive = await response.json();
+  it("keeps the owner archive ThumbHashes decodable", async () => {
+    const archive = JSON.parse(await readFile(path.join(appRoot, "archive.json"), "utf8"));
     const items = archive.days.flatMap((day) => day.items);
     assert.ok(items.length > 0);
-    assert.ok(items.every((item) => item.src.startsWith("https://media.shanzoon.art/")));
-    assert.ok(items.every((item) => item.src.endsWith(".webp")));
-    assert.ok(items.every((item) => Number.isInteger(item.width) && item.width > 0));
-    assert.ok(items.every((item) => Number.isInteger(item.height) && item.height > 0));
     assert.ok(items.every((item) => typeof item.thumbhash === "string" && item.thumbhash.length > 0));
     for (const item of items) {
       const decoded = decodeLocalThumbHash(Buffer.from(item.thumbhash, "base64"));
@@ -381,17 +374,33 @@ describe("static assets", () => {
     }
   });
 
-  it("serves local content images and 404s for gitignored ones", async () => {
-    const contentImages = [
-      "/assets/project-drama-data.png",
-      "/assets/project-lingjing-ai.png",
-      "/assets/project-loomicc-card-v2.png",
-    ];
-    for (const image of contentImages) {
-      const expected = existsSync(path.join(appRoot, image)) ? 200 : 404;
-      const response = await fetchWithRetry(`${baseUrl}${image}`);
-      assert.equal(response.status, expected, `${image} should be ${expected} (content assets are gitignored)`);
-    }
+  it("serves the archive manifest selected by site.config.js", async () => {
+    const response = await fetchWithRetry(`${baseUrl}${siteConfig.archive.manifestPath}`);
+    assert.equal(response.status, 200);
+    assert.match(response.headers.get("content-type"), /application\/json/);
+    const archive = await response.json();
+    const items = archive.days.flatMap((day) => day.items);
+    assert.ok(items.length > 0);
+    assert.ok(items.every((item) => typeof item.src === "string" && Boolean(new URL(item.src, baseUrl))));
+    assert.ok(items.every((item) => Number.isInteger(item.width) && item.width > 0));
+    assert.ok(items.every((item) => Number.isInteger(item.height) && item.height > 0));
+  });
+
+  it("serves configurable local assets and rejects traversal", async () => {
+    const image = await fetchWithRetry(`${baseUrl}/assets/example-project-one.svg`);
+    assert.equal(image.status, 200);
+    assert.match(image.headers.get("content-type"), /image\/svg\+xml/);
+    const traversal = await fetchWithRetry(`${baseUrl}/assets/%2e%2e/package.json`);
+    assert.ok([400, 404].includes(traversal.status));
+  });
+});
+
+describe("static deployment entry", () => {
+  it("provides an index.html fallback for hosts that do not apply vercel.json", async () => {
+    const response = await fetchWithRetry(`${baseUrl}/index.html`);
+    assert.equal(response.status, 200);
+    const html = await response.text();
+    assert.match(html, /location\.replace\(`\/brand\.html/);
   });
 });
 

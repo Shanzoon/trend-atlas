@@ -1,6 +1,6 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { mkdtemp, rm } from "node:fs/promises";
+import { mkdir, mkdtemp, realpath, rm, symlink } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import {
@@ -10,6 +10,8 @@ import {
   confirmMissingObjects,
   parseSourceFile,
   publicUrlFor,
+  resolvePublishingConfig,
+  resolveSourceCategoryRoot,
 } from "../scripts/publish-images.mjs";
 
 describe("incremental image publisher", () => {
@@ -21,8 +23,8 @@ describe("incremental image publisher", () => {
     });
     assert.equal(parseSourceFile("notes.txt"), null);
     assert.equal(
-      publicUrlFor("01-Dreamscape", "2026-08-28__interesting-01-new-work.png"),
-      "https://media.shanzoon.art/01-Dreamscape/2026-08-28__interesting-01-new-work.webp",
+      publicUrlFor("01-Dreamscape", "2026-08-28__interesting-01-new-work.png", "https://media.example.com"),
+      "https://media.example.com/01-Dreamscape/2026-08-28__interesting-01-new-work.webp",
     );
   });
 
@@ -36,7 +38,7 @@ describe("incremental image publisher", () => {
         bytes: 20,
         width: 1600,
         height: 900,
-        url: "https://media.shanzoon.art/02-Lens/2026-08-27__hottest-01-street.webp",
+        url: "https://media.example.com/02-Lens/2026-08-27__hottest-01-street.webp",
       },
       {
         category: "01-Dreamscape",
@@ -46,7 +48,7 @@ describe("incremental image publisher", () => {
         bytes: 10,
         width: 1024,
         height: 1536,
-        url: "https://media.shanzoon.art/01-Dreamscape/2026-08-28__interesting-01-new-work.webp",
+        url: "https://media.example.com/01-Dreamscape/2026-08-28__interesting-01-new-work.webp",
       },
     ], "2026-08-28T00:00:00.000Z");
 
@@ -54,7 +56,53 @@ describe("incremental image publisher", () => {
     assert.equal(archive.days[0].items[0].title, "New Work");
     assert.equal(archive.days[0].items[0].width, 1024);
     assert.equal(archive.days[0].items[0].height, 1536);
-    assert.equal(archive.days[0].items[0].src, "https://media.shanzoon.art/01-Dreamscape/2026-08-28__interesting-01-new-work.webp");
+    assert.equal(archive.days[0].items[0].src, "https://media.example.com/01-Dreamscape/2026-08-28__interesting-01-new-work.webp");
+  });
+
+  it("fails before network access when publishing is not configured", () => {
+    assert.throws(
+      () => resolvePublishingConfig({ publishing: { sourceRoot: "./content/images", bucket: "", mediaOrigin: "" } }, {}),
+      /图片发布尚未配置.*publishing\.bucket.*publishing\.mediaOrigin.*不要把 Cloudflare 令牌写入仓库/,
+    );
+  });
+
+  it("accepts environment overrides without storing credentials", () => {
+    const settings = resolvePublishingConfig(
+      { publishing: { sourceRoot: "", bucket: "", mediaOrigin: "" } },
+      { ARCHIVE_ROOT: "/tmp/example-images", R2_BUCKET: "portfolio-images", MEDIA_ORIGIN: "https://media.example.com/" },
+    );
+    assert.equal(settings.sourceRoot, "/tmp/example-images");
+    assert.equal(settings.bucket, "portfolio-images");
+    assert.equal(settings.mediaOrigin, "https://media.example.com");
+  });
+
+  it("rejects media origins that could leak credentials or tokens into archive.json", () => {
+    for (const mediaOrigin of [
+      "https://user:secret@media.example.com",
+      "https://media.example.com/private",
+      "https://media.example.com?token=secret",
+      "https://media.example.com#secret",
+    ]) {
+      assert.throws(
+        () => resolvePublishingConfig({ publishing: { sourceRoot: "./content/images", bucket: "images", mediaOrigin } }, {}),
+        /mediaOrigin 只能填写公开 origin/,
+      );
+    }
+  });
+
+  it("rejects category traversal and symlinked source directories", async () => {
+    const root = await mkdtemp(path.join(tmpdir(), "trend-atlas-source-"));
+    const outside = await mkdtemp(path.join(tmpdir(), "trend-atlas-outside-"));
+    try {
+      await mkdir(path.join(root, "safe"));
+      assert.equal(await resolveSourceCategoryRoot(root, "safe"), await realpath(path.join(root, "safe")));
+      await assert.rejects(resolveSourceCategoryRoot(root, "../outside"), /越出图片源根目录/);
+      await symlink(outside, path.join(root, "linked"));
+      await assert.rejects(resolveSourceCategoryRoot(root, "linked"), /不能是符号链接/);
+    } finally {
+      await rm(root, { recursive: true, force: true });
+      await rm(outside, { recursive: true, force: true });
+    }
   });
 
   it("keeps historical objects when the public probe returns a false 404", async () => {

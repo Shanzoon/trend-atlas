@@ -55,6 +55,8 @@
   overflow: hidden;
 }
 .project-board img { display: block; width: 100%; height: auto; }
+.project-board[data-image-error] { display: grid; min-height: 220px; place-items: center; }
+.project-board[data-image-error]::after { padding: 24px; color: var(--night-muted); content: attr(data-image-error); text-align: center; }
 
 .contact-links { display: flex; flex-wrap: wrap; gap: 12px 34px; margin-top: 96px; font-style: normal; }
 .systems-contact { justify-content: flex-end; width: min(1160px, 100%); margin: 0 auto; }
@@ -117,10 +119,8 @@
     transform-origin: center;
     will-change: opacity, transform;
   }
-  /* 列宽按各自图片比例限制，保证展板高度不超过 48dvh */
-  .motion-ready .project-lingjing { grid-template-columns: min(1060px, 82vw, calc(48dvh * 1.5988)); }
-  .motion-ready .project-drama { grid-template-columns: min(1060px, 82vw, calc(48dvh * 1.777)); }
-  .motion-ready .project-loomicc { grid-template-columns: min(1060px, 82vw, calc(48dvh * 1.5)); }
+  /* 列宽按配置中的图片比例限制，保证展板高度不超过 48dvh。 */
+  .motion-ready .project-sheet { grid-template-columns: min(1060px, 82vw, calc(48dvh * var(--project-aspect, 1.6))); }
   .motion-ready .project-sheet-copy {
     position: relative;
     z-index: 5;

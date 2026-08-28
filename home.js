@@ -1,9 +1,9 @@
-import { categoryFor } from "./categories.js?v=20260829-focus1";
-import { elements } from "./elements.js?v=20260829-focus1";
-import { mobileLayout, reduceMotion } from "./media.js?v=20260829-focus1";
-import { itemsForScope, state } from "./state.js?v=20260829-focus1";
-import { archiveTimeline, progressWithHold, progressWithHolds, scrollCueOpacity, systemsTimeline } from "./timelines.js?v=20260829-focus1";
-import { clamp, clearMotionStyles, lerp, setButtonInteractive, setContainerInteractive, smoothstep } from "./utils.js?v=20260829-focus1";
+import { categoryFor } from "./categories.js?v=20260829-template-thumbhash1";
+import { elements } from "./elements.js?v=20260829-template-thumbhash1";
+import { mobileLayout, reduceMotion } from "./media.js?v=20260829-template-thumbhash1";
+import { itemsForScope, state } from "./state.js?v=20260829-template-thumbhash1";
+import { archiveTimeline, progressWithHold, progressWithHolds, scrollCueOpacity, systemsTimeline } from "./timelines.js?v=20260829-template-thumbhash1";
+import { clamp, clearMotionStyles, lerp, setButtonInteractive, setContainerInteractive, smoothstep } from "./utils.js?v=20260829-template-thumbhash1";
 
 const ARCHIVE_STAGE_SCALE = 0.84;
 
@@ -48,6 +48,10 @@ function hydrateFolderPreviews() {
       mainImage.loading = "eager";
       mainImage.decoding = "async";
       mainImage.fetchPriority = "low";
+      mainImage.addEventListener("error", () => {
+        elements.homeStatus.textContent = `分类封面加载失败：${definition.label}。请检查 site.config.js 中的 archive.categories。`;
+        elements.homeStatus.classList.add("is-error");
+      }, { once: true });
       mainImage.src = definition.preview;
     }
 

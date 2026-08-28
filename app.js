@@ -1,8 +1,18 @@
-import { elements } from "./elements.js?v=20260829-focus1";
-import { invalidateMotionLayout, scheduleStoryUpdate } from "./home.js?v=20260829-focus1";
-import { mobileLayout, reduceMotion } from "./media.js?v=20260829-focus1";
-import { state } from "./state.js?v=20260829-focus1";
-import { hydrateFolderCovers, initCollectionFilters, moveDetail, navigateHome, navigateToArchive, renderNextCollectionPage, retryDetailImage, routeFromHash, switchDailyItem } from "./views.js?v=20260829-focus1";
+import { elements } from "./elements.js?v=20260829-template-thumbhash1";
+import { invalidateMotionLayout, scheduleStoryUpdate } from "./home.js?v=20260829-template-thumbhash1";
+import { mobileLayout, reduceMotion } from "./media.js?v=20260829-template-thumbhash1";
+import { applySiteConfig, siteConfig } from "./site.js?v=20260829-template-thumbhash1";
+import { state } from "./state.js?v=20260829-template-thumbhash1";
+import { hydrateFolderCovers, initCollectionFilters, moveDetail, navigateHome, navigateToArchive, renderNextCollectionPage, retryDetailImage, routeFromHash, switchDailyItem } from "./views.js?v=20260829-template-thumbhash1";
+
+let configurationError;
+try {
+  applySiteConfig();
+} catch (error) {
+  configurationError = error;
+  elements.homeStatus.textContent = `站点配置错误：${error.message}`;
+  elements.homeStatus.classList.add("is-error");
+}
 
 document.documentElement.classList.add("motion-ready");
 if ("scrollRestoration" in history) history.scrollRestoration = "manual";
@@ -66,10 +76,11 @@ reduceMotion.addEventListener("change", invalidateMotionLayout);
 mobileLayout.addEventListener("change", invalidateMotionLayout);
 
 async function initialize() {
+  if (configurationError) return;
   hydrateFolderCovers();
   initCollectionFilters();
   try {
-    const response = await fetch("/archive.json");
+    const response = await fetch(siteConfig.archive.manifestPath);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
     state.days = data.days;
@@ -81,7 +92,7 @@ async function initialize() {
     invalidateMotionLayout();
     routeFromHash();
   } catch (error) {
-    elements.homeStatus.textContent = `图像归档读取失败：${error.message}`;
+    elements.homeStatus.textContent = `图像归档读取失败（${siteConfig.archive.manifestPath}）：${error.message}。请检查 site.config.js 中的 archive.manifestPath。`;
     elements.homeStatus.classList.add("is-error");
   }
 }

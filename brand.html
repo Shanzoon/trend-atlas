@@ -4,24 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="oklch(0.055 0 0)" />
-    <meta name="description" content="张丰（Shanzoon）的个人主页：在技术、图像与叙事之间，把模糊的想法做成真实的东西。" />
-    <link rel="icon" type="image/svg+xml" href="/assets/shanzoon-glyph-favicon.svg" />
-    <link rel="preconnect" href="https://media.shanzoon.art" />
-    <title>shanzoon.art</title>
-    <link rel="stylesheet" href="/base.css?v=20260829-focus1" />
-    <link rel="stylesheet" href="/home.css?v=20260829-focus1" />
-    <link rel="stylesheet" href="/systems.css?v=20260829-focus1" />
-    <link rel="stylesheet" href="/collection.css?v=20260829-focus1" />
-    <link rel="stylesheet" href="/detail.css?v=20260829-focus1" />
+    <meta name="description" content="Personal portfolio" />
+    <link id="siteFavicon" rel="icon" type="image/svg+xml" href="/assets/example-logo.svg" />
+    <title>Personal portfolio</title>
+    <link rel="stylesheet" href="/base.css?v=20260829-template-thumbhash1" />
+    <link rel="stylesheet" href="/home.css?v=20260829-template-thumbhash1" />
+    <link rel="stylesheet" href="/systems.css?v=20260829-template-thumbhash1" />
+    <link rel="stylesheet" href="/collection.css?v=20260829-template-thumbhash1" />
+    <link rel="stylesheet" href="/detail.css?v=20260829-template-thumbhash1" />
   </head>
   <body data-page="home">
     <a class="skip-link" href="#mainContent">跳到主要内容</a>
     <div class="night-glow" aria-hidden="true"></div>
 
     <header class="site-header">
-      <a class="site-signature" href="#home" id="homeLink" aria-label="返回 Shanzoon 首页">
-        <img src="/assets/shanzoon-glyph.svg" alt="" />
-        <span>Shanzoon</span>
+      <a class="site-signature" href="#home" id="homeLink" aria-label="返回首页">
+        <img id="siteLogo" src="/assets/example-logo.svg" alt="" />
+        <span id="siteSignature">Portfolio</span>
       </a>
       <button class="gallery-back" id="galleryBack" type="button" hidden>
         <span aria-hidden="true">←</span> <span id="galleryBackLabel">返回首页</span>
@@ -33,16 +32,16 @@
         <div class="story-sticky">
           <div class="bright-stage" id="brightStage">
             <div class="stage-identity" id="stageIdentity">
-              <p class="identity-kicker">张丰 · 个人主页</p>
-              <h1 id="brandName" tabindex="-1">Shanzoon</h1>
-              <p class="identity-role" lang="en">AI Product · Creative Technology · Visual Systems</p>
-              <p class="chapter-subtitle">在技术、图像与叙事之间，<br />把模糊的想法做成真实的东西。</p>
+              <p class="identity-kicker" id="identityKicker">个人主页</p>
+              <h1 id="brandName" tabindex="-1">Your Name</h1>
+              <p class="identity-role" id="identityRole" lang="en">YOUR ROLE</p>
+              <p class="chapter-subtitle" id="identityIntroduction">介绍你的方向，<br />以及你希望做成的事情。</p>
             </div>
 
             <div class="archive-copy" id="archiveCopy">
               <h2 class="archive-identity" id="archiveIdentity">GENERATIVE ARCHIVE</h2>
               <div class="archive-meta">
-                <p class="archive-subtitle chapter-subtitle">探索生成式图像的边界，<br />也决定哪些结果值得成为作品。</p>
+                <p class="archive-subtitle chapter-subtitle" id="archiveIntroduction">你的视觉作品，<br />可以从这里开始。</p>
                 <button class="archive-all" id="archiveAll" type="button" tabindex="-1">VIEW ALL</button>
               </div>
             </div>
@@ -77,6 +76,7 @@
                 <span class="folder-object"><span class="folder-back"></span><span class="folder-image"><img alt="" /></span><span class="folder-front"><span class="folder-label">PERSONA</span></span></span>
               </button>
             </div>
+
           </div>
           <div class="scroll-cue" id="scrollCue" aria-hidden="true">
             <span class="scroll-cue-label">ENTER ARCHIVE</span>
@@ -90,51 +90,54 @@
           <div class="systems-deck">
             <div class="systems-bridge" id="systemsBridge">
               <h2 id="systemsTitle">LIVE PRODUCTS</h2>
-              <p class="chapter-subtitle">从发现方向，<br />到构建真正运行的产品。</p>
+              <p class="chapter-subtitle" id="systemsIntroduction">选择代表项目，<br />讲清楚你做成的事情。</p>
             </div>
 
-            <article class="project-sheet project-lingjing" data-project-sheet>
-              <h3 class="project-title">灵境 AI 创作平台</h3>
+            <article class="project-sheet" data-project-sheet>
+              <h3 class="project-title">Project One</h3>
 
               <figure class="project-board">
-                <img src="https://media.shanzoon.art/site-assets/project-lingjing-ai.webp" width="1586" height="992" loading="lazy" decoding="async" alt="灵境 AI 创作平台，展示剧本上传、素材创作、素材库与项目界面" />
+                <img width="1600" height="1000" loading="lazy" decoding="async" alt="" />
               </figure>
 
               <div class="project-sheet-copy">
-                <p>把剧本拆成角色、场景和可复用的视觉资产。</p>
-                <a class="project-visit" data-project-link href="https://animeworkbench.lingjingai.cn/sandbox" target="_blank" rel="noopener noreferrer" tabindex="-1">访问灵境创作平台 <span aria-hidden="true">↗</span></a>
+                <p>Project summary.</p>
+                <a class="project-visit" data-project-link href="https://example.com" target="_blank" rel="noopener noreferrer" tabindex="-1">Visit project <span aria-hidden="true">↗</span></a>
+                <span class="project-availability" hidden>PROJECT STATUS</span>
               </div>
             </article>
 
-            <article class="project-sheet project-drama" data-project-sheet>
-              <h3 class="project-title">漫剧有数</h3>
+            <article class="project-sheet" data-project-sheet>
+              <h3 class="project-title">Project Two</h3>
 
               <figure class="project-board">
-                <img src="https://media.shanzoon.art/site-assets/project-drama-data.webp" width="1672" height="941" loading="lazy" decoding="async" alt="漫剧有数海外漫剧数据与 AI 内容洞察平台，展示 YouTube 长视频数据界面" />
+                <img width="1600" height="900" loading="lazy" decoding="async" alt="" />
               </figure>
 
               <div class="project-sheet-copy">
-                <p>从平台数据中发现正在形成的内容方向。</p>
-                <a class="project-visit" data-project-link href="https://manjuyoushu.com" target="_blank" rel="noopener noreferrer" tabindex="-1">访问漫剧有数 <span aria-hidden="true">↗</span></a>
+                <p>Project summary.</p>
+                <a class="project-visit" data-project-link href="https://example.com" target="_blank" rel="noopener noreferrer" tabindex="-1">Visit project <span aria-hidden="true">↗</span></a>
+                <span class="project-availability" hidden>PROJECT STATUS</span>
               </div>
             </article>
 
-            <article class="project-sheet project-loomicc" data-project-sheet>
-              <h3 class="project-title">Loomicc</h3>
+            <article class="project-sheet" data-project-sheet>
+              <h3 class="project-title">Project Three</h3>
 
               <figure class="project-board">
-                <img src="https://media.shanzoon.art/site-assets/project-loomicc-card-v2.webp" width="1536" height="1024" loading="lazy" decoding="async" alt="Loomicc 图片生成与视觉资产管理工作台，展示结构化提示词、图片资产库和生成元信息" />
+                <img width="1500" height="1000" loading="lazy" decoding="async" alt="" />
               </figure>
 
               <div class="project-sheet-copy">
-                <p>把生图、筛选、提示词与视觉资产管理收进一个本地工作台。</p>
-                <span class="project-availability">LOCAL PROTOTYPE</span>
+                <p>Project summary.</p>
+                <a class="project-visit" data-project-link href="https://example.com" target="_blank" rel="noopener noreferrer" tabindex="-1">Visit project <span aria-hidden="true">↗</span></a>
+                <span class="project-availability" hidden>PROJECT STATUS</span>
               </div>
             </article>
 
             <address class="contact-links systems-contact" id="systemsContact">
-              <a href="mailto:zmark4847@gmail.com">zmark4847@gmail.com</a>
-              <a href="https://github.com/shanzoon" rel="me">github.com/shanzoon</a>
+              <a href="mailto:you@example.com">you@example.com</a>
+              <a href="https://github.com/your-name" rel="me">github.com/your-name</a>
             </address>
           </div>
         </section>
@@ -182,6 +185,6 @@
       </button>
     </template>
 
-    <script type="module" src="/app.js?v=20260829-focus1"></script>
+    <script type="module" src="/app.js?v=20260829-template-thumbhash1"></script>
   </body>
 </html>

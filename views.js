@@ -1,9 +1,10 @@
-import { categoryDefinitions, categoryFor } from "./categories.js?v=20260829-focus1";
-import { elements } from "./elements.js?v=20260829-focus1";
-import { scheduleStoryUpdate } from "./home.js?v=20260829-focus1";
-import { itemsForScope, nextCollectionPageEnd, state } from "./state.js?v=20260829-focus1";
-import { renderThumbHash } from "./thumbhash.js?v=20260829-focus1";
-import { hashString, stableDateKey } from "./utils.js?v=20260829-focus1";
+import { categoryDefinitions, categoryFor } from "./categories.js?v=20260829-template-thumbhash1";
+import { elements } from "./elements.js?v=20260829-template-thumbhash1";
+import { scheduleStoryUpdate } from "./home.js?v=20260829-template-thumbhash1";
+import { siteConfig } from "./site.js?v=20260829-template-thumbhash1";
+import { itemsForScope, nextCollectionPageEnd, state } from "./state.js?v=20260829-template-thumbhash1";
+import { renderThumbHash } from "./thumbhash.js?v=20260829-template-thumbhash1";
+import { hashString, stableDateKey } from "./utils.js?v=20260829-template-thumbhash1";
 
 let dailyDeck = [];
 const dailyLayers = [elements.dailyImage, elements.dailyImageIncoming];
@@ -23,6 +24,7 @@ const SWITCH_INTENT_DELAY_MS = 40;
 const reduceImageMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const placeholderPhases = new WeakMap();
 const placeholderHideTimers = new WeakMap();
+const dailyCategoryId = categoryDefinitions[0]?.id;
 
 function showImagePlaceholder(canvas, sweep, item, accessibleLabel = "") {
   clearTimeout(placeholderHideTimers.get(canvas));
@@ -52,7 +54,6 @@ function hideImagePlaceholder(canvas, sweep, immediate = false) {
     canvas.classList.remove("is-visible", "is-hiding");
     return;
   }
-
   canvas.classList.add("is-hiding");
   const timer = setTimeout(() => {
     if (placeholderHideTimers.get(canvas) !== timer) return;
@@ -185,7 +186,7 @@ function shuffle(items) {
 }
 
 function selectDailyItem() {
-  const candidates = itemsForScope("01-Dreamscape");
+  const candidates = itemsForScope(dailyCategoryId);
   if (!candidates.length) return null;
   return candidates[hashString(stableDateKey()) % candidates.length];
 }
@@ -193,7 +194,7 @@ function selectDailyItem() {
 // 洗牌队列：每次点击换图都保证拿到一张未看过的图，队列耗尽后重新洗牌
 // （排除当前展示项，避免刚换完又点回同一张）。
 function nextDailyItem() {
-  const candidates = itemsForScope("01-Dreamscape");
+  const candidates = itemsForScope(dailyCategoryId);
   if (!candidates.length) return null;
   if (candidates.length === 1) return state.dailyItem || candidates[0];
   if (!dailyDeck.length) {
@@ -203,7 +204,7 @@ function nextDailyItem() {
 }
 
 function preloadNextDailyItem() {
-  const candidates = itemsForScope("01-Dreamscape");
+  const candidates = itemsForScope(dailyCategoryId);
   if (candidates.length < 2) {
     setAdjacentPreloads([]);
     return;
@@ -460,7 +461,7 @@ function updateDetailMetadata(item, index) {
   elements.detailTitle.textContent = item.title;
   elements.detailCounter.textContent = `${String(index + 1).padStart(2, "0")} / ${String(state.activeItems.length).padStart(2, "0")}`;
   elements.detailMeta.textContent = `${item.categoryLabel} · ${item.date}`;
-  document.title = "shanzoon.art";
+  document.title = siteConfig.site.title;
 
   // 线性翻页：到列表两端时隐藏对应按钮，避免死胡同或环形瞬移。
   elements.detailPrevious.hidden = index <= 0;
@@ -631,7 +632,7 @@ export function navigateHome(updateHash = true, restorePosition = false) {
   const previousPage = state.page;
   setPage("home");
   renderDailyItem();
-  document.title = "shanzoon.art";
+  document.title = siteConfig.site.title;
   if (updateHash && location.hash !== "#home") history.pushState({ source: previousPage }, "", "#home");
   if (restorePosition) restoreScroll(state.homeScrollY);
   else window.scrollTo({ top: 0, left: 0 });
@@ -645,7 +646,7 @@ export function navigateToArchive(updateHash = true, restorePosition = false) {
   syncCollectionScope(state.collectionScope);
   setPage("collection");
   renderCollection();
-  document.title = "shanzoon.art";
+  document.title = siteConfig.site.title;
   if (updateHash && location.hash !== archiveHash(state.collectionScope)) {
     history.pushState({ source: previousPage }, "", archiveHash(state.collectionScope));
   }
