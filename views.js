@@ -1,17 +1,119 @@
 import { categoryDefinitions, categoryFor } from "./categories.js";
 import { elements } from "./elements.js";
 import { scheduleStoryUpdate } from "./home.js";
-import { reduceMotion } from "./media.js";
 import { itemsForScope, nextCollectionPageEnd, state } from "./state.js";
 import { hashString, stableDateKey } from "./utils.js";
 
 let dailyDeck = [];
-// 交叉淡入淡出的双层图片：带 is-active 的一层是当前展示层，另一层预载新图后淡入顶替。
 const dailyLayers = [elements.dailyImage, elements.dailyImageIncoming];
 let dailyActiveLayer = dailyLayers[0];
 let dailySwitchSeq = 0;
-let dailyFadeTimer = null;
-const DAILY_CROSSFADE_MS = 320;
+let dailyPendingItem = null;
+const detailLayers = [elements.detailImage, elements.detailImageIncoming];
+let detailActiveLayer = null;
+let detailSwitchSeq = 0;
+let detailPendingIndex = null;
+let detailFailedIndex = null;
+let detailFailedUpdateHash = true;
+const imageLoadControllers = new WeakMap();
+let adjacentPreloadLinks = [];
+const MAX_ADJACENT_PRELOADS = 2;
+const SWITCH_INTENT_DELAY_MS = 70;
+
+function setImageDimensions(image, item) {
+  if (item.width && item.height) {
+    image.width = item.width;
+    image.height = item.height;
+  } else {
+    image.removeAttribute("width");
+    image.removeAttribute("height");
+  }
+}
+
+function cancelImageLoad(image, clearSource = false) {
+  imageLoadControllers.get(image)?.abort();
+  imageLoadControllers.delete(image);
+  if (clearSource) {
+    image.removeAttribute("src");
+    image.removeAttribute("width");
+    image.removeAttribute("height");
+    image.alt = "";
+  }
+}
+
+function releaseInactiveLayer(image, isActive, delay) {
+  setTimeout(() => {
+    if (isActive() || imageLoadControllers.has(image)) return;
+    image.removeAttribute("src");
+    image.removeAttribute("width");
+    image.removeAttribute("height");
+    image.alt = "";
+  }, delay);
+}
+
+function loadAndDecodeImage(image, item, priority = "auto") {
+  cancelImageLoad(image);
+  const controller = new AbortController();
+  imageLoadControllers.set(image, controller);
+  const expectedSrc = new URL(item.src, location.href).href;
+
+  image.alt = "";
+  image.setAttribute("aria-hidden", "true");
+  image.decoding = "async";
+  image.fetchPriority = priority;
+  setImageDimensions(image, item);
+
+  const loaded = new Promise((resolve, reject) => {
+    let settled = false;
+    const finish = (callback, value) => {
+      if (settled) return;
+      settled = true;
+      callback(value);
+    };
+    const onAbort = () => finish(reject, new DOMException("Image load superseded", "AbortError"));
+    const onError = () => finish(reject, new Error(`图片加载失败：${item.src}`));
+    const onLoad = () => {
+      if (image.currentSrc === expectedSrc || image.src === expectedSrc) finish(resolve);
+    };
+
+    controller.signal.addEventListener("abort", onAbort, { once: true });
+    image.addEventListener("load", onLoad, { once: true, signal: controller.signal });
+    image.addEventListener("error", onError, { once: true, signal: controller.signal });
+    image.src = item.src;
+    if (image.complete) queueMicrotask(() => (image.naturalWidth ? onLoad() : onError()));
+  });
+
+  return loaded
+    .then(async () => {
+      if (typeof image.decode === "function") await image.decode();
+      if (controller.signal.aborted || image.currentSrc !== expectedSrc || !image.naturalWidth) {
+        throw new DOMException("Image load superseded", "AbortError");
+      }
+      return image;
+    })
+    .finally(() => {
+      if (imageLoadControllers.get(image) === controller) imageLoadControllers.delete(image);
+    });
+}
+
+function setAdjacentPreloads(items) {
+  adjacentPreloadLinks.forEach((link) => link.remove());
+  adjacentPreloadLinks = [...new Map(items.filter(Boolean).map((item) => [item.src, item])).values()]
+    .slice(0, MAX_ADJACENT_PRELOADS)
+    .map((item) => {
+      const link = document.createElement("link");
+      link.rel = "prefetch";
+      link.as = "image";
+      link.href = item.src;
+      link.fetchPriority = "low";
+      document.head.append(link);
+      return link;
+    });
+}
+
+function waitForSettledSwitchIntent() {
+  return new Promise((resolve) => setTimeout(resolve, SWITCH_INTENT_DELAY_MS));
+}
 
 function setDailyLayerAccessibility(visibleLayer) {
   dailyLayers.forEach((layer) => {
@@ -20,46 +122,14 @@ function setDailyLayerAccessibility(visibleLayer) {
   });
 }
 
-function setDailyStatus(message = "", isError = false) {
+function setDailyStatus(message = "", isError = false, isLoading = false) {
   elements.homeStatus.textContent = message;
   elements.homeStatus.classList.toggle("is-error", isError);
+  elements.homeStatus.classList.toggle("is-loading", isLoading);
 }
 
 function updateDailyControlLabel(item) {
   elements.dailyImageWrap.setAttribute("aria-label", `当前精选：${item.title}，点击换一张`);
-}
-
-function preloadImage(src) {
-  return new Promise((resolve) => {
-    const probe = new Image();
-    probe.decoding = "async";
-    probe.addEventListener("load", () => resolve(true), { once: true });
-    probe.addEventListener("error", () => resolve(false), { once: true });
-    probe.src = src;
-  });
-}
-
-// 把进行中的淡入快进到终态：新层顶替为当前层，旧层清空待用。
-// 快进期间临时禁用过渡，保证旧图不闪回。
-function finishDailyFade() {
-  if (dailyFadeTimer) {
-    clearTimeout(dailyFadeTimer);
-    dailyFadeTimer = null;
-  }
-  const wrap = elements.dailyImageWrap;
-  if (!wrap.classList.contains("is-crossfading")) return;
-  const outgoing = dailyActiveLayer;
-  const incoming = dailyLayers.find((layer) => layer !== outgoing);
-  dailyLayers.forEach((layer) => { layer.style.transition = "none"; });
-  wrap.classList.remove("is-crossfading");
-  outgoing.classList.remove("is-active");
-  incoming.classList.add("is-active");
-  outgoing.removeAttribute("src");
-  outgoing.alt = "";
-  dailyActiveLayer = incoming;
-  setDailyLayerAccessibility(dailyActiveLayer);
-  void wrap.offsetWidth;
-  dailyLayers.forEach((layer) => { layer.style.transition = ""; });
 }
 
 function shuffle(items) {
@@ -84,19 +154,77 @@ function nextDailyItem() {
   if (!candidates.length) return null;
   if (candidates.length === 1) return state.dailyItem || candidates[0];
   if (!dailyDeck.length) {
-    dailyDeck = shuffle(candidates.filter((item) => item !== state.dailyItem));
+    dailyDeck = shuffle(candidates.filter((item) => item !== state.dailyItem && item !== dailyPendingItem));
   }
   return dailyDeck.pop();
 }
 
-function displayDailyItem(item) {
+function preloadNextDailyItem() {
+  const candidates = itemsForScope("01-Dreamscape");
+  if (candidates.length < 2) {
+    setAdjacentPreloads([]);
+    return;
+  }
+  if (!dailyDeck.length) dailyDeck = shuffle(candidates.filter((item) => item !== state.dailyItem));
+  setAdjacentPreloads([dailyDeck.at(-1)]);
+}
+
+function commitDailyItem(item, layer) {
+  const outgoing = dailyActiveLayer;
   state.dailyItem = item;
+  dailyPendingItem = null;
   elements.dailyArt.hidden = false;
-  dailyActiveLayer.src = item.src;
-  dailyActiveLayer.alt = `${item.title}，${item.categoryLabel}`;
-  dailyActiveLayer.classList.add("is-active");
+  layer.alt = `${item.title}，${item.categoryLabel}`;
+  layer.classList.add("is-active");
+  outgoing.classList.remove("is-active");
+  dailyActiveLayer = layer;
+  releaseInactiveLayer(outgoing, () => outgoing === dailyActiveLayer, 360);
   setDailyLayerAccessibility(dailyActiveLayer);
   updateDailyControlLabel(item);
+  setDailyStatus();
+  elements.dailyImageWrap.classList.remove("is-loading");
+  elements.dailyImageWrap.setAttribute("aria-busy", "false");
+  preloadNextDailyItem();
+}
+
+async function requestDailyItem(item) {
+  const seq = ++dailySwitchSeq;
+  setAdjacentPreloads([]);
+  dailyLayers
+    .filter((layer) => layer !== dailyActiveLayer && imageLoadControllers.has(layer))
+    .forEach((layer) => cancelImageLoad(layer, true));
+  dailyPendingItem = item;
+  elements.dailyArt.hidden = false;
+  elements.dailyImageWrap.classList.add("is-loading");
+  elements.dailyImageWrap.setAttribute("aria-busy", "true");
+  setDailyStatus(state.dailyItem ? "正在加载下一张图像" : "正在加载今日精选", false, true);
+
+  if (state.dailyItem) {
+    await waitForSettledSwitchIntent();
+    if (seq !== dailySwitchSeq || state.page !== "home") return;
+  }
+
+  const targetLayer = dailyLayers.find((layer) => layer !== dailyActiveLayer);
+  try {
+    await loadAndDecodeImage(targetLayer, item, state.dailyItem ? "auto" : "high");
+    if (seq !== dailySwitchSeq || state.page !== "home") return;
+    commitDailyItem(item, targetLayer);
+  } catch (error) {
+    if (seq !== dailySwitchSeq || error.name === "AbortError") return;
+    dailyPendingItem = null;
+    if (!dailyDeck.includes(item)) dailyDeck.push(item);
+    elements.dailyImageWrap.classList.remove("is-loading");
+    elements.dailyImageWrap.setAttribute("aria-busy", "false");
+    setDailyStatus("新图加载失败，当前精选保持不变。请再试一次。", true);
+  }
+}
+
+function cancelDailyRequest() {
+  dailySwitchSeq += 1;
+  dailyPendingItem = null;
+  dailyLayers.filter((layer) => layer !== dailyActiveLayer).forEach((layer) => cancelImageLoad(layer, true));
+  elements.dailyImageWrap.classList.remove("is-loading");
+  elements.dailyImageWrap.setAttribute("aria-busy", "false");
   setDailyStatus();
 }
 
@@ -145,6 +273,9 @@ export function initCollectionFilters() {
 }
 
 function setPage(page) {
+  if (page !== "home") cancelDailyRequest();
+  if (page !== "detail") cancelDetailRequest(true);
+  setAdjacentPreloads([]);
   state.page = page;
   document.body.dataset.page = page;
   elements.story.hidden = page !== "home";
@@ -170,7 +301,6 @@ export function hydrateFolderCovers() {
     const imageLayer = button.querySelector(".folder-image");
     const image = imageLayer.querySelector("img");
     imageLayer.classList.add("is-preview-main");
-    image.src = definition.preview;
     image.alt = "";
     image.decoding = "async";
     button.addEventListener("click", () => {
@@ -182,6 +312,11 @@ export function hydrateFolderCovers() {
 }
 
 export function renderDailyItem() {
+  if (state.dailyItem) {
+    preloadNextDailyItem();
+    return;
+  }
+  if (dailyPendingItem) return;
   const item = selectDailyItem();
   if (!item) {
     elements.dailyArt.hidden = true;
@@ -189,44 +324,13 @@ export function renderDailyItem() {
     elements.homeStatus.classList.add("is-error");
     return;
   }
-  displayDailyItem(item);
+  requestDailyItem(item);
 }
 
 export function switchDailyItem() {
   const item = nextDailyItem();
   if (!item || item === state.dailyItem) return;
-  const seq = ++dailySwitchSeq;
-  // 先预加载新图，加载完成前旧图一直留在画面上，切换全程没有空窗。
-  preloadImage(item.src).then((loaded) => {
-    if (seq !== dailySwitchSeq) {
-      // 已被更新的点击取代：把这张图放回洗牌队列，避免丢失。
-      dailyDeck.push(item);
-      return;
-    }
-    if (!loaded) {
-      setDailyStatus("新图加载失败，当前精选保持不变。请再试一次。", true);
-      return;
-    }
-    state.dailyItem = item;
-    if (reduceMotion.matches) {
-      finishDailyFade();
-      displayDailyItem(item);
-      return;
-    }
-    // 新图已就绪：旧层淡出、新层淡入。
-    finishDailyFade();
-    const wrap = elements.dailyImageWrap;
-    const nextLayer = dailyLayers.find((layer) => layer !== dailyActiveLayer);
-    nextLayer.src = item.src;
-    nextLayer.alt = `${item.title}，${item.categoryLabel}`;
-    setDailyLayerAccessibility(nextLayer);
-    updateDailyControlLabel(item);
-    setDailyStatus();
-    wrap.classList.remove("is-crossfading");
-    void wrap.offsetWidth;
-    wrap.classList.add("is-crossfading");
-    dailyFadeTimer = setTimeout(finishDailyFade, DAILY_CROSSFADE_MS + 60);
-  });
+  requestDailyItem(item);
 }
 
 function updateCollectionMore() {
@@ -288,20 +392,147 @@ function renderCollection() {
   else updateCollectionMore();
 }
 
-function renderDetail() {
-  const item = state.activeItems[state.detailIndex];
-  if (!item) return;
+function setDetailStatus(message = "", showRetry = false) {
+  elements.detailStatus.textContent = message;
+  elements.detailRetry.hidden = !showRetry;
+}
 
-  elements.detailImage.src = item.src;
-  elements.detailImage.alt = `${item.title}，${item.categoryLabel}`;
+function updateDetailMetadata(item, index) {
   elements.detailTitle.textContent = item.title;
-  elements.detailCounter.textContent = `${String(state.detailIndex + 1).padStart(2, "0")} / ${String(state.activeItems.length).padStart(2, "0")}`;
+  elements.detailCounter.textContent = `${String(index + 1).padStart(2, "0")} / ${String(state.activeItems.length).padStart(2, "0")}`;
   elements.detailMeta.textContent = `${item.categoryLabel} · ${item.date}`;
   document.title = "shanzoon.art";
 
   // 线性翻页：到列表两端时隐藏对应按钮，避免死胡同或环形瞬移。
-  elements.detailPrevious.hidden = state.detailIndex <= 0;
-  elements.detailNext.hidden = state.detailIndex >= state.activeItems.length - 1;
+  elements.detailPrevious.hidden = index <= 0;
+  elements.detailNext.hidden = index >= state.activeItems.length - 1;
+}
+
+function resetDetailFrame(item) {
+  detailSwitchSeq += 1;
+  detailPendingIndex = null;
+  detailFailedIndex = null;
+  detailActiveLayer = null;
+  detailLayers.forEach((layer) => {
+    cancelImageLoad(layer);
+    layer.classList.remove("is-active");
+    layer.removeAttribute("src");
+    layer.alt = "";
+    layer.setAttribute("aria-hidden", "true");
+  });
+  elements.detailImageWrap.classList.add("is-empty");
+  elements.detailImageWrap.classList.remove("is-loading");
+  elements.detailImageWrap.setAttribute("aria-busy", "false");
+  if (item.width && item.height) {
+    elements.detailImageWrap.style.setProperty("--detail-aspect", `${item.width} / ${item.height}`);
+  } else {
+    elements.detailImageWrap.style.removeProperty("--detail-aspect");
+  }
+  elements.detailCounter.textContent = "";
+  elements.detailTitle.textContent = "";
+  elements.detailMeta.textContent = "";
+  elements.detailPrevious.hidden = true;
+  elements.detailNext.hidden = true;
+  setDetailStatus();
+}
+
+function cancelDetailRequest(releaseActiveLayer = false) {
+  detailSwitchSeq += 1;
+  detailPendingIndex = null;
+  detailFailedIndex = null;
+  detailLayers
+    .filter((layer) => releaseActiveLayer || layer !== detailActiveLayer)
+    .forEach((layer) => {
+      cancelImageLoad(layer, true);
+      layer.classList.remove("is-active");
+      layer.setAttribute("aria-hidden", "true");
+    });
+  if (releaseActiveLayer) detailActiveLayer = null;
+  elements.detailImageWrap.classList.remove("is-loading");
+  elements.detailImageWrap.setAttribute("aria-busy", "false");
+}
+
+function preloadDetailNeighbors(index) {
+  setAdjacentPreloads([
+    state.activeItems[index - 1],
+    state.activeItems[index + 1],
+  ]);
+}
+
+function restoreDetailControlFocus(focusedControl) {
+  if (focusedControl === elements.detailPrevious && elements.detailPrevious.hidden) {
+    (elements.detailNext.hidden ? elements.detailTitle : elements.detailNext).focus({ preventScroll: true });
+  }
+  if (focusedControl === elements.detailNext && elements.detailNext.hidden) {
+    (elements.detailPrevious.hidden ? elements.detailTitle : elements.detailPrevious).focus({ preventScroll: true });
+  }
+}
+
+async function requestDetailItem(index, updateHash = true, focusHeading = false) {
+  if (!state.activeItems.length) return;
+  const targetIndex = Math.min(Math.max(index, 0), state.activeItems.length - 1);
+  const item = state.activeItems[targetIndex];
+  const items = state.activeItems;
+  const scope = state.detailScope;
+  const focusedControl = document.activeElement;
+  const hasVisibleImage = Boolean(detailActiveLayer);
+  const seq = ++detailSwitchSeq;
+
+  setAdjacentPreloads([]);
+  detailLayers
+    .filter((layer) => layer !== detailActiveLayer && imageLoadControllers.has(layer))
+    .forEach((layer) => cancelImageLoad(layer, true));
+  state.detailTargetIndex = targetIndex;
+  detailPendingIndex = targetIndex;
+  detailFailedIndex = null;
+  elements.detailImageWrap.classList.add("is-loading");
+  elements.detailImageWrap.setAttribute("aria-busy", "true");
+  if (!detailActiveLayer && item.width && item.height) {
+    elements.detailImageWrap.style.setProperty("--detail-aspect", `${item.width} / ${item.height}`);
+  }
+  setDetailStatus(detailActiveLayer ? "" : "正在加载图像");
+
+  if (hasVisibleImage) {
+    await waitForSettledSwitchIntent();
+    if (seq !== detailSwitchSeq || state.page !== "detail" || state.activeItems !== items || state.detailScope !== scope) return;
+  }
+
+  const targetLayer = detailActiveLayer
+    ? detailLayers.find((layer) => layer !== detailActiveLayer)
+    : detailLayers[0];
+  try {
+    await loadAndDecodeImage(targetLayer, item, detailActiveLayer ? "auto" : "high");
+    if (seq !== detailSwitchSeq || state.page !== "detail" || state.activeItems !== items || state.detailScope !== scope) return;
+
+    const outgoing = detailActiveLayer;
+    outgoing?.classList.remove("is-active");
+    outgoing?.setAttribute("aria-hidden", "true");
+    targetLayer.alt = `${item.title}，${item.categoryLabel}`;
+    targetLayer.removeAttribute("aria-hidden");
+    targetLayer.classList.add("is-active");
+    detailActiveLayer = targetLayer;
+    if (outgoing) releaseInactiveLayer(outgoing, () => outgoing === detailActiveLayer, 0);
+    state.detailIndex = targetIndex;
+    state.detailTargetIndex = targetIndex;
+    detailPendingIndex = null;
+    elements.detailImageWrap.classList.remove("is-loading", "is-empty");
+    elements.detailImageWrap.setAttribute("aria-busy", "false");
+    setDetailStatus();
+    updateDetailMetadata(item, targetIndex);
+    if (updateHash) history.replaceState(history.state, "", detailHash(scope, item));
+    preloadDetailNeighbors(targetIndex);
+    restoreDetailControlFocus(focusedControl);
+    if (focusHeading) focusPageHeading(elements.detailTitle);
+  } catch (error) {
+    if (seq !== detailSwitchSeq || error.name === "AbortError") return;
+    detailPendingIndex = null;
+    detailFailedIndex = targetIndex;
+    detailFailedUpdateHash = updateHash;
+    state.detailTargetIndex = detailActiveLayer ? state.detailIndex : targetIndex;
+    elements.detailImageWrap.classList.remove("is-loading");
+    elements.detailImageWrap.setAttribute("aria-busy", "false");
+    setDetailStatus(detailActiveLayer ? "新图加载失败，仍显示上一张。" : "图像加载失败。", true);
+  }
 }
 
 function focusPageHeading(heading) {
@@ -312,6 +543,7 @@ function focusPageHeading(heading) {
 export function navigateHome(updateHash = true, restorePosition = false) {
   const previousPage = state.page;
   setPage("home");
+  renderDailyItem();
   document.title = "shanzoon.art";
   if (updateHash && location.hash !== "#home") history.pushState({ source: previousPage }, "", "#home");
   if (restorePosition) restoreScroll(state.homeScrollY);
@@ -341,40 +573,42 @@ function navigateToDetail(item, scope, updateHash = true) {
   if (itemIndex < 0) return;
 
   const previousPage = state.page;
+  cancelDetailRequest();
   if (previousPage === "home") state.homeScrollY = scrollY;
   if (previousPage === "collection") state.archiveScrollY = scrollY;
 
   state.activeItems = scopedItems;
-  state.detailIndex = itemIndex;
+  state.detailTargetIndex = itemIndex;
   state.detailScope = scope;
   state.detailSource = previousPage === "collection" ? "collection" : "home";
+  if (previousPage !== "detail") resetDetailFrame(item);
   setPage("detail");
-  renderDetail();
 
   if (updateHash) history.pushState({ source: previousPage }, "", detailHash(scope, item));
+  requestDetailItem(itemIndex, previousPage === "detail" && updateHash, previousPage !== "detail");
   window.scrollTo({ top: 0, left: 0 });
-  if (previousPage !== "detail") focusPageHeading(elements.detailTitle);
 }
 
 function selectDetail(index, updateHash = true) {
   if (!state.activeItems.length) return;
-  const focusedControl = document.activeElement;
-  state.detailIndex = Math.min(Math.max(index, 0), state.activeItems.length - 1);
-  renderDetail();
-  if (updateHash) {
-    const item = state.activeItems[state.detailIndex];
-    history.replaceState(history.state, "", detailHash(state.detailScope, item));
+  const targetIndex = Math.min(Math.max(index, 0), state.activeItems.length - 1);
+  if (targetIndex === detailPendingIndex) return;
+  if (targetIndex === state.detailIndex && detailActiveLayer) {
+    if (detailPendingIndex !== null) cancelDetailRequest();
+    state.detailTargetIndex = state.detailIndex;
+    setDetailStatus();
+    return;
   }
-  if (focusedControl === elements.detailPrevious && elements.detailPrevious.hidden) {
-    (elements.detailNext.hidden ? elements.detailTitle : elements.detailNext).focus({ preventScroll: true });
-  }
-  if (focusedControl === elements.detailNext && elements.detailNext.hidden) {
-    (elements.detailPrevious.hidden ? elements.detailTitle : elements.detailPrevious).focus({ preventScroll: true });
-  }
+  requestDetailItem(targetIndex, updateHash);
 }
 
 export function moveDetail(direction) {
-  selectDetail(state.detailIndex + direction);
+  selectDetail(state.detailTargetIndex + direction);
+}
+
+export function retryDetailImage() {
+  if (detailFailedIndex === null || state.page !== "detail") return;
+  requestDetailItem(detailFailedIndex, detailFailedUpdateHash, !detailActiveLayer);
 }
 
 export function routeFromHash() {

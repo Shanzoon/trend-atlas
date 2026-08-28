@@ -84,6 +84,32 @@ describe("collection pagination", () => {
   });
 });
 
+describe("image loading contract", () => {
+  it("decodes into reusable layers and bounds adjacent prefetching", async () => {
+    const views = await readFile(path.join(appRoot, "views.js"), "utf8");
+    const dailyRequest = views.slice(views.indexOf("async function requestDailyItem"), views.indexOf("function cancelDailyRequest"));
+    const detailRequest = views.slice(views.indexOf("async function requestDetailItem"), views.indexOf("function focusPageHeading"));
+
+    assert.match(views, /await loadAndDecodeImage\(targetLayer, item/);
+    assert.match(views, /const MAX_ADJACENT_PRELOADS = 2;/);
+    assert.match(views, /state\.detailTargetIndex = targetIndex;[\s\S]*await loadAndDecodeImage[\s\S]*state\.detailIndex = targetIndex;/);
+    assert.ok(dailyRequest.indexOf("await waitForSettledSwitchIntent()") < dailyRequest.indexOf("const targetLayer"), "daily target layer must be chosen after rapid intent settles");
+    assert.ok(detailRequest.indexOf("await waitForSettledSwitchIntent()") < detailRequest.indexOf("const targetLayer"), "detail target layer must be chosen after rapid intent settles");
+    assert.doesNotMatch(views, /new Image\s*\(/, "switching should reuse the two DOM image layers");
+    assert.doesNotMatch(views, /offsetWidth/, "image transitions should not force synchronous layout");
+  });
+
+  it("defers folder cover requests until the archive scene approaches", async () => {
+    const views = await readFile(path.join(appRoot, "views.js"), "utf8");
+    const home = await readFile(path.join(appRoot, "home.js"), "utf8");
+    const app = await readFile(path.join(appRoot, "app.js"), "utf8");
+
+    assert.doesNotMatch(views, /image\.src = definition\.preview/);
+    assert.match(home, /function hydrateFolderPreviews\(\)[\s\S]*mainImage\.src = definition\.preview/);
+    assert.doesNotMatch(app, /renderDailyItem\(\);/, "routing should decide whether the home image is needed");
+  });
+});
+
 function waitForReady(timeoutMs = 8000) {
   return new Promise((resolve, reject) => {
     const started = Date.now();
@@ -241,6 +267,7 @@ describe("home page", () => {
       assert.ok(html.includes(`https://media.shanzoon.art/site-assets/${image}`), `missing R2 product image ${image}`);
     }
     assert.ok(html.includes('<script type="module" src="/app.js">'), "expected /app.js module entry");
+    assert.ok(html.includes('<link rel="preconnect" href="https://media.shanzoon.art" />'), "expected an early media origin connection");
     assert.match(html, /<img alt="" loading="lazy" decoding="async" \/>/, "collection images should remain lazy-loaded");
     assert.ok(html.includes('id="collectionMore"'), "expected a manual archive pagination control");
     assert.ok(html.includes('id="collectionFilters"'), "expected a collection category filter control");
@@ -253,6 +280,8 @@ describe("home page", () => {
     assert.ok(!html.includes('class="detail-browser"'), "detail page should not render the old thumbnail browser");
     assert.ok(html.includes('class="detail-nav previous"'), "detail page should expose the previous image control");
     assert.ok(html.includes('class="detail-nav next"'), "detail page should expose the next image control");
+    assert.ok(html.includes('id="detailImageIncoming"'), "detail switching should have a reusable decoded incoming layer");
+    assert.ok(html.includes('id="detailRetry"'), "detail failures should expose a retry control");
     assert.ok(html.indexOf('id="detailPrevious"') < html.indexOf('class="detail-layout"'), "detail navigation should sit outside the artwork layout");
     const stylesheetOrder = ["/base.css", "/home.css", "/systems.css", "/collection.css", "/detail.css"];
     const styleIndexes = stylesheetOrder.map((href) => html.indexOf(`href="${href}"`));

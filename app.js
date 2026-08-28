@@ -2,7 +2,7 @@ import { elements } from "./elements.js";
 import { invalidateMotionLayout, scheduleStoryUpdate } from "./home.js";
 import { mobileLayout, reduceMotion } from "./media.js";
 import { state } from "./state.js";
-import { hydrateFolderCovers, initCollectionFilters, moveDetail, navigateHome, navigateToArchive, renderDailyItem, renderNextCollectionPage, routeFromHash, switchDailyItem } from "./views.js";
+import { hydrateFolderCovers, initCollectionFilters, moveDetail, navigateHome, navigateToArchive, renderNextCollectionPage, retryDetailImage, routeFromHash, switchDailyItem } from "./views.js";
 
 document.documentElement.classList.add("motion-ready");
 if ("scrollRestoration" in history) history.scrollRestoration = "manual";
@@ -37,6 +37,7 @@ elements.dailyImageWrap.addEventListener("keydown", (event) => {
 elements.dailyRefresh.addEventListener("click", switchDailyItem);
 elements.detailPrevious.addEventListener("click", () => moveDetail(-1));
 elements.detailNext.addEventListener("click", () => moveDetail(1));
+elements.detailRetry.addEventListener("click", retryDetailImage);
 
 elements.detailImageWrap.addEventListener("pointermove", (event) => {
   if (reduceMotion.matches) return;
@@ -78,7 +79,6 @@ async function initialize() {
     if (!state.allItems.length) throw new Error("归档中没有图片");
     state.archiveReady = true;
     invalidateMotionLayout();
-    renderDailyItem();
     routeFromHash();
   } catch (error) {
     elements.homeStatus.textContent = `图像归档读取失败：${error.message}`;

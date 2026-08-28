@@ -42,21 +42,51 @@ function hydrateFolderPreviews() {
     const definition = categoryFor(button.dataset.category);
     const categoryItems = itemsForScope(definition.id);
     const previewItems = categoryItems.filter((item) => item.src !== definition.cover).slice(0, 2);
+    const mainImage = button.querySelector(".is-preview-main img");
 
-    button.querySelectorAll(".is-preview-extra").forEach((layer) => layer.remove());
-    button.classList.toggle("has-preview-stack", previewItems.length === 2);
+    if (mainImage && !mainImage.getAttribute("src")) {
+      mainImage.loading = "eager";
+      mainImage.decoding = "async";
+      mainImage.fetchPriority = "low";
+      mainImage.src = definition.preview;
+    }
 
-    previewItems.forEach((item, index) => {
-      const layer = document.createElement("span");
-      const image = document.createElement("img");
-      layer.className = `folder-image is-preview-extra ${index === 0 ? "is-preview-left" : "is-preview-right"}`;
-      image.src = item.src;
-      image.alt = "";
-      image.loading = "lazy";
-      image.decoding = "async";
-      layer.append(image);
-      button.querySelector(".folder-front").before(layer);
-    });
+    if (previewItems.length !== 2) return;
+    button.classList.add("has-preview-stack");
+    let previewTimer = 0;
+    const loadHoverPreviews = () => {
+      previewTimer = 0;
+      if (button.querySelector(".is-preview-extra")) return;
+      previewItems.forEach((item, index) => {
+        const layer = document.createElement("span");
+        const image = document.createElement("img");
+        layer.className = `folder-image is-preview-extra ${index === 0 ? "is-preview-left" : "is-preview-right"}`;
+        image.src = item.src;
+        image.alt = "";
+        image.decoding = "async";
+        image.fetchPriority = "low";
+        layer.append(image);
+        button.querySelector(".folder-front").before(layer);
+      });
+    };
+    const scheduleHoverPreviews = () => {
+      if (previewTimer || button.querySelector(".is-preview-extra")) return;
+      previewTimer = window.setTimeout(loadHoverPreviews, 240);
+    };
+    const cancelHoverPreviews = () => {
+      if (previewTimer) {
+        clearTimeout(previewTimer);
+        previewTimer = 0;
+      }
+      button.querySelectorAll(".is-preview-extra").forEach((layer) => {
+        layer.querySelector("img")?.removeAttribute("src");
+        layer.remove();
+      });
+    };
+    button.addEventListener("pointerenter", scheduleHoverPreviews);
+    button.addEventListener("pointerleave", cancelHoverPreviews);
+    button.addEventListener("pointerdown", cancelHoverPreviews);
+    button.addEventListener("click", cancelHoverPreviews);
   });
 }
 

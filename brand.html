@@ -6,6 +6,7 @@
     <meta name="theme-color" content="oklch(0.055 0 0)" />
     <meta name="description" content="张丰（Shanzoon）的个人主页：在技术、图像与叙事之间，把模糊的想法做成真实的东西。" />
     <link rel="icon" type="image/svg+xml" href="/assets/shanzoon-glyph-favicon.svg" />
+    <link rel="preconnect" href="https://media.shanzoon.art" />
     <title>shanzoon.art</title>
     <link rel="stylesheet" href="/base.css" />
     <link rel="stylesheet" href="/home.css" />
@@ -149,12 +150,18 @@
         <button class="collection-more" id="collectionMore" type="button" hidden>LOAD MORE</button>
       </section>
 
-      <section class="detail-page" id="detailPage" hidden aria-labelledby="detailTitle">
+      <section class="detail-page" id="detailPage" hidden aria-label="图像详情">
         <button class="detail-nav previous" id="detailPrevious" type="button" aria-label="上一张图片" hidden>‹</button>
         <button class="detail-nav next" id="detailNext" type="button" aria-label="下一张图片" hidden>›</button>
         <div class="detail-layout">
           <div class="detail-image-wrap" id="detailImageWrap">
-            <img id="detailImage" alt="" decoding="async" />
+            <img class="detail-layer" id="detailImage" alt="" decoding="async" />
+            <img class="detail-layer" id="detailImageIncoming" alt="" decoding="async" aria-hidden="true" />
+            <span class="detail-placeholder" aria-hidden="true"></span>
+            <div class="detail-load-state">
+              <p id="detailStatus" role="status"></p>
+              <button class="detail-retry" id="detailRetry" type="button" hidden>重新加载</button>
+            </div>
           </div>
           <div class="detail-copy">
             <span id="detailCounter"></span>

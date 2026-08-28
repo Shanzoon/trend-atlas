@@ -7,6 +7,7 @@ export const state = {
   activeItems: [],
   dailyItem: null,
   detailIndex: 0,
+  detailTargetIndex: 0,
   detailScope: "all",
   detailSource: "home",
   collectionScope: "all",
