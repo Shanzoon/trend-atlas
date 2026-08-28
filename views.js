@@ -1,8 +1,8 @@
-import { categoryDefinitions, categoryFor } from "./categories.js";
-import { elements } from "./elements.js";
-import { scheduleStoryUpdate } from "./home.js";
-import { itemsForScope, nextCollectionPageEnd, state } from "./state.js";
-import { hashString, stableDateKey } from "./utils.js";
+import { categoryDefinitions, categoryFor } from "./categories.js?v=20260829-image2";
+import { elements } from "./elements.js?v=20260829-image2";
+import { scheduleStoryUpdate } from "./home.js?v=20260829-image2";
+import { itemsForScope, nextCollectionPageEnd, state } from "./state.js?v=20260829-image2";
+import { hashString, stableDateKey } from "./utils.js?v=20260829-image2";
 
 let dailyDeck = [];
 const dailyLayers = [elements.dailyImage, elements.dailyImageIncoming];

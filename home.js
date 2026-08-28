@@ -1,9 +1,9 @@
-import { categoryFor } from "./categories.js";
-import { elements } from "./elements.js";
-import { mobileLayout, reduceMotion } from "./media.js";
-import { itemsForScope, state } from "./state.js";
-import { archiveTimeline, progressWithHold, progressWithHolds, scrollCueOpacity, systemsTimeline } from "./timelines.js";
-import { clamp, clearMotionStyles, lerp, setButtonInteractive, setContainerInteractive, smoothstep } from "./utils.js";
+import { categoryFor } from "./categories.js?v=20260829-image2";
+import { elements } from "./elements.js?v=20260829-image2";
+import { mobileLayout, reduceMotion } from "./media.js?v=20260829-image2";
+import { itemsForScope, state } from "./state.js?v=20260829-image2";
+import { archiveTimeline, progressWithHold, progressWithHolds, scrollCueOpacity, systemsTimeline } from "./timelines.js?v=20260829-image2";
+import { clamp, clearMotionStyles, lerp, setButtonInteractive, setContainerInteractive, smoothstep } from "./utils.js?v=20260829-image2";
 
 const ARCHIVE_STAGE_SCALE = 0.84;
 

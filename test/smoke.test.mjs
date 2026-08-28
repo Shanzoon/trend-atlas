@@ -12,6 +12,7 @@ import { COLLECTION_PAGE_SIZE, nextCollectionPageEnd } from "../state.js";
 import { progressWithHold, progressWithHolds, scrollCueOpacity, systemsTimeline } from "../timelines.js";
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const ASSET_VERSION = "20260829-image2";
 
 const [dreamscape, lens] = categoryDefinitions;
 
@@ -107,6 +108,20 @@ describe("image loading contract", () => {
     assert.doesNotMatch(views, /image\.src = definition\.preview/);
     assert.match(home, /function hydrateFolderPreviews\(\)[\s\S]*mainImage\.src = definition\.preview/);
     assert.doesNotMatch(app, /renderDailyItem\(\);/, "routing should decide whether the home image is needed");
+  });
+
+  it("keeps the browser module graph on one cache version", async () => {
+    for (const file of ["app.js", "home.js", "views.js", "utils.js"]) {
+      const source = await readFile(path.join(appRoot, file), "utf8");
+      const imports = [...source.matchAll(/from "(\.\/[^\"]+)"/g)].map((match) => match[1]);
+      for (const specifier of imports) {
+        assert.ok(specifier.endsWith(`?v=${ASSET_VERSION}`), `${file} has an unversioned browser import: ${specifier}`);
+      }
+    }
+
+    const headers = await readFile(path.join(appRoot, "_headers"), "utf8");
+    assert.match(headers, /\/\*\.js[\s\S]*Cache-Control: public, max-age=0, must-revalidate/);
+    assert.match(headers, /\/\*\.css[\s\S]*Cache-Control: public, max-age=0, must-revalidate/);
   });
 });
 
@@ -266,7 +281,7 @@ describe("home page", () => {
     for (const image of ["project-lingjing-ai.webp", "project-drama-data.webp", "project-loomicc-card-v2.webp"]) {
       assert.ok(html.includes(`https://media.shanzoon.art/site-assets/${image}`), `missing R2 product image ${image}`);
     }
-    assert.ok(html.includes('<script type="module" src="/app.js">'), "expected /app.js module entry");
+    assert.ok(html.includes(`<script type="module" src="/app.js?v=${ASSET_VERSION}">`), "expected versioned /app.js module entry");
     assert.ok(html.includes('<link rel="preconnect" href="https://media.shanzoon.art" />'), "expected an early media origin connection");
     assert.match(html, /<img alt="" loading="lazy" decoding="async" \/>/, "collection images should remain lazy-loaded");
     assert.ok(html.includes('id="collectionMore"'), "expected a manual archive pagination control");
@@ -284,7 +299,7 @@ describe("home page", () => {
     assert.ok(html.includes('id="detailRetry"'), "detail failures should expose a retry control");
     assert.ok(html.indexOf('id="detailPrevious"') < html.indexOf('class="detail-layout"'), "detail navigation should sit outside the artwork layout");
     const stylesheetOrder = ["/base.css", "/home.css", "/systems.css", "/collection.css", "/detail.css"];
-    const styleIndexes = stylesheetOrder.map((href) => html.indexOf(`href="${href}"`));
+    const styleIndexes = stylesheetOrder.map((href) => html.indexOf(`href="${href}?v=${ASSET_VERSION}"`));
     for (let index = 0; index < styleIndexes.length; index += 1) {
       assert.ok(styleIndexes[index] !== -1, `expected stylesheet link to ${stylesheetOrder[index]}`);
       if (index > 0) assert.ok(styleIndexes[index] > styleIndexes[index - 1], `${stylesheetOrder[index]} must come after ${stylesheetOrder[index - 1]}`);

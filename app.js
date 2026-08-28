@@ -1,8 +1,8 @@
-import { elements } from "./elements.js";
-import { invalidateMotionLayout, scheduleStoryUpdate } from "./home.js";
-import { mobileLayout, reduceMotion } from "./media.js";
-import { state } from "./state.js";
-import { hydrateFolderCovers, initCollectionFilters, moveDetail, navigateHome, navigateToArchive, renderNextCollectionPage, retryDetailImage, routeFromHash, switchDailyItem } from "./views.js";
+import { elements } from "./elements.js?v=20260829-image2";
+import { invalidateMotionLayout, scheduleStoryUpdate } from "./home.js?v=20260829-image2";
+import { mobileLayout, reduceMotion } from "./media.js?v=20260829-image2";
+import { state } from "./state.js?v=20260829-image2";
+import { hydrateFolderCovers, initCollectionFilters, moveDetail, navigateHome, navigateToArchive, renderNextCollectionPage, retryDetailImage, routeFromHash, switchDailyItem } from "./views.js?v=20260829-image2";
 
 document.documentElement.classList.add("motion-ready");
 if ("scrollRestoration" in history) history.scrollRestoration = "manual";
