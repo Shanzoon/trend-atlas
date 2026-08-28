@@ -1,10 +1,10 @@
-import { categoryDefinitions, categoryFor } from "./categories.js?v=20260829-thumbhashfix1";
-import { elements } from "./elements.js?v=20260829-thumbhashfix1";
-import { scheduleStoryUpdate } from "./home.js?v=20260829-thumbhashfix1";
-import { siteConfig } from "./site.js?v=20260829-thumbhashfix1";
-import { itemsForScope, nextCollectionPageEnd, state } from "./state.js?v=20260829-thumbhashfix1";
-import { renderThumbHash } from "./thumbhash.js?v=20260829-thumbhashfix1";
-import { hashString, stableDateKey } from "./utils.js?v=20260829-thumbhashfix1";
+import { categoryDefinitions, categoryFor } from "./categories.js?v=20260829-loadingfallback1";
+import { elements } from "./elements.js?v=20260829-loadingfallback1";
+import { scheduleStoryUpdate } from "./home.js?v=20260829-loadingfallback1";
+import { siteConfig } from "./site.js?v=20260829-loadingfallback1";
+import { itemsForScope, nextCollectionPageEnd, state } from "./state.js?v=20260829-loadingfallback1";
+import { renderThumbHash } from "./thumbhash.js?v=20260829-loadingfallback1";
+import { hashString, stableDateKey } from "./utils.js?v=20260829-loadingfallback1";
 
 let dailyDeck = [];
 const dailyLayers = [elements.dailyImage, elements.dailyImageIncoming];
@@ -19,8 +19,10 @@ let detailFailedIndex = null;
 let detailFailedUpdateHash = true;
 const imageLoadControllers = new WeakMap();
 let adjacentPreloadLinks = [];
-const MAX_ADJACENT_PRELOADS = 2;
+const MAX_DAILY_PREFETCHES = 1;
+const MAX_DETAIL_NEIGHBOR_PREFETCHES = 4;
 const SWITCH_INTENT_DELAY_MS = 40;
+const IMAGE_LOADING_FALLBACK_DELAY_MS = 240;
 const DETAIL_LAYER_RELEASE_DELAY_MS = 180;
 const reduceImageMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const placeholderPhases = new WeakMap();
@@ -38,17 +40,38 @@ function showImagePlaceholder(canvas, sweep, item, accessibleLabel = "") {
   }
   const phase = placeholderPhases.get(canvas) === "a" ? "b" : "a";
   placeholderPhases.set(canvas, phase);
-  canvas.classList.remove("is-hiding", "is-reveal-a", "is-reveal-b");
+  canvas.classList.remove("is-hiding");
   sweep.classList.remove("is-sweep-a", "is-sweep-b");
-  canvas.classList.add("is-visible", `is-reveal-${phase}`);
+  canvas.classList.add("is-visible");
   sweep.classList.add(`is-sweep-${phase}`);
+}
+
+function scheduleImageLoadingFallback(canvas, sweep, item, shouldShow, accessibleLabel = "") {
+  let timer = setTimeout(() => {
+    timer = null;
+    if (shouldShow()) showImagePlaceholder(canvas, sweep, item, accessibleLabel);
+  }, IMAGE_LOADING_FALLBACK_DELAY_MS);
+
+  return () => {
+    if (timer !== null) clearTimeout(timer);
+    timer = null;
+  };
+}
+
+function refreshVisibleImageLoadingFallback(canvas, sweep, item, accessibleLabel = "") {
+  if (!canvas.classList.contains("is-visible")) return false;
+  showImagePlaceholder(canvas, sweep, item, accessibleLabel);
+  return true;
+}
+
+function stopImagePlaceholderSweep(sweep) {
+  sweep.classList.remove("is-sweep-a", "is-sweep-b");
 }
 
 function hideImagePlaceholder(canvas, sweep, immediate = false) {
   clearTimeout(placeholderHideTimers.get(canvas));
   placeholderHideTimers.delete(canvas);
-  canvas.classList.remove("is-reveal-a", "is-reveal-b");
-  sweep.classList.remove("is-sweep-a", "is-sweep-b");
+  stopImagePlaceholderSweep(sweep);
   canvas.setAttribute("aria-hidden", "true");
   canvas.removeAttribute("aria-label");
   if (immediate || reduceImageMotion.matches || !canvas.classList.contains("is-visible")) {
@@ -97,6 +120,9 @@ function releaseInactiveLayer(image, isActive, delay) {
 
 function loadAndDecodeImage(image, item, priority = "auto") {
   cancelImageLoad(image);
+  image.getAnimations?.().forEach((animation) => {
+    if (animation.transitionProperty === "opacity") animation.cancel();
+  });
   const controller = new AbortController();
   imageLoadControllers.set(image, controller);
   const expectedSrc = new URL(item.src, location.href).href;
@@ -140,10 +166,10 @@ function loadAndDecodeImage(image, item, priority = "auto") {
     });
 }
 
-function setAdjacentPreloads(items) {
+function setAdjacentPreloads(items, limit = MAX_DETAIL_NEIGHBOR_PREFETCHES) {
   adjacentPreloadLinks.forEach((link) => link.remove());
   adjacentPreloadLinks = [...new Map(items.filter(Boolean).map((item) => [item.src, item])).values()]
-    .slice(0, MAX_ADJACENT_PRELOADS)
+    .slice(0, limit)
     .map((item) => {
       const link = document.createElement("link");
       link.rel = "prefetch";
@@ -166,10 +192,9 @@ function setDailyLayerAccessibility(visibleLayer) {
   });
 }
 
-function setDailyStatus(message = "", isError = false, isLoading = false) {
+function setDailyStatus(message = "", isError = false) {
   elements.homeStatus.textContent = message;
   elements.homeStatus.classList.toggle("is-error", isError);
-  elements.homeStatus.classList.toggle("is-loading", isLoading);
 }
 
 function updateDailyControlLabel(item, isLoading = false) {
@@ -211,7 +236,7 @@ function preloadNextDailyItem() {
     return;
   }
   if (!dailyDeck.length) dailyDeck = shuffle(candidates.filter((item) => item !== state.dailyItem));
-  setAdjacentPreloads([dailyDeck.at(-1)]);
+  setAdjacentPreloads([dailyDeck.at(-1)], MAX_DAILY_PREFETCHES);
 }
 
 function commitDailyItem(item, layer) {
@@ -235,28 +260,45 @@ function commitDailyItem(item, layer) {
 
 async function requestDailyItem(item) {
   const seq = ++dailySwitchSeq;
-  setAdjacentPreloads([]);
   dailyLayers
     .filter((layer) => layer !== dailyActiveLayer && imageLoadControllers.has(layer))
     .forEach((layer) => cancelImageLoad(layer, true));
   dailyPendingItem = item;
   elements.dailyArt.hidden = false;
-  dailyActiveLayer?.setAttribute("aria-hidden", "true");
-  showImagePlaceholder(elements.dailyPlaceholder, elements.dailyLoadSweep, item);
+  const hasVisibleImage = Boolean(state.dailyItem && dailyActiveLayer?.classList.contains("is-active"));
   elements.dailyImageWrap.classList.add("is-loading");
   elements.dailyImageWrap.setAttribute("aria-busy", "true");
-  updateDailyControlLabel(item, true);
-  setDailyStatus(state.dailyItem ? "正在加载下一张图像" : "正在加载今日精选", false, true);
+  if (!hasVisibleImage) updateDailyControlLabel(item, true);
+  setDailyStatus();
+
+  const hasVisibleFallback = !hasVisibleImage && refreshVisibleImageLoadingFallback(
+    elements.dailyPlaceholder,
+    elements.dailyLoadSweep,
+    item,
+  );
+  const cancelLoadingFallback = hasVisibleImage || hasVisibleFallback
+    ? () => {}
+    : scheduleImageLoadingFallback(
+      elements.dailyPlaceholder,
+      elements.dailyLoadSweep,
+      item,
+      () => seq === dailySwitchSeq && state.page === "home" && !state.dailyItem,
+    );
 
   await waitForSettledSwitchIntent();
-  if (seq !== dailySwitchSeq || state.page !== "home") return;
+  if (seq !== dailySwitchSeq || state.page !== "home") {
+    cancelLoadingFallback();
+    return;
+  }
 
   const targetLayer = dailyLayers.find((layer) => layer !== dailyActiveLayer);
   try {
     await loadAndDecodeImage(targetLayer, item, state.dailyItem ? "auto" : "high");
+    cancelLoadingFallback();
     if (seq !== dailySwitchSeq || state.page !== "home") return;
     commitDailyItem(item, targetLayer);
   } catch (error) {
+    cancelLoadingFallback();
     if (seq !== dailySwitchSeq || error.name === "AbortError") return;
     cancelImageLoad(targetLayer, true);
     targetLayer.classList.remove("is-active");
@@ -271,6 +313,10 @@ async function requestDailyItem(item) {
       setDailyStatus("新图加载失败，当前精选保持不变。请再试一次。", true);
     } else {
       dailyDeck = shuffle(itemsForScope(dailyCategoryId).filter((candidate) => candidate !== item));
+      if (!elements.dailyPlaceholder.classList.contains("is-visible")) {
+        showImagePlaceholder(elements.dailyPlaceholder, elements.dailyLoadSweep, item);
+      }
+      stopImagePlaceholderSweep(elements.dailyLoadSweep);
       elements.dailyImageWrap.setAttribute("aria-label", `高清图加载失败：${item.title}，点击换一张`);
       setDailyStatus("高清图加载失败，暂时保留模糊预览。点击可再换一张。", true);
     }
@@ -494,7 +540,8 @@ function setDetailAspect(item) {
 if (typeof ResizeObserver === "function") {
   new ResizeObserver(() => {
     if (state.page !== "detail") return;
-    setDetailAspect(state.activeItems[state.detailTargetIndex] || state.activeItems[state.detailIndex]);
+    const visibleIndex = detailActiveLayer ? state.detailIndex : state.detailTargetIndex;
+    setDetailAspect(state.activeItems[visibleIndex]);
   }).observe(elements.detailImageWrap);
 }
 
@@ -546,6 +593,8 @@ function preloadDetailNeighbors(index) {
   setAdjacentPreloads([
     state.activeItems[index - 1],
     state.activeItems[index + 1],
+    state.activeItems[index - 2],
+    state.activeItems[index + 2],
   ]);
 }
 
@@ -567,32 +616,51 @@ async function requestDetailItem(index, updateHash = true, focusHeading = false)
   const focusedControl = document.activeElement;
   const seq = ++detailSwitchSeq;
 
-  setAdjacentPreloads([]);
   detailLayers
     .filter((layer) => layer !== detailActiveLayer && imageLoadControllers.has(layer))
     .forEach((layer) => cancelImageLoad(layer, true));
   state.detailTargetIndex = targetIndex;
   detailPendingIndex = targetIndex;
   detailFailedIndex = null;
-  detailActiveLayer?.setAttribute("aria-hidden", "true");
-  setDetailAspect(item);
-  showImagePlaceholder(
-    elements.detailPlaceholder,
-    elements.detailLoadSweep,
-    item,
-    `正在加载：${item.title}，${item.categoryLabel}`,
-  );
+  const hasVisibleImage = Boolean(detailActiveLayer?.classList.contains("is-active"));
+  if (!hasVisibleImage) setDetailAspect(item);
   elements.detailImageWrap.classList.add("is-loading");
   elements.detailImageWrap.setAttribute("aria-busy", "true");
-  updateDetailMetadata(item, targetIndex);
-  restoreDetailControlFocus(focusedControl);
+  if (!hasVisibleImage) {
+    updateDetailMetadata(item, targetIndex);
+    restoreDetailControlFocus(focusedControl);
+  }
   const loadingMessage = detailActiveLayer
     ? `正在加载 ${String(targetIndex + 1).padStart(2, "0")} / ${String(state.activeItems.length).padStart(2, "0")}`
     : "正在加载图像";
-  setDetailStatus(loadingMessage);
+  setDetailStatus();
+
+  const fallbackLabel = `${item.title} 的模糊预览，高清图仍在加载`;
+  const hasVisibleFallback = !hasVisibleImage && refreshVisibleImageLoadingFallback(
+    elements.detailPlaceholder,
+    elements.detailLoadSweep,
+    item,
+    fallbackLabel,
+  );
+  const cancelLoadingFallback = hasVisibleImage || hasVisibleFallback
+    ? () => {}
+    : scheduleImageLoadingFallback(
+      elements.detailPlaceholder,
+      elements.detailLoadSweep,
+      item,
+      () => seq === detailSwitchSeq
+        && state.page === "detail"
+        && state.activeItems === items
+        && state.detailScope === scope
+        && !detailActiveLayer,
+      fallbackLabel,
+    );
 
   await waitForSettledSwitchIntent();
-  if (seq !== detailSwitchSeq || state.page !== "detail" || state.activeItems !== items || state.detailScope !== scope) return;
+  if (seq !== detailSwitchSeq || state.page !== "detail" || state.activeItems !== items || state.detailScope !== scope) {
+    cancelLoadingFallback();
+    return;
+  }
   announceDetailStatus(loadingMessage);
 
   const targetLayer = detailActiveLayer
@@ -600,14 +668,16 @@ async function requestDetailItem(index, updateHash = true, focusHeading = false)
     : detailLayers[0];
   try {
     await loadAndDecodeImage(targetLayer, item, detailActiveLayer ? "auto" : "high");
+    cancelLoadingFallback();
     if (seq !== detailSwitchSeq || state.page !== "detail" || state.activeItems !== items || state.detailScope !== scope) return;
 
     const outgoing = detailActiveLayer;
-    outgoing?.classList.remove("is-active");
-    outgoing?.setAttribute("aria-hidden", "true");
+    setDetailAspect(item);
     targetLayer.alt = `${item.title}，${item.categoryLabel}`;
     targetLayer.removeAttribute("aria-hidden");
     targetLayer.classList.add("is-active");
+    outgoing?.classList.remove("is-active");
+    outgoing?.setAttribute("aria-hidden", "true");
     detailActiveLayer = targetLayer;
     if (outgoing) releaseInactiveLayer(outgoing, () => outgoing === detailActiveLayer, DETAIL_LAYER_RELEASE_DELAY_MS);
     state.detailIndex = targetIndex;
@@ -624,6 +694,7 @@ async function requestDetailItem(index, updateHash = true, focusHeading = false)
     restoreDetailControlFocus(focusedControl);
     if (focusHeading) focusPageHeading(elements.detailTitle);
   } catch (error) {
+    cancelLoadingFallback();
     if (seq !== detailSwitchSeq || error.name === "AbortError") return;
     cancelImageLoad(targetLayer, true);
     targetLayer.classList.remove("is-active");
@@ -640,6 +711,10 @@ async function requestDetailItem(index, updateHash = true, focusHeading = false)
       setDetailAspect(state.activeItems[state.detailIndex]);
       updateDetailMetadata(state.activeItems[state.detailIndex], state.detailIndex);
     } else {
+      if (!elements.detailPlaceholder.classList.contains("is-visible")) {
+        showImagePlaceholder(elements.detailPlaceholder, elements.detailLoadSweep, item);
+      }
+      stopImagePlaceholderSweep(elements.detailLoadSweep);
       const placeholderLabel = elements.detailPlaceholder.dataset.hasThumbhash === "true"
         ? `${item.title} 的模糊预览，高清图加载失败`
         : `${item.title} 的图像占位，高清图加载失败`;

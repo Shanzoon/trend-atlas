@@ -13,7 +13,7 @@ import { progressWithHold, progressWithHolds, scrollCueOpacity, systemsTimeline 
 import { thumbHashToRGBA as decodeLocalThumbHash } from "../thumbhash.js";
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const ASSET_VERSION = "20260829-thumbhashfix1";
+const ASSET_VERSION = "20260829-loadingfallback1";
 
 const [dreamscape, lens] = categoryDefinitions;
 
@@ -93,8 +93,10 @@ describe("image loading contract", () => {
     const detailRequest = views.slice(views.indexOf("async function requestDetailItem"), views.indexOf("function focusPageHeading"));
 
     assert.match(views, /await loadAndDecodeImage\(targetLayer, item/);
-    assert.match(views, /const MAX_ADJACENT_PRELOADS = 2;/);
+    assert.match(views, /const MAX_DAILY_PREFETCHES = 1;/);
+    assert.match(views, /const MAX_DETAIL_NEIGHBOR_PREFETCHES = 4;/);
     assert.match(views, /const SWITCH_INTENT_DELAY_MS = 40;/);
+    assert.match(views, /const IMAGE_LOADING_FALLBACK_DELAY_MS = 240;/);
     assert.match(views, /const DETAIL_LAYER_RELEASE_DELAY_MS = 180;/);
     assert.match(views, /state\.detailTargetIndex = targetIndex;[\s\S]*await loadAndDecodeImage[\s\S]*state\.detailIndex = targetIndex;/);
     assert.ok(dailyRequest.indexOf("await waitForSettledSwitchIntent()") < dailyRequest.indexOf("const targetLayer"), "daily target layer must be chosen after rapid intent settles");
@@ -103,28 +105,50 @@ describe("image loading contract", () => {
     assert.doesNotMatch(detailRequest, /if \(hasVisibleImage\)\s*\{\s*await waitForSettledSwitchIntent/);
     assert.doesNotMatch(views, /new Image\s*\(/, "switching should reuse the two DOM image layers");
     assert.doesNotMatch(views, /offsetWidth/, "image transitions should not force synchronous layout");
+    assert.match(views, /getAnimations\?\.\(\)[\s\S]*transitionProperty === "opacity"[\s\S]*animation\.cancel\(\)/, "a fading layer must become fully hidden before it is reused");
+    assert.doesNotMatch(dailyRequest, /setAdjacentPreloads\(\[\]\)/, "daily switching must keep its existing prefetch hint until commit");
+    assert.doesNotMatch(detailRequest, /setAdjacentPreloads\(\[\]\)/, "detail switching must keep its existing prefetch hints until commit");
+    assert.match(views, /setAdjacentPreloads\(\[dailyDeck\.at\(-1\)\], MAX_DAILY_PREFETCHES\)/, "daily prefetch should stay bounded to the next likely image");
+    assert.match(views, /function preloadDetailNeighbors\(index\)[\s\S]*index - 1[\s\S]*index \+ 1[\s\S]*index - 2[\s\S]*index \+ 2/, "detail should prefetch two neighbors in each direction, nearest first");
     assert.match(detailRequest, /releaseInactiveLayer\(outgoing,[\s\S]*DETAIL_LAYER_RELEASE_DELAY_MS\)/, "detail source cleanup must wait until the fade ends");
     assert.match(detailRequest, /cancelImageLoad\(targetLayer, true\)/, "failed detail targets must release broken sources");
     assert.doesNotMatch(dailyRequest, /dailyDeck\.push\(item\)/, "a failed daily image must not become the next target again");
     assert.match(dailyRequest, /dailyDeck = shuffle\(itemsForScope\(dailyCategoryId\)[\s\S]*candidate !== item[\s\S]*高清图加载失败：/, "cold daily failures must prepare another configured target and update the control label");
   });
 
-  it("shows the target ThumbHash and metadata before the final image request settles", async () => {
+  it("delays the cold-loading fallback and preserves an existing decoded image", async () => {
     const views = await readFile(path.join(appRoot, "views.js"), "utf8");
     const base = await readFile(path.join(appRoot, "base.css"), "utf8");
     const detailCss = await readFile(path.join(appRoot, "detail.css"), "utf8");
     const dailyRequest = views.slice(views.indexOf("async function requestDailyItem"), views.indexOf("function cancelDailyRequest"));
     const detailRequest = views.slice(views.indexOf("async function requestDetailItem"), views.indexOf("function focusPageHeading"));
 
-    assert.ok(dailyRequest.indexOf("showImagePlaceholder") < dailyRequest.indexOf("await waitForSettledSwitchIntent()"));
-    assert.ok(detailRequest.indexOf("showImagePlaceholder") < detailRequest.indexOf("await waitForSettledSwitchIntent()"));
-    assert.ok(detailRequest.indexOf("setDetailAspect(item)") < detailRequest.indexOf("showImagePlaceholder"), "the target media box must update before its ThumbHash is shown");
-    assert.ok(detailRequest.indexOf("updateDetailMetadata(item, targetIndex)") < detailRequest.indexOf("await waitForSettledSwitchIntent()"));
+    assert.match(views, /function scheduleImageLoadingFallback\([\s\S]*setTimeout\([\s\S]*IMAGE_LOADING_FALLBACK_DELAY_MS/);
+    assert.match(views, /function refreshVisibleImageLoadingFallback\([\s\S]*showImagePlaceholder\([\s\S]*return true;/, "a visible cold fallback must update immediately when its target changes");
+    assert.ok(dailyRequest.indexOf("scheduleImageLoadingFallback") < dailyRequest.indexOf("await waitForSettledSwitchIntent()"), "daily fallback delay must start from the user action");
+    assert.ok(detailRequest.indexOf("scheduleImageLoadingFallback") < detailRequest.indexOf("await waitForSettledSwitchIntent()"), "detail fallback delay must start from the user action");
+    assert.doesNotMatch(dailyRequest.slice(0, dailyRequest.indexOf("await loadAndDecodeImage")), /showImagePlaceholder/, "daily ThumbHash must not appear synchronously");
+    assert.doesNotMatch(detailRequest.slice(0, detailRequest.indexOf("await loadAndDecodeImage")), /showImagePlaceholder/, "detail ThumbHash must not appear synchronously");
+    assert.match(dailyRequest, /const hasVisibleImage =[\s\S]*hasVisibleImage \|\| hasVisibleFallback\s*\? \(\) => \{\}\s*:\s*scheduleImageLoadingFallback/, "an existing daily image must suppress the loading fallback");
+    assert.match(detailRequest, /const hasVisibleImage =[\s\S]*hasVisibleImage \|\| hasVisibleFallback\s*\? \(\) => \{\}\s*:\s*scheduleImageLoadingFallback/, "an existing detail image must suppress the loading fallback");
+    assert.match(dailyRequest, /const hasVisibleFallback = !hasVisibleImage && refreshVisibleImageLoadingFallback/, "daily cold navigation must keep a visible fallback bound to the current target");
+    assert.match(detailRequest, /const hasVisibleFallback = !hasVisibleImage && refreshVisibleImageLoadingFallback/, "detail cold navigation must keep a visible fallback bound to the current target");
+    assert.doesNotMatch(dailyRequest, /dailyActiveLayer\?\.setAttribute\("aria-hidden", "true"\)/, "the current daily image must remain accessible while its replacement decodes");
+    assert.doesNotMatch(detailRequest.slice(0, detailRequest.indexOf("await loadAndDecodeImage")), /detailActiveLayer\?\.setAttribute\("aria-hidden", "true"\)/, "the current detail image must remain accessible while its replacement decodes");
+    assert.ok(detailRequest.indexOf('targetLayer.classList.add("is-active")') < detailRequest.indexOf('outgoing?.setAttribute("aria-hidden", "true")'), "the decoded detail layer must become active before the old layer is hidden");
+    assert.match(detailRequest, /if \(!hasVisibleImage\) setDetailAspect\(item\);/, "warm detail switching must retain the current media geometry until commit");
+    assert.match(detailRequest, /if \(!hasVisibleImage\)\s*\{[\s\S]*updateDetailMetadata\(item, targetIndex\)/, "only a cold detail load may publish target metadata before decode");
+    assert.ok(detailRequest.lastIndexOf("updateDetailMetadata(item, targetIndex)") > detailRequest.indexOf("await loadAndDecodeImage"), "warm detail metadata must update only after decode");
     assert.match(views, /renderThumbHash\(canvas, item\.thumbhash\)/);
     assert.match(detailCss, /\.detail-media\s*\{[^}]*width:\s*100%;[^}]*height:\s*100%;[^}]*max-height:\s*100%;[^}]*aspect-ratio:\s*var\(--detail-aspect/s);
     assert.match(detailCss, /\.detail-media\s*\{[^}]*overflow:\s*hidden;/s);
     assert.doesNotMatch(detailCss, /\.detail-image-wrap\s*\{[^}]*background:/s, "the stable detail stage must not render as an image frame");
     assert.match(views, /const width = Math\.min\(availableWidth, availableHeight \* ratio\);[\s\S]*detailMedia\.style\.width[\s\S]*detailMedia\.style\.height/, "the target media box must fit both available dimensions");
+    assert.doesNotMatch(dailyRequest, /setDailyStatus\([^)]*正在加载/, "normal daily loading must not expose a visible loading message");
+    assert.doesNotMatch(detailRequest, /setDetailStatus\(loadingMessage\)/, "normal detail loading must not expose a visible loading message");
+    assert.match(base, /\.image-load-sweep\.is-sweep-a\s*\{[^}]*animation:[^;}]*infinite;/, "the sweep is the persistent slow-loading indicator");
+    assert.doesNotMatch(base, /thumbhash-develop/, "ThumbHash should not animate as a separate loading beat");
+    assert.doesNotMatch(detailCss, /\.detail-image-wrap\.is-loading[^}]*\.detail-load-state/, "detail loading must not render a second visible loading treatment");
     assert.match(base, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.image-load-sweep\s*\{\s*display:\s*none;/);
   });
 

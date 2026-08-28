@@ -1,4 +1,4 @@
-import { siteConfig } from "./site-profile.js?v=20260829-thumbhashfix1";
+import { siteConfig } from "./site-profile.js?v=20260829-loadingfallback1";
 
 function requireString(value, path) {
   if (typeof value !== "string" || !value.trim()) throw new Error(`${path} 必须是非空文本`);

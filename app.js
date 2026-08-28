@@ -1,9 +1,9 @@
-import { elements } from "./elements.js?v=20260829-thumbhashfix1";
-import { invalidateMotionLayout, scheduleStoryUpdate } from "./home.js?v=20260829-thumbhashfix1";
-import { mobileLayout, reduceMotion } from "./media.js?v=20260829-thumbhashfix1";
-import { applySiteConfig, siteConfig } from "./site.js?v=20260829-thumbhashfix1";
-import { state } from "./state.js?v=20260829-thumbhashfix1";
-import { hydrateFolderCovers, initCollectionFilters, moveDetail, navigateHome, navigateToArchive, renderNextCollectionPage, retryDetailImage, routeFromHash, switchDailyItem } from "./views.js?v=20260829-thumbhashfix1";
+import { elements } from "./elements.js?v=20260829-loadingfallback1";
+import { invalidateMotionLayout, scheduleStoryUpdate } from "./home.js?v=20260829-loadingfallback1";
+import { mobileLayout, reduceMotion } from "./media.js?v=20260829-loadingfallback1";
+import { applySiteConfig, siteConfig } from "./site.js?v=20260829-loadingfallback1";
+import { state } from "./state.js?v=20260829-loadingfallback1";
+import { hydrateFolderCovers, initCollectionFilters, moveDetail, navigateHome, navigateToArchive, renderNextCollectionPage, retryDetailImage, routeFromHash, switchDailyItem } from "./views.js?v=20260829-loadingfallback1";
 
 let configurationError;
 try {

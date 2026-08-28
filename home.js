@@ -1,9 +1,9 @@
-import { categoryFor } from "./categories.js?v=20260829-thumbhashfix1";
-import { elements } from "./elements.js?v=20260829-thumbhashfix1";
-import { mobileLayout, reduceMotion } from "./media.js?v=20260829-thumbhashfix1";
-import { itemsForScope, state } from "./state.js?v=20260829-thumbhashfix1";
-import { archiveTimeline, progressWithHold, progressWithHolds, scrollCueOpacity, systemsTimeline } from "./timelines.js?v=20260829-thumbhashfix1";
-import { clamp, clearMotionStyles, lerp, setButtonInteractive, setContainerInteractive, smoothstep } from "./utils.js?v=20260829-thumbhashfix1";
+import { categoryFor } from "./categories.js?v=20260829-loadingfallback1";
+import { elements } from "./elements.js?v=20260829-loadingfallback1";
+import { mobileLayout, reduceMotion } from "./media.js?v=20260829-loadingfallback1";
+import { itemsForScope, state } from "./state.js?v=20260829-loadingfallback1";
+import { archiveTimeline, progressWithHold, progressWithHolds, scrollCueOpacity, systemsTimeline } from "./timelines.js?v=20260829-loadingfallback1";
+import { clamp, clearMotionStyles, lerp, setButtonInteractive, setContainerInteractive, smoothstep } from "./utils.js?v=20260829-loadingfallback1";
 
 const ARCHIVE_STAGE_SCALE = 0.84;
 

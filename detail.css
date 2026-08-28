@@ -76,13 +76,9 @@
 .detail-load-state { position: absolute; z-index: 4; inset: 50% auto auto 50%; display: grid; justify-items: center; gap: 12px; width: min(280px, calc(100% - 32px)); color: var(--night-muted); font-size: var(--type-small); text-align: center; transform: translate(-50%, -50%); pointer-events: none; }
 .detail-load-state p { margin: 0; }
 .detail-load-state p:empty { display: none; }
-.detail-image-wrap.is-loading:not(.is-empty) .detail-load-state { inset: auto 12px 12px auto; width: auto; max-width: calc(100% - 24px); padding: 7px 10px; border: 1px solid oklch(0.9 0.01 356.8 / 0.2); border-radius: 999px; background: oklch(0.08 0.004 356.8 / 0.88); color: var(--night-ink); transform: none; }
-.detail-image-wrap.is-loading:not(.is-empty) .detail-load-state p { display: flex; align-items: center; gap: 8px; font-variant-numeric: tabular-nums; }
-.detail-image-wrap.is-loading:not(.is-empty) .detail-load-state p::before { width: 6px; height: 6px; border-radius: 50%; background: var(--rose); content: ""; animation: detail-status-pulse 1.8s ease-in-out 800ms infinite alternate; }
 .detail-live-status { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .detail-retry { min-height: 40px; padding: 0 16px; border: 1px solid oklch(0.9 0.01 356.8 / 0.42); border-radius: 999px; background: oklch(0.1 0.004 356.8 / 0.88); color: var(--night-ink); cursor: pointer; pointer-events: auto; }
 .detail-retry[hidden] { display: none; }
-@keyframes detail-status-pulse { to { opacity: 0.48; } }
 .detail-nav {
   position: fixed;
   z-index: 2;
@@ -136,5 +132,4 @@
 
 @media (prefers-reduced-motion: reduce) {
   .detail-image-wrap .detail-layer { transform: none; }
-  .detail-image-wrap.is-loading:not(.is-empty) .detail-load-state p::before { animation: none; }
 }

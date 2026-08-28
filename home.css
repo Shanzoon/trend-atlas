@@ -214,10 +214,8 @@
 @keyframes cue { 0% { transform: translate(-50%, 0); opacity: 0; } 28% { opacity: 1; } 80%, 100% { transform: translate(-50%, 18px); opacity: 0; } }
 
 .home-status { position: absolute; z-index: 5; top: 12px; left: 12px; max-width: calc(100% - 58px); margin: 0; padding: 7px 10px; border: 1px solid oklch(0.9 0.01 356.8 / 0.18); border-radius: 999px; background: oklch(0.08 0.004 356.8 / 0.82); color: var(--stage-muted); font-size: var(--type-small); line-height: 1.25; opacity: 0; }
-.home-status.is-loading, .home-status.is-error { opacity: 1; }
+.home-status.is-error { opacity: 1; }
 .home-status.is-error { color: var(--danger); }
-.home-status.is-loading { animation: image-status-breathe 1.8s ease-in-out 800ms infinite alternate; }
-@keyframes image-status-breathe { to { opacity: 0.58; } }
 
 @media (min-width: 761px) and (prefers-reduced-motion: no-preference) {
   .motion-ready .brand-story {
@@ -278,5 +276,4 @@
   .archive-all { opacity: 1 !important; pointer-events: auto; transform: none !important; }
   .scroll-cue { display: none; }
   .daily-image-wrap img { transition: none; }
-  .home-status.is-loading { animation: none; }
 }
