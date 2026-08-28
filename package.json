@@ -8,10 +8,11 @@
     "start": "node server.mjs",
     "publish:images": "node scripts/publish-images.mjs",
     "publish:images:dry": "node scripts/publish-images.mjs --dry-run",
-    "check": "node --check server.mjs && node --check scripts/publish-images.mjs && node --check categories.js && node --check app.js && node --check views.js && node --check home.js && node --check elements.js && node --check state.js && node --check media.js && node --check timelines.js && node --check utils.js && node --test"
+    "check": "node --check server.mjs && node --check scripts/publish-images.mjs && node --check categories.js && node --check app.js && node --check views.js && node --check home.js && node --check elements.js && node --check state.js && node --check media.js && node --check timelines.js && node --check thumbhash.js && node --check utils.js && node --test"
   },
   "devDependencies": {
     "sharp": "0.35.4",
+    "thumbhash": "0.1.1",
     "wrangler": "4.126.0"
   }
 }

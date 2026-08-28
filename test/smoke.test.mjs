@@ -10,9 +10,10 @@ import { fileURLToPath } from "node:url";
 import { categoryDefinitions } from "../categories.js";
 import { COLLECTION_PAGE_SIZE, nextCollectionPageEnd } from "../state.js";
 import { progressWithHold, progressWithHolds, scrollCueOpacity, systemsTimeline } from "../timelines.js";
+import { thumbHashToRGBA as decodeLocalThumbHash } from "../thumbhash.js";
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const ASSET_VERSION = "20260829-image3";
+const ASSET_VERSION = "20260829-focus1";
 
 const [dreamscape, lens] = categoryDefinitions;
 
@@ -97,8 +98,29 @@ describe("image loading contract", () => {
     assert.match(views, /state\.detailTargetIndex = targetIndex;[\s\S]*await loadAndDecodeImage[\s\S]*state\.detailIndex = targetIndex;/);
     assert.ok(dailyRequest.indexOf("await waitForSettledSwitchIntent()") < dailyRequest.indexOf("const targetLayer"), "daily target layer must be chosen after rapid intent settles");
     assert.ok(detailRequest.indexOf("await waitForSettledSwitchIntent()") < detailRequest.indexOf("const targetLayer"), "detail target layer must be chosen after rapid intent settles");
+    assert.doesNotMatch(dailyRequest, /if \(state\.dailyItem\)\s*\{\s*await waitForSettledSwitchIntent/);
+    assert.doesNotMatch(detailRequest, /if \(hasVisibleImage\)\s*\{\s*await waitForSettledSwitchIntent/);
     assert.doesNotMatch(views, /new Image\s*\(/, "switching should reuse the two DOM image layers");
     assert.doesNotMatch(views, /offsetWidth/, "image transitions should not force synchronous layout");
+  });
+
+  it("shows the target ThumbHash and metadata before the final image request settles", async () => {
+    const views = await readFile(path.join(appRoot, "views.js"), "utf8");
+    const base = await readFile(path.join(appRoot, "base.css"), "utf8");
+    const detailCss = await readFile(path.join(appRoot, "detail.css"), "utf8");
+    const dailyRequest = views.slice(views.indexOf("async function requestDailyItem"), views.indexOf("function cancelDailyRequest"));
+    const detailRequest = views.slice(views.indexOf("async function requestDetailItem"), views.indexOf("function focusPageHeading"));
+
+    assert.ok(dailyRequest.indexOf("showImagePlaceholder") < dailyRequest.indexOf("await waitForSettledSwitchIntent()"));
+    assert.ok(detailRequest.indexOf("showImagePlaceholder") < detailRequest.indexOf("await waitForSettledSwitchIntent()"));
+    assert.ok(detailRequest.indexOf("updateDetailMetadata(item, targetIndex)") < detailRequest.indexOf("await waitForSettledSwitchIntent()"));
+    assert.match(views, /renderThumbHash\(canvas, item\.thumbhash\)/);
+    assert.match(detailRequest, /detailActiveLayer\?\.setAttribute\("aria-hidden", "true"\);[\s\S]*正在加载：\$\{item\.title\}[\s\S]*await waitForSettledSwitchIntent/);
+    assert.match(detailCss, /\.detail-image-wrap\s*\{[^}]*width:\s*100%;[^}]*height:\s*100%;/s);
+    assert.match(detailCss, /\.detail-image-wrap \.detail-layer\s*\{[^}]*position:\s*absolute;[^}]*width:\s*100%;[^}]*height:\s*100%;/s);
+    assert.match(base, /\.image-load-sweep\.is-sweep-a\s*\{[^}]*animation:[^;]*720ms[^;]*both;/s);
+    assert.doesNotMatch(base, /\.image-load-sweep[^}]*animation:[^;]*infinite/s);
+    assert.match(base, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.image-load-sweep\s*\{\s*display:\s*none;/);
   });
 
   it("defers folder cover requests until the archive scene approaches", async () => {
@@ -291,12 +313,15 @@ describe("home page", () => {
     const archiveCuePattern = /<div class="scroll-cue" id="scrollCue" aria-hidden="true">\s*<span class="scroll-cue-label">ENTER ARCHIVE<\/span>\s*<span class="scroll-cue-mouse"><\/span>\s*<\/div>/g;
     assert.equal(html.match(archiveCuePattern)?.length, 1, "one complete scroll cue component should serve both archive transitions");
     assert.ok(!html.includes('id="archiveScrollCue"'), "archive transitions should not fork the scroll cue component");
-    assert.match(html, /id="homeStatus"[^>]*>[^<]*<\/p>\s*<\/div>\s*<div class="scroll-cue" id="scrollCue"/, "the scroll cue should sit outside the scaled stage");
+    assert.ok(html.indexOf('id="homeStatus"') < html.indexOf('id="folderPortals"'), "daily feedback should stay inside the artwork before archive controls");
+    assert.match(html, /<\/div>\s*<div class="scroll-cue" id="scrollCue"/, "the scroll cue should sit outside the scaled stage");
     assert.ok(!html.includes('id="detailStrip"'), "detail page should not render the old thumbnail strip");
     assert.ok(!html.includes('class="detail-browser"'), "detail page should not render the old thumbnail browser");
     assert.ok(html.includes('class="detail-nav previous"'), "detail page should expose the previous image control");
     assert.ok(html.includes('class="detail-nav next"'), "detail page should expose the next image control");
     assert.ok(html.includes('id="detailImageIncoming"'), "detail switching should have a reusable decoded incoming layer");
+    assert.ok(html.includes('id="dailyPlaceholder"'), "daily switching should expose a ThumbHash canvas");
+    assert.ok(html.includes('id="detailPlaceholder"'), "detail switching should expose a ThumbHash canvas");
     assert.ok(html.includes('id="detailRetry"'), "detail failures should expose a retry control");
     assert.ok(html.includes('id="detailLiveStatus"'), "detail feedback should expose a live region outside the busy image wrapper");
     assert.ok(html.indexOf('id="detailPrevious"') < html.indexOf('class="detail-layout"'), "detail navigation should sit outside the artwork layout");
@@ -326,6 +351,7 @@ describe("static assets", () => {
       "/state.js",
       "/media.js",
       "/timelines.js",
+      "/thumbhash.js",
       "/utils.js",
       "/assets/shanzoon-glyph.svg",
       "/assets/shanzoon-glyph-favicon.svg",
@@ -347,6 +373,12 @@ describe("static assets", () => {
     assert.ok(items.every((item) => item.src.endsWith(".webp")));
     assert.ok(items.every((item) => Number.isInteger(item.width) && item.width > 0));
     assert.ok(items.every((item) => Number.isInteger(item.height) && item.height > 0));
+    assert.ok(items.every((item) => typeof item.thumbhash === "string" && item.thumbhash.length > 0));
+    for (const item of items) {
+      const decoded = decodeLocalThumbHash(Buffer.from(item.thumbhash, "base64"));
+      assert.ok(decoded.width > 0 && decoded.height > 0, `invalid ThumbHash dimensions for ${item.id}`);
+      assert.equal(decoded.rgba.length, decoded.width * decoded.height * 4);
+    }
   });
 
   it("serves local content images and 404s for gitignored ones", async () => {

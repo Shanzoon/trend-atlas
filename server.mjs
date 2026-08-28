@@ -189,6 +189,7 @@ const server = http.createServer(async (request, response) => {
     "/state.js": "state.js",
     "/media.js": "media.js",
     "/timelines.js": "timelines.js",
+    "/thumbhash.js": "thumbhash.js",
     "/utils.js": "utils.js",
     "/assets/shanzoon-glyph.svg": "assets/shanzoon-glyph.svg",
     "/assets/shanzoon-glyph-favicon.svg": "assets/shanzoon-glyph-favicon.svg",

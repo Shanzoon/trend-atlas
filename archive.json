@@ -1,6 +1,6 @@
 {
   "archive": "trend-lab",
-  "updatedAt": "2026-08-26T19:53:06.880Z",
+  "updatedAt": "2026-08-28T19:08:36.099Z",
   "days": [
     {
       "date": "2026-08-27",
@@ -15,7 +15,8 @@
           "bytes": 99902,
           "width": 1122,
           "height": 1402,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-27__import-04.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-27__import-04.webp",
+          "thumbhash": "EQgGBgBlDGc3V9iXh5RWiHeHa5/XgFo="
         },
         {
           "id": "04-Persona/character-41.webp",
@@ -26,7 +27,8 @@
           "bytes": 156390,
           "width": 1024,
           "height": 1536,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-27__character-41.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-27__character-41.webp",
+          "thumbhash": "pzgGDQLchmNveGfIWHtmuGZ/YsA3"
         },
         {
           "id": "04-Persona/character-42.webp",
@@ -37,7 +39,8 @@
           "bytes": 69588,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-27__character-42.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-27__character-42.webp",
+          "thumbhash": "YCgODQT6tn2HZoeYaHl4lypglAKH"
         },
         {
           "id": "04-Persona/character-43.webp",
@@ -48,7 +51,8 @@
           "bytes": 105420,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-27__character-43.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-27__character-43.webp",
+          "thumbhash": "YRgSBQD4h3x3dniIeHqGiPlhkhsG"
         },
         {
           "id": "04-Persona/character-44.webp",
@@ -59,7 +63,8 @@
           "bytes": 74238,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-27__character-44.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-27__character-44.webp",
+          "thumbhash": "YBgOBQDnd3+GNoiXiIl2iIhEgHUE"
         },
         {
           "id": "04-Persona/character-45.webp",
@@ -70,7 +75,8 @@
           "bytes": 121016,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-27__character-45.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-27__character-45.webp",
+          "thumbhash": "XhgODQD4uH13ZoiYeHiHmPZ1UEwH"
         },
         {
           "id": "04-Persona/character-46.webp",
@@ -81,7 +87,8 @@
           "bytes": 99540,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-27__character-46.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-27__character-46.webp",
+          "thumbhash": "XSgSBQToZ495V1eId3p3dweCeAOn"
         },
         {
           "id": "04-Persona/character-47.webp",
@@ -92,7 +99,8 @@
           "bytes": 79480,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-27__character-47.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-27__character-47.webp",
+          "thumbhash": "bxgGDQLop4h86Qd3h4iYZwdydDBH"
         },
         {
           "id": "04-Persona/character-48.webp",
@@ -103,7 +111,8 @@
           "bytes": 117300,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-27__character-48.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-27__character-48.webp",
+          "thumbhash": "aBgKDQK6RmV/V0ipd3q2lydxcBAH"
         },
         {
           "id": "04-Persona/character-49.webp",
@@ -114,7 +123,8 @@
           "bytes": 102902,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-27__character-49.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-27__character-49.webp",
+          "thumbhash": "KwgGDQLus29plziqd3aoeAaBcRA4"
         },
         {
           "id": "04-Persona/character-50.webp",
@@ -125,7 +135,8 @@
           "bytes": 71006,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-27__character-50.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-27__character-50.webp",
+          "thumbhash": "YhgSDQLIl394NYeYaHmHhwdxcSAX"
         }
       ]
     },
@@ -142,7 +153,8 @@
           "bytes": 128246,
           "width": 1448,
           "height": 1086,
-          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-01.webp"
+          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-01.webp",
+          "thumbhash": "svgFDYIwZXg3UnZIVJWJekAmB3Ry"
         },
         {
           "id": "03-Ink/illustration-02.webp",
@@ -153,7 +165,8 @@
           "bytes": 113766,
           "width": 1448,
           "height": 1086,
-          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-02.webp"
+          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-02.webp",
+          "thumbhash": "7ggKBYCYl5d/iIeJdod3iLl/m/vH"
         },
         {
           "id": "03-Ink/illustration-03.webp",
@@ -164,7 +177,8 @@
           "bytes": 59782,
           "width": 1448,
           "height": 1086,
-          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-03.webp"
+          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-03.webp",
+          "thumbhash": "MPgFDYIIloePiXlyiadodQeIdbBI"
         },
         {
           "id": "03-Ink/illustration-04.webp",
@@ -175,7 +189,8 @@
           "bytes": 72608,
           "width": 1448,
           "height": 1086,
-          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-04.webp"
+          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-04.webp",
+          "thumbhash": "KvgNDYLplnmPZodqlVeHevh7nP+4"
         },
         {
           "id": "03-Ink/illustration-05.webp",
@@ -186,7 +201,8 @@
           "bytes": 64618,
           "width": 1448,
           "height": 1086,
-          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-05.webp"
+          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-05.webp",
+          "thumbhash": "IfgFDYLn19iHiXiPhWZnjsiGj3v4"
         },
         {
           "id": "03-Ink/illustration-06.webp",
@@ -197,7 +213,8 @@
           "bytes": 205132,
           "width": 1448,
           "height": 1086,
-          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-06.webp"
+          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-06.webp",
+          "thumbhash": "pggKDYKZhoefeXieZXeGe5ePavmY"
         },
         {
           "id": "03-Ink/illustration-07.webp",
@@ -208,7 +225,8 @@
           "bytes": 46044,
           "width": 1448,
           "height": 1086,
-          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-07.webp"
+          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-07.webp",
+          "thumbhash": "bfgFDYJkrzaHeYidWRdXipaAawm4"
         },
         {
           "id": "03-Ink/illustration-08.webp",
@@ -219,7 +237,8 @@
           "bytes": 202336,
           "width": 1448,
           "height": 1086,
-          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-08.webp"
+          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-08.webp",
+          "thumbhash": "bwgCBYAJuSmUeoVQqmRIaBfkcEAN"
         },
         {
           "id": "03-Ink/illustration-09.webp",
@@ -230,7 +249,8 @@
           "bytes": 85970,
           "width": 1448,
           "height": 1086,
-          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-09.webp"
+          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-09.webp",
+          "thumbhash": "rggGDYJ2eJh/eIePd5loeEV/V/WH"
         },
         {
           "id": "03-Ink/illustration-10.webp",
@@ -241,7 +261,8 @@
           "bytes": 94144,
           "width": 1448,
           "height": 1086,
-          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-10.webp"
+          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-10.webp",
+          "thumbhash": "8RgGBYJieHiNiYjPdliWdxCKHbX4"
         },
         {
           "id": "03-Ink/illustration-11.webp",
@@ -252,7 +273,8 @@
           "bytes": 83092,
           "width": 1448,
           "height": 1086,
-          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-11.webp"
+          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-11.webp",
+          "thumbhash": "KvgFDYL6BrpkfYV9lOoYafWiFh9b"
         },
         {
           "id": "03-Ink/illustration-12.webp",
@@ -263,7 +285,8 @@
           "bytes": 73586,
           "width": 1448,
           "height": 1086,
-          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-12.webp"
+          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-12.webp",
+          "thumbhash": "4+cFDYIFn2e+mHeMWnd2ewdfhvNS"
         },
         {
           "id": "03-Ink/illustration-13.webp",
@@ -274,7 +297,8 @@
           "bytes": 158286,
           "width": 1448,
           "height": 1086,
-          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-13.webp"
+          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-13.webp",
+          "thumbhash": "qvgFDYJle4mPeXmmU4l3eAun5XBK"
         },
         {
           "id": "03-Ink/illustration-14.webp",
@@ -285,7 +309,8 @@
           "bytes": 166998,
           "width": 1448,
           "height": 1086,
-          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-14.webp"
+          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-14.webp",
+          "thumbhash": "5AgGDYA1l4Z/eHd6iWeIeAt/yuDX"
         },
         {
           "id": "03-Ink/illustration-15.webp",
@@ -296,7 +321,8 @@
           "bytes": 172626,
           "width": 1448,
           "height": 1086,
-          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-15.webp"
+          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-15.webp",
+          "thumbhash": "ZjkOHYRqd4ePiHh5iYd4d39G9yiC"
         },
         {
           "id": "03-Ink/illustration-16.webp",
@@ -307,7 +333,8 @@
           "bytes": 108108,
           "width": 1448,
           "height": 1086,
-          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-16.webp"
+          "src": "https://media.shanzoon.art/03-Ink/2026-08-26__illustration-16.webp",
+          "thumbhash": "qwgKBYD1and5iGd1h5iIl0ZoUJkH"
         }
       ]
     },
@@ -324,7 +351,8 @@
           "bytes": 518520,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-17__hottest-02-torn-nightshift-notice.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-17__hottest-02-torn-nightshift-notice.webp",
+          "thumbhash": "HhkKHwSwarlapod5iFiKd4mHCG+u4KcF"
         },
         {
           "id": "01-Dreamscape/interesting-03-sleeveless-record-repair.webp",
@@ -335,7 +363,8 @@
           "bytes": 369618,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-17__interesting-03-sleeveless-record-repair.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-17__interesting-03-sleeveless-record-repair.webp",
+          "thumbhash": "0RgGDwILWnaTd3iBdYmGRmd4lUMISIIA"
         },
         {
           "id": "01-Dreamscape/niche-01-folded-vellum-weather-station.webp",
@@ -346,7 +375,8 @@
           "bytes": 112424,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-17__niche-01-folded-vellum-weather-station.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-17__niche-01-folded-vellum-weather-station.webp",
+          "thumbhash": "ZQgGDwC0i4evdmaldJd3d3d1VQF7JqAI"
         },
         {
           "id": "01-Dreamscape/niche-02-glitch-rug-diver.webp",
@@ -357,7 +387,8 @@
           "bytes": 495496,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-17__niche-02-glitch-rug-diver.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-17__niche-02-glitch-rug-diver.webp",
+          "thumbhash": "DxgKFwQqaHWPhXd5h4eHeIiI5sn6v6sP"
         },
         {
           "id": "01-Dreamscape/niche-04-halftone-print-archive-nightwatch.webp",
@@ -368,7 +399,8 @@
           "bytes": 556888,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-17__niche-04-halftone-print-archive-nightwatch.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-17__niche-04-halftone-print-archive-nightwatch.webp",
+          "thumbhash": "DAgGFwgf2IgQqXa1ejRlaId9FQGjcFYJ"
         },
         {
           "id": "02-Lens/hottest-01-drama-club-elevator.webp",
@@ -379,7 +411,8 @@
           "bytes": 77886,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-17__hottest-01-drama-club-elevator.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-17__hottest-01-drama-club-elevator.webp",
+          "thumbhash": "SBgGDwI2mSiLfYV/hymoh1eDaZC5BooJ"
         },
         {
           "id": "02-Lens/hottest-04-silver-raindrop-ticket-booth.webp",
@@ -390,7 +423,8 @@
           "bytes": 156854,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-17__hottest-04-silver-raindrop-ticket-booth.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-17__hottest-04-silver-raindrop-ticket-booth.webp",
+          "thumbhash": "iwcGDwIEuoaGeIhxd1jXiHmHyV94+YcG"
         }
       ]
     },
@@ -407,7 +441,8 @@
           "bytes": 382350,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-16__hottest-02.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-16__hottest-02.webp",
+          "thumbhash": "3xgKFYJnd2iIdpiliGZ4YJZjXwub"
         },
         {
           "id": "01-Dreamscape/hottest-03.webp",
@@ -418,7 +453,8 @@
           "bytes": 169076,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-16__hottest-03.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-16__hottest-03.webp",
+          "thumbhash": "KQgGDwJRiHc/d3iahuiIVmh3+HaYf4YK"
         },
         {
           "id": "01-Dreamscape/interesting-03.webp",
@@ -429,7 +465,8 @@
           "bytes": 130312,
           "width": 1402,
           "height": 1122,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-16__interesting-03.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-16__interesting-03.webp",
+          "thumbhash": "mSgKJoYJmmiIZnaSh4mHl3d3CYOUMEg="
         },
         {
           "id": "02-Lens/character-04.webp",
@@ -440,7 +477,8 @@
           "bytes": 91500,
           "width": 1024,
           "height": 1536,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-16__character-04.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-16__character-04.webp",
+          "thumbhash": "zwcKHQQUiqB6eKiGWHtHqDOARQNn"
         },
         {
           "id": "02-Lens/hottest-01.webp",
@@ -451,7 +489,8 @@
           "bytes": 156330,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-16__hottest-01.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-16__hottest-01.webp",
+          "thumbhash": "WwgSFYIIV4d5iHh3h6doiYtlwHgF"
         },
         {
           "id": "02-Lens/hottest-04.webp",
@@ -462,7 +501,8 @@
           "bytes": 200264,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-16__hottest-04.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-16__hottest-04.webp",
+          "thumbhash": "2SgSFYJ7eHiPh4hoh3h3iI+80KgK"
         },
         {
           "id": "02-Lens/niche-02.webp",
@@ -473,7 +513,8 @@
           "bytes": 187104,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-16__niche-02.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-16__niche-02.webp",
+          "thumbhash": "0ygKFYIlmZqflpiJd2d3dkCdB8V4"
         },
         {
           "id": "02-Lens/niche-03.webp",
@@ -484,7 +525,8 @@
           "bytes": 188158,
           "width": 1024,
           "height": 1536,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-16__niche-03.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-16__niche-03.webp",
+          "thumbhash": "ThgKDQKbeoBqSFZ1V6d4h6lwlwp3"
         },
         {
           "id": "02-Lens/niche-04.webp",
@@ -495,7 +537,8 @@
           "bytes": 278638,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-16__niche-04.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-16__niche-04.webp",
+          "thumbhash": "zigKDYIHaHV0iImCerh4hAR0M1A2"
         }
       ]
     },
@@ -512,7 +555,8 @@
           "bytes": 141574,
           "width": 1402,
           "height": 1122,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-15__hottest-04.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-15__hottest-04.webp",
+          "thumbhash": "3DkGDoKvY2OGhId9hleapoh1PbewBVY="
         },
         {
           "id": "01-Dreamscape/interesting-01.webp",
@@ -523,7 +567,8 @@
           "bytes": 230754,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-15__interesting-01.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-15__interesting-01.webp",
+          "thumbhash": "VBoKJYI4eVaPZodxhnmHh1iPhfi4"
         },
         {
           "id": "01-Dreamscape/niche-01.webp",
@@ -534,7 +579,8 @@
           "bytes": 303002,
           "width": 1122,
           "height": 1402,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-15__niche-01.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-15__niche-01.webp",
+          "thumbhash": "0DgGDgIUGGWqaSV5l2h2gHdIYJwgSW8="
         },
         {
           "id": "02-Lens/hottest-01.webp",
@@ -545,7 +591,8 @@
           "bytes": 93814,
           "width": 1402,
           "height": 1122,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-15__hottest-01.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-15__hottest-01.webp",
+          "thumbhash": "FPgNDoCPRqZ7Z5hpdqiJh3eIQIUKMrg="
         },
         {
           "id": "02-Lens/hottest-03.webp",
@@ -556,7 +603,8 @@
           "bytes": 144792,
           "width": 1122,
           "height": 1402,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-15__hottest-03.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-15__hottest-03.webp",
+          "thumbhash": "oEgGNgT92Og5lweniHtqlYd4j6qUlAg="
         },
         {
           "id": "02-Lens/interesting-03.webp",
@@ -567,7 +615,8 @@
           "bytes": 165068,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-15__interesting-03.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-15__interesting-03.webp",
+          "thumbhash": "3RgKDYJfeJu0d1ith3aEmJBhAGp0"
         },
         {
           "id": "02-Lens/niche-02.webp",
@@ -578,7 +627,8 @@
           "bytes": 242270,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-15__niche-02.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-15__niche-02.webp",
+          "thumbhash": "yucJHYRVeniKiIeQanh3eH+m+Fe6"
         },
         {
           "id": "02-Lens/niche-03.webp",
@@ -589,7 +639,8 @@
           "bytes": 173304,
           "width": 1024,
           "height": 1536,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-15__niche-03.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-15__niche-03.webp",
+          "thumbhash": "jRgKFQIJdnqGKKdYl3R5iAh3gnAn"
         },
         {
           "id": "02-Lens/niche-04.webp",
@@ -600,7 +651,8 @@
           "bytes": 232570,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-15__niche-04.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-15__niche-04.webp",
+          "thumbhash": "zSgGDYIJFYZliJ2SaoaHZRWaQKEI"
         }
       ]
     },
@@ -617,7 +669,8 @@
           "bytes": 72526,
           "width": 1316,
           "height": 1195,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-14__interesting-01.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-14__interesting-01.webp",
+          "thumbhash": "qegNDoL0aXibdXh5dWiIiHd3CIRUcBg="
         },
         {
           "id": "01-Dreamscape/interesting-02.webp",
@@ -628,7 +681,8 @@
           "bytes": 487022,
           "width": 1024,
           "height": 1536,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-14__interesting-02.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-14__interesting-02.webp",
+          "thumbhash": "IucJHQLIlJ+MJphIhoh4ePl7la9X"
         },
         {
           "id": "01-Dreamscape/interesting-03.webp",
@@ -639,7 +693,8 @@
           "bytes": 195494,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-14__interesting-03.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-14__interesting-03.webp",
+          "thumbhash": "kCcGFYRXZ2h3doiwlimHWAKaJIA5"
         },
         {
           "id": "01-Dreamscape/interesting-04.webp",
@@ -650,7 +705,8 @@
           "bytes": 242004,
           "width": 1402,
           "height": 1122,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-14__interesting-04.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-14__interesting-04.webp",
+          "thumbhash": "HykKFoTIp4mFhomPiHZ3qWiKRopghQg="
         },
         {
           "id": "01-Dreamscape/niche-03.webp",
@@ -661,7 +717,8 @@
           "bytes": 407816,
           "width": 1024,
           "height": 1536,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-14__niche-03.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-14__niche-03.webp",
+          "thumbhash": "EikGHQRLCIeHSXRKRmR5aDCaBcRp"
         },
         {
           "id": "01-Dreamscape/niche-04.webp",
@@ -672,7 +729,8 @@
           "bytes": 293588,
           "width": 1402,
           "height": 1122,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-14__niche-04.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-14__niche-04.webp",
+          "thumbhash": "0zgGHoaneZmoZ3ePtyenuFpnRmSQUgY="
         },
         {
           "id": "02-Lens/hottest-01.webp",
@@ -683,7 +741,8 @@
           "bytes": 71064,
           "width": 1024,
           "height": 1536,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-14__hottest-01.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-14__hottest-01.webp",
+          "thumbhash": "0AcGFQK1CX+Jh2iHZ3WYaHBIBodV"
         },
         {
           "id": "02-Lens/hottest-02.webp",
@@ -694,7 +753,8 @@
           "bytes": 159454,
           "width": 1024,
           "height": 1536,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-14__hottest-02.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-14__hottest-02.webp",
+          "thumbhash": "VhgKDQIHomd4aKZ6iHSZeG5v+ON4"
         },
         {
           "id": "02-Lens/hottest-03.webp",
@@ -705,7 +765,8 @@
           "bytes": 100670,
           "width": 1122,
           "height": 1402,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-14__hottest-03.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-14__hottest-03.webp",
+          "thumbhash": "ZhgKDgKIWPeIeKd4h4qHhWd4aICFBUg="
         },
         {
           "id": "02-Lens/niche-01.webp",
@@ -716,7 +777,8 @@
           "bytes": 227772,
           "width": 1024,
           "height": 1536,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-14__niche-01.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-14__niche-01.webp",
+          "thumbhash": "TygKJQioim+HiHeIaIeIiOdvf/3m"
         },
         {
           "id": "02-Lens/niche-02.webp",
@@ -727,7 +789,8 @@
           "bytes": 411322,
           "width": 1402,
           "height": 1122,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-14__niche-02.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-14__niche-02.webp",
+          "thumbhash": "kOcNDoJ3eId/l3eKh3h3eHh3n6H1CVs="
         }
       ]
     },
@@ -744,7 +807,8 @@
           "bytes": 606662,
           "width": 1024,
           "height": 1536,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-13__hottest-02.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-13__hottest-02.webp",
+          "thumbhash": "WFmGCwItACI8rUmPwUZu+Gh3h4iAdxg="
         },
         {
           "id": "01-Dreamscape/interesting-01.webp",
@@ -755,7 +819,8 @@
           "bytes": 239806,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-13__interesting-01.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-13__interesting-01.webp",
+          "thumbhash": "jwcGHwJlfGiXeZmAich1OZh2B1NnMHYF"
         },
         {
           "id": "01-Dreamscape/interesting-02.webp",
@@ -766,7 +831,8 @@
           "bytes": 305256,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-13__interesting-02.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-13__interesting-02.webp",
+          "thumbhash": "VSkGHwLpWJf+a5eZiEhZeXeGaP57068L"
         },
         {
           "id": "01-Dreamscape/niche-01.webp",
@@ -777,7 +843,8 @@
           "bytes": 468876,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-13__niche-01.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-13__niche-01.webp",
+          "thumbhash": "VhgODwJgmWdfl2iUeHd4h4Z3GPpHoX8D"
         },
         {
           "id": "01-Dreamscape/niche-03.webp",
@@ -788,7 +855,8 @@
           "bytes": 233046,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-13__niche-03.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-13__niche-03.webp",
+          "thumbhash": "3SgKDwJscqdfdHcWpXlnqHaaNzogMUsA"
         },
         {
           "id": "02-Lens/hottest-03.webp",
@@ -799,7 +867,8 @@
           "bytes": 165300,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-13__hottest-03.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-13__hottest-03.webp",
+          "thumbhash": "WkkOFwIHl3d4iHaCiVh4mIeJdt/I940M"
         },
         {
           "id": "02-Lens/niche-02.webp",
@@ -810,7 +879,8 @@
           "bytes": 129450,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-13__niche-02.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-13__niche-02.webp",
+          "thumbhash": "yPcJBwBFenh5h4eQamiIt2eIZor3togP"
         },
         {
           "id": "02-Lens/niche-04.webp",
@@ -821,7 +891,8 @@
           "bytes": 146628,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-13__niche-04.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-13__niche-04.webp",
+          "thumbhash": "jPcJHwSGaHhfiIdYiHiGiIeHpwk4qoAE"
         }
       ]
     },
@@ -838,7 +909,8 @@
           "bytes": 172822,
           "width": 1024,
           "height": 1536,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-12__hottest-03.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-12__hottest-03.webp",
+          "thumbhash": "n+cFLQhIwI2oF3UYeHk5qFdwdAVX"
         },
         {
           "id": "01-Dreamscape/hottest-04.webp",
@@ -849,7 +921,8 @@
           "bytes": 432556,
           "width": 1122,
           "height": 1402,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-12__hottest-04.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-12__hottest-04.webp",
+          "thumbhash": "lTgGHgIGpumYeEdIeGdmeodpaHew9QA="
         },
         {
           "id": "01-Dreamscape/interesting-01.webp",
@@ -860,7 +933,8 @@
           "bytes": 225980,
           "width": 1024,
           "height": 1536,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-12__interesting-01.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-12__interesting-01.webp",
+          "thumbhash": "z/cFFQISiEmMBIZHepM4TPyDxx+I"
         },
         {
           "id": "01-Dreamscape/interesting-04.webp",
@@ -871,7 +945,8 @@
           "bytes": 109120,
           "width": 1402,
           "height": 1122,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-12__interesting-04.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-12__interesting-04.webp",
+          "thumbhash": "zycKHoJJYmh4aXhQvFiGaWl5UGNHVAQ="
         },
         {
           "id": "01-Dreamscape/niche-02.webp",
@@ -882,7 +957,8 @@
           "bytes": 248264,
           "width": 1122,
           "height": 1402,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-12__niche-02.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-12__niche-02.webp",
+          "thumbhash": "jRgCBgALOzp5hFd0q12jTDbXip/M2/o="
         },
         {
           "id": "01-Dreamscape/niche-03.webp",
@@ -893,7 +969,8 @@
           "bytes": 263870,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-12__niche-03.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-12__niche-03.webp",
+          "thumbhash": "iigGFYIHWGeEh4ahd8h2kPh0fS/I"
         },
         {
           "id": "02-Lens/niche-01.webp",
@@ -904,7 +981,8 @@
           "bytes": 94716,
           "width": 1122,
           "height": 1402,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-12__niche-01.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-12__niche-01.webp",
+          "thumbhash": "2ygGDgIIp9xlekioaHGYkmqYB3txsBc="
         },
         {
           "id": "02-Lens/niche-04.webp",
@@ -915,7 +993,8 @@
           "bytes": 185394,
           "width": 1314,
           "height": 1197,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-12__niche-04.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-12__niche-04.webp",
+          "thumbhash": "3/cNDoK/eXdqiHiKZnd5iHeGgJVKXvg="
         }
       ]
     },
@@ -932,7 +1011,8 @@
           "bytes": 325692,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-11__hottest-01.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-11__hottest-01.webp",
+          "thumbhash": "XPgJDwJmB5eOd3aLd5h4qHiJSbBZB5oG"
         },
         {
           "id": "01-Dreamscape/interesting-01.webp",
@@ -943,7 +1023,8 @@
           "bytes": 169870,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-11__interesting-01.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-11__interesting-01.webp",
+          "thumbhash": "EOcJNwh0iHhveXd3eFdniHiJhhAYCIEB"
         },
         {
           "id": "01-Dreamscape/interesting-03.webp",
@@ -954,7 +1035,8 @@
           "bytes": 103692,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-11__interesting-03.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-11__interesting-03.webp",
+          "thumbhash": "DggGDwJmhbhwinmYlrVnp3eJYQNIRIAE"
         },
         {
           "id": "01-Dreamscape/interesting-04.webp",
@@ -965,7 +1047,8 @@
           "bytes": 225448,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-11__interesting-04.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-11__interesting-04.webp",
+          "thumbhash": "SxgGDwIrd0qPfoiGa0SoZ3p69nc9j9gC"
         },
         {
           "id": "01-Dreamscape/niche-01.webp",
@@ -976,7 +1059,8 @@
           "bytes": 131994,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-11__niche-01.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-11__niche-01.webp",
+          "thumbhash": "jxgSFwI3d4h2iHiAiph4h4eHd4QHR3gA"
         },
         {
           "id": "01-Dreamscape/niche-02.webp",
@@ -987,7 +1071,8 @@
           "bytes": 149926,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-11__niche-02.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-11__niche-02.webp",
+          "thumbhash": "IQgGDwAUpZK5S1teBDmeWIdNYFEIF5QA"
         },
         {
           "id": "02-Lens/character-04.webp",
@@ -998,7 +1083,8 @@
           "bytes": 108444,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-11__character-04.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-11__character-04.webp",
+          "thumbhash": "TwgGDwL1WWhVd4hjZEl8iHpot39V/FUF"
         },
         {
           "id": "02-Lens/hottest-02.webp",
@@ -1009,7 +1095,8 @@
           "bytes": 448102,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-11__hottest-02.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-11__hottest-02.webp",
+          "thumbhash": "kwgGDwBleHeDdoR9hzRo92h/rOBH63cA"
         },
         {
           "id": "02-Lens/hottest-04.webp",
@@ -1020,7 +1107,8 @@
           "bytes": 233988,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-11__hottest-04.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-11__hottest-04.webp",
+          "thumbhash": "mhgGFwI5eWlmpYWHb2OUWXhhkwZZLVMA"
         }
       ]
     },
@@ -1037,7 +1125,8 @@
           "bytes": 157874,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-10__interesting-03.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-10__interesting-03.webp",
+          "thumbhash": "aAgKDYKHh7ibdnZ/iYmHdWd2gGYH"
         },
         {
           "id": "01-Dreamscape/niche-04.webp",
@@ -1048,7 +1137,8 @@
           "bytes": 249768,
           "width": 1402,
           "height": 1122,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-10__niche-04.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-10__niche-04.webp",
+          "thumbhash": "XxgGDoLrZYXvlWeMplVLdml5BUdDgEU="
         },
         {
           "id": "02-Lens/hottest-01.webp",
@@ -1059,7 +1149,8 @@
           "bytes": 172054,
           "width": 1122,
           "height": 1402,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-10__hottest-01.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-10__hottest-01.webp",
+          "thumbhash": "kxgGDgAqOPSYeHlIuWV3hneI7GzQrxU="
         },
         {
           "id": "02-Lens/hottest-03.webp",
@@ -1070,7 +1161,8 @@
           "bytes": 154264,
           "width": 1024,
           "height": 1536,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-10__hottest-03.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-10__hottest-03.webp",
+          "thumbhash": "zRYGJQQGZ0mpRpV5dpI6Wqqg2AIL"
         },
         {
           "id": "02-Lens/niche-01.webp",
@@ -1081,7 +1173,8 @@
           "bytes": 158706,
           "width": 1402,
           "height": 1122,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-10__niche-01.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-10__niche-01.webp",
+          "thumbhash": "TAgGDoADbHiyN5iBi0aHemlrUaAmBXk="
         },
         {
           "id": "02-Lens/niche-02.webp",
@@ -1092,7 +1185,8 @@
           "bytes": 138526,
           "width": 1402,
           "height": 1122,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-10__niche-02.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-10__niche-02.webp",
+          "thumbhash": "zygGFoQRlneGV2iQiKZ3eniFoIYQawg="
         },
         {
           "id": "02-Lens/niche-03.webp",
@@ -1103,7 +1197,8 @@
           "bytes": 163018,
           "width": 1402,
           "height": 1122,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-10__niche-03.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-10__niche-03.webp",
+          "thumbhash": "iSgGDoJmKGxrdaaQZ1qaaYlmZ3hgdgc="
         }
       ]
     },
@@ -1120,7 +1215,8 @@
           "bytes": 160352,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-09__interesting-04.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-09__interesting-04.webp",
+          "thumbhash": "YggGDwJz+MmFkHiFagem6GhhuKAHBnkD"
         },
         {
           "id": "01-Dreamscape/niche-01.webp",
@@ -1131,7 +1227,8 @@
           "bytes": 288722,
           "width": 1024,
           "height": 1536,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-09__niche-01.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-09__niche-01.webp",
+          "thumbhash": "FvcJHQZmeIWHB4ineIdYiHaQZgdZ"
         },
         {
           "id": "01-Dreamscape/niche-04.webp",
@@ -1142,7 +1239,8 @@
           "bytes": 166132,
           "width": 1402,
           "height": 1122,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-09__niche-04.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-09__niche-04.webp",
+          "thumbhash": "XvgJDoBgt5qOhYWMeZiHeFqFfHegVQU="
         },
         {
           "id": "02-Lens/hottest-01.webp",
@@ -1153,7 +1251,8 @@
           "bytes": 159842,
           "width": 1122,
           "height": 1402,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-09__hottest-01.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-09__hottest-01.webp",
+          "thumbhash": "iBgGDgIJusaJqQiniWqHdDpoCIuBsCc="
         },
         {
           "id": "02-Lens/hottest-02.webp",
@@ -1164,7 +1263,8 @@
           "bytes": 218416,
           "width": 1024,
           "height": 1535,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-09__hottest-02.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-09__hottest-02.webp",
+          "thumbhash": "yPgFFQRnuJB3Z4eIh4Sod5mAyfk1"
         },
         {
           "id": "02-Lens/hottest-03.webp",
@@ -1175,7 +1275,8 @@
           "bytes": 192738,
           "width": 1023,
           "height": 1537,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-09__hottest-03.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-09__hottest-03.webp",
+          "thumbhash": "DQgKDQKPp3SHSIiYl1RnhwSBQxBI"
         },
         {
           "id": "02-Lens/interesting-02.webp",
@@ -1186,7 +1287,8 @@
           "bytes": 138962,
           "width": 1402,
           "height": 1122,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-09__interesting-02.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-09__interesting-02.webp",
+          "thumbhash": "kPgFFoSYm3dwmXqZcspkV3i8WGA29mk="
         },
         {
           "id": "04-Persona/character-03.webp",
@@ -1197,7 +1299,8 @@
           "bytes": 54730,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-03.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-03.webp",
+          "thumbhash": "LwgKDQK3mHCLuHinaIantwd7crAn"
         },
         {
           "id": "04-Persona/character-04.webp",
@@ -1208,7 +1311,8 @@
           "bytes": 164782,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-04.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-04.webp",
+          "thumbhash": "mSgGDQD4+GiGWZi3eIipxylhkDAW"
         },
         {
           "id": "04-Persona/character-05.webp",
@@ -1219,7 +1323,8 @@
           "bytes": 183316,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-05.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-05.webp",
+          "thumbhash": "XxgKDQKk/KNZpod3l4eHlwaCY0A4"
         },
         {
           "id": "04-Persona/character-06.webp",
@@ -1230,7 +1335,8 @@
           "bytes": 122796,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-06.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-06.webp",
+          "thumbhash": "YRgOFQT3qHWFh6i3d4V4mAeJdIBY"
         },
         {
           "id": "04-Persona/character-07.webp",
@@ -1241,7 +1347,8 @@
           "bytes": 114006,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-07.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-07.webp",
+          "thumbhash": "VhgOBQKI+3hphYh4mIiXlxhTkFAW"
         },
         {
           "id": "04-Persona/character-08.webp",
@@ -1252,7 +1359,8 @@
           "bytes": 102490,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-08.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-08.webp",
+          "thumbhash": "UBgODQK3tn95aHeIh3qHd0iPkvIY"
         },
         {
           "id": "04-Persona/character-09.webp",
@@ -1263,7 +1371,8 @@
           "bytes": 119268,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-09.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-09.webp",
+          "thumbhash": "YBgKDQLnp4+HRahIZ32XeAh7g4BX"
         },
         {
           "id": "04-Persona/character-10.webp",
@@ -1274,7 +1383,8 @@
           "bytes": 167988,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-10.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-10.webp",
+          "thumbhash": "WhgOBQD3lnuWRpdomXiXl/dpcXwF"
         },
         {
           "id": "04-Persona/character-11.webp",
@@ -1285,7 +1395,8 @@
           "bytes": 87096,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-11.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-11.webp",
+          "thumbhash": "EAgODQC3mI+JV3hniHmXh0h/cvMH"
         },
         {
           "id": "04-Persona/character-12.webp",
@@ -1296,7 +1407,8 @@
           "bytes": 86984,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-12.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-12.webp",
+          "thumbhash": "GBgKDQIn6It/KJj3V4npeAeFdGA4"
         },
         {
           "id": "04-Persona/character-13.webp",
@@ -1307,7 +1419,8 @@
           "bytes": 115640,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-13.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-13.webp",
+          "thumbhash": "oygKDQLWaICLdpiXZ4qWhyaAaQOY"
         },
         {
           "id": "04-Persona/character-14.webp",
@@ -1318,7 +1431,8 @@
           "bytes": 82760,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-14.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-14.webp",
+          "thumbhash": "EwgODQK5yI95ZoiHZ3iYmAaNcqA3"
         },
         {
           "id": "04-Persona/character-15.webp",
@@ -1329,7 +1443,8 @@
           "bytes": 131284,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-15.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-15.webp",
+          "thumbhash": "2jgKDQT7131pVYeoZ3eZhxeAdQFo"
         },
         {
           "id": "04-Persona/character-16.webp",
@@ -1340,7 +1455,8 @@
           "bytes": 74690,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-16.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-16.webp",
+          "thumbhash": "axgGDQKG+KJr5VjHJZlGVwWFVhBo"
         },
         {
           "id": "04-Persona/character-17.webp",
@@ -1351,7 +1467,8 @@
           "bytes": 82044,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-17.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-17.webp",
+          "thumbhash": "JggODQKoiHB6mHiHd3enmBd/cKAY"
         },
         {
           "id": "04-Persona/character-18.webp",
@@ -1362,7 +1479,8 @@
           "bytes": 121308,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-18.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-18.webp",
+          "thumbhash": "WxgKDQLX+HN7tGhYh3qWdyeFcEII"
         },
         {
           "id": "04-Persona/character-19.webp",
@@ -1373,7 +1491,8 @@
           "bytes": 95646,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-19.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-19.webp",
+          "thumbhash": "YxgOFQT6h2aHNqjXaHaYlwSWU1A5"
         },
         {
           "id": "04-Persona/character-20.webp",
@@ -1384,7 +1503,8 @@
           "bytes": 85182,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-20.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-20.webp",
+          "thumbhash": "GQgSDQKouH96V3eHd3mIhwd6cpA3"
         },
         {
           "id": "04-Persona/character-21.webp",
@@ -1395,7 +1515,8 @@
           "bytes": 118438,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-21.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-21.webp",
+          "thumbhash": "3DgKDQL82Ix5ZpfHZ4dnyFpikBMG"
         },
         {
           "id": "04-Persona/character-22.webp",
@@ -1406,7 +1527,8 @@
           "bytes": 100712,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-22.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-22.webp",
+          "thumbhash": "HxgOBQD493mJgmeXh4iWl2Z/kWAH"
         },
         {
           "id": "04-Persona/character-23.webp",
@@ -1417,7 +1539,8 @@
           "bytes": 97552,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-23.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-23.webp",
+          "thumbhash": "aRgODQKnuHCKqYi3eIiHmAd2dIA3"
         },
         {
           "id": "04-Persona/character-24.webp",
@@ -1428,7 +1551,8 @@
           "bytes": 142138,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-24.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-24.webp",
+          "thumbhash": "YBgGDQT7wl28ZnaKaXl4mAacY4BY"
         },
         {
           "id": "04-Persona/character-25.webp",
@@ -1439,7 +1563,8 @@
           "bytes": 86436,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-25.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-25.webp",
+          "thumbhash": "JwgODQK7ZoBriHeJd3iXlwiLlJBI"
         },
         {
           "id": "04-Persona/character-26.webp",
@@ -1450,7 +1575,8 @@
           "bytes": 68208,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-26.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-26.webp",
+          "thumbhash": "qRgGDQLKcmB/pmeKh3vFpwhxdDBH"
         },
         {
           "id": "04-Persona/character-27.webp",
@@ -1461,7 +1587,8 @@
           "bytes": 128442,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-27.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-27.webp",
+          "thumbhash": "rRgGFQT7lGWbpIeZWXeIlwaHdHBI"
         },
         {
           "id": "04-Persona/character-28.webp",
@@ -1472,7 +1599,8 @@
           "bytes": 114914,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-28.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-28.webp",
+          "thumbhash": "ZRgKBQD56IV6tGd3h4mHpwhQdzBm"
         },
         {
           "id": "04-Persona/character-29.webp",
@@ -1483,7 +1611,8 @@
           "bytes": 68918,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-29.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-29.webp",
+          "thumbhash": "nygODQL32HuHNpjYaIqGlxiGgHII"
         },
         {
           "id": "04-Persona/character-30.webp",
@@ -1494,7 +1623,8 @@
           "bytes": 133346,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-30.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-30.webp",
+          "thumbhash": "YhgKDQL+4UW6tXmHmGmmqRlghUBH"
         },
         {
           "id": "04-Persona/character-31.webp",
@@ -1505,7 +1635,8 @@
           "bytes": 79996,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-31.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-31.webp",
+          "thumbhash": "7AcOFQSZhnB5qHepZ4mmmGh+gNQH"
         },
         {
           "id": "04-Persona/character-32.webp",
@@ -1516,7 +1647,8 @@
           "bytes": 91668,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-32.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-32.webp",
+          "thumbhash": "YigKDQL4yH13FMi3WHqHqEd0cFMH"
         },
         {
           "id": "04-Persona/character-33.webp",
@@ -1527,7 +1659,8 @@
           "bytes": 126934,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-33.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-33.webp",
+          "thumbhash": "2TgGDQL89ll4aLjoV3N42DpQkgFW"
         },
         {
           "id": "04-Persona/character-34.webp",
@@ -1538,7 +1671,8 @@
           "bytes": 137552,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-34.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-34.webp",
+          "thumbhash": "qSgGFQT6mVN8qHineHulhwiBhgB3"
         },
         {
           "id": "04-Persona/character-35.webp",
@@ -1549,7 +1683,8 @@
           "bytes": 98564,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-35.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-35.webp",
+          "thumbhash": "pRgKBQCKp3B7t3doiHi3d9pwhQY4"
         },
         {
           "id": "04-Persona/character-36.webp",
@@ -1560,7 +1695,8 @@
           "bytes": 102116,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-36.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-36.webp",
+          "thumbhash": "IwgOFQT5pnWJp5iHZ4i2iBeNcLAI"
         },
         {
           "id": "04-Persona/character-37.webp",
@@ -1571,7 +1707,8 @@
           "bytes": 147320,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-37.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-37.webp",
+          "thumbhash": "IwgKBQDiz7dLdZiWZoqGmGSaYMII"
         },
         {
           "id": "04-Persona/character-38.webp",
@@ -1582,7 +1719,8 @@
           "bytes": 172128,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-38.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-38.webp",
+          "thumbhash": "nygODQJ4+Xh8lmd4iHeImEhwhgE2"
         },
         {
           "id": "04-Persona/character-39.webp",
@@ -1593,7 +1731,8 @@
           "bytes": 125574,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-39.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-39.webp",
+          "thumbhash": "GBgSDQKXmI+Jd4h3aHiImAd+cfAn"
         },
         {
           "id": "04-Persona/character-40.webp",
@@ -1604,7 +1743,8 @@
           "bytes": 90910,
           "width": 1086,
           "height": 1448,
-          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-40.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-08-09__character-40.webp",
+          "thumbhash": "aBgKDQL5aIZmWLfIR3eXqAZ8YZAn"
         }
       ]
     },
@@ -1621,7 +1761,8 @@
           "bytes": 204396,
           "width": 1402,
           "height": 1122,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-08__i03_particle_post_office.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-08__i03_particle_post_office.webp",
+          "thumbhash": "XOcJFoIIZ2apd4dVeIh3SId4D5D2Aoo="
         },
         {
           "id": "01-Dreamscape/i04_lost_idea_repair.webp",
@@ -1632,7 +1773,8 @@
           "bytes": 258460,
           "width": 1393,
           "height": 1129,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-08__i04_lost_idea_repair.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-08__i04_lost_idea_repair.webp",
+          "thumbhash": "FCkGBoBmiZZ3eYeKaPdGqWiG9ekeX9w="
         },
         {
           "id": "01-Dreamscape/n03_folded_city_book.webp",
@@ -1643,7 +1785,8 @@
           "bytes": 229596,
           "width": 1403,
           "height": 1121,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-08__n03_folded_city_book.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-08__n03_folded_city_book.webp",
+          "thumbhash": "ISkKDoL0p4e5Wmdbp6Z3dIl4/1zWf3Q="
         },
         {
           "id": "02-Lens/c02_punk_ballet_footmaker.webp",
@@ -1654,7 +1797,8 @@
           "bytes": 139006,
           "width": 1024,
           "height": 1536,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-08__c02_punk_ballet_footmaker.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-08__c02_punk_ballet_footmaker.webp",
+          "thumbhash": "BggGDQIHZpVmaZh3eHh4mBSEMGMH"
         },
         {
           "id": "02-Lens/c03_analog_weather_witness.webp",
@@ -1665,7 +1809,8 @@
           "bytes": 93400,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-08__c03_analog_weather_witness.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-08__c03_analog_weather_witness.webp",
+          "thumbhash": "FggSBYLIaId/eHaIh4h4iDZ/QLBY"
         },
         {
           "id": "02-Lens/h01_empathy_toy_orbit.webp",
@@ -1676,7 +1821,8 @@
           "bytes": 93880,
           "width": 1402,
           "height": 1122,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-08__h01_empathy_toy_orbit.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-08__h01_empathy_toy_orbit.webp",
+          "thumbhash": "XjkODoRvaIfXZneamHh4l4h4BKKBRgc="
         },
         {
           "id": "02-Lens/h03_courtside_coastal_prep.webp",
@@ -1687,7 +1833,8 @@
           "bytes": 214120,
           "width": 1024,
           "height": 1536,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-08__h03_courtside_coastal_prep.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-08__h03_courtside_coastal_prep.webp",
+          "thumbhash": "owgGFQIyZnmL9KfHdLiImXhwJgSJ"
         },
         {
           "id": "02-Lens/i01_reality_warp_archive.webp",
@@ -1698,7 +1845,8 @@
           "bytes": 198346,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-08__i01_reality_warp_archive.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-08__i01_reality_warp_archive.webp",
+          "thumbhash": "TAgGFYR5l4l2d4dwh8aIdYyAkQhY"
         },
         {
           "id": "02-Lens/i02_five_tone_lanterns.webp",
@@ -1709,7 +1857,8 @@
           "bytes": 221582,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-08__i02_five_tone_lanterns.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-08__i02_five_tone_lanterns.webp",
+          "thumbhash": "SRgGDYBWWGh2iIlwZ2h4ZWs+oIUE"
         },
         {
           "id": "02-Lens/n01_projected_ceramic_guardian.webp",
@@ -1720,7 +1869,8 @@
           "bytes": 180052,
           "width": 1024,
           "height": 1536,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-08__n01_projected_ceramic_guardian.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-08__n01_projected_ceramic_guardian.webp",
+          "thumbhash": "yvcJBQAJZIV2SJVZmZWIZx86Jkj5"
         },
         {
           "id": "02-Lens/n04_anonymous_vinyl_constellation.webp",
@@ -1731,7 +1881,8 @@
           "bytes": 60222,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-08__n04_anonymous_vinyl_constellation.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-08__n04_anonymous_vinyl_constellation.webp",
+          "thumbhash": "BQgGDYAHapV6hoiBanmIdid3kGEH"
         }
       ]
     },
@@ -1748,7 +1899,8 @@
           "bytes": 207918,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-07__interesting-01-orbit-laundromat.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-07__interesting-01-orbit-laundromat.webp",
+          "thumbhash": "C/gFHYQOeANSd5qlezanegR3QWAX"
         },
         {
           "id": "01-Dreamscape/interesting-02-accidental-museum.webp",
@@ -1759,7 +1911,8 @@
           "bytes": 114314,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-07__interesting-02-accidental-museum.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-07__interesting-02-accidental-museum.webp",
+          "thumbhash": "oSgSDwJYl4h/d3d3iWd3l3iHKPM4BIMF"
         },
         {
           "id": "01-Dreamscape/interesting-03-tea-tide.webp",
@@ -1770,7 +1923,8 @@
           "bytes": 97880,
           "width": 1199,
           "height": 1312,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-07__interesting-03-tea-tide.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-07__interesting-03-tea-tide.webp",
+          "thumbhash": "TwgGHgQrfOZUagjIdrqJaWRpRWZQVAY="
         },
         {
           "id": "01-Dreamscape/interesting-04-weather-vending.webp",
@@ -1781,7 +1935,8 @@
           "bytes": 148366,
           "width": 1402,
           "height": 1122,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-07__interesting-04-weather-vending.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-07__interesting-04-weather-vending.webp",
+          "thumbhash": "VRgGDoRmNoWEco10dWZpB2li9ZY0X1k="
         },
         {
           "id": "02-Lens/hottest-01-sleeve-activism.webp",
@@ -1792,7 +1947,8 @@
           "bytes": 192284,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-07__hottest-01-sleeve-activism.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-07__hottest-01-sleeve-activism.webp",
+          "thumbhash": "ThgGDYIwmJhlpTk1fpsrd0W6UIYK"
         },
         {
           "id": "02-Lens/hottest-02-art-creator-live.webp",
@@ -1803,7 +1959,8 @@
           "bytes": 142060,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-07__hottest-02-art-creator-live.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-07__hottest-02-art-creator-live.webp",
+          "thumbhash": "VxgODYJYd3h/h4d4l3iHhoRiUEwG"
         },
         {
           "id": "02-Lens/hottest-03-five-colours-now.webp",
@@ -1814,7 +1971,8 @@
           "bytes": 226950,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-07__hottest-03-five-colours-now.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-07__hottest-03-five-colours-now.webp",
+          "thumbhash": "GzkKFYQNuJZXbJZWhqRZmK8XZJVg"
         },
         {
           "id": "02-Lens/hottest-04-digital-dunescape.webp",
@@ -1825,7 +1983,8 @@
           "bytes": 215116,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-07__hottest-04-digital-dunescape.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-07__hottest-04-digital-dunescape.webp",
+          "thumbhash": "yzgGFYQYl4iJh3iAeFaIczh9gMMH"
         },
         {
           "id": "02-Lens/niche-01-book-reef.webp",
@@ -1836,7 +1995,8 @@
           "bytes": 215648,
           "width": 1477,
           "height": 1065,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-07__niche-01-book-reef.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-07__niche-01-book-reef.webp",
+          "thumbhash": "GRgKDYR+inR/kWW6OaeGmC9c84ZV"
         },
         {
           "id": "02-Lens/niche-02-woven-weather.webp",
@@ -1847,7 +2007,8 @@
           "bytes": 278084,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-07__niche-02-woven-weather.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-07__niche-02-woven-weather.webp",
+          "thumbhash": "iygGDYJBqHiLdJhQh1eVl1WJUIUH"
         },
         {
           "id": "02-Lens/niche-03-saltwater-plate.webp",
@@ -1858,7 +2019,8 @@
           "bytes": 234376,
           "width": 1402,
           "height": 1122,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-07__niche-03-saltwater-plate.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-07__niche-03-saltwater-plate.webp",
+          "thumbhash": "TDgGFoaMd1lGVodgmnmHp2iaCJmloEg="
         },
         {
           "id": "02-Lens/niche-04-botanical-xray.webp",
@@ -1869,7 +2031,8 @@
           "bytes": 342638,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-07__niche-04-botanical-xray.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-07__niche-04-botanical-xray.webp",
+          "thumbhash": "jAgKHYKIZxd5h4eAh2mIdYt20GsH"
         }
       ]
     },
@@ -1886,7 +2049,8 @@
           "bytes": 357868,
           "width": 1024,
           "height": 1536,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-06__hottest-04-interactive-portrait.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-06__hottest-04-interactive-portrait.webp",
+          "thumbhash": "iTgKFQQIl3h2N6d4h3aYZwh0gWAn"
         },
         {
           "id": "01-Dreamscape/interesting-03-teacup-weather.webp",
@@ -1897,7 +2061,8 @@
           "bytes": 104886,
           "width": 1402,
           "height": 1122,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-06__interesting-03-teacup-weather.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-06__interesting-03-teacup-weather.webp",
+          "thumbhash": "DggGDoIf7ZqDqouWeWdlZqpojrC2CJo="
         },
         {
           "id": "01-Dreamscape/niche-02-cyanotype-laundry.webp",
@@ -1908,7 +2073,8 @@
           "bytes": 228350,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-06__niche-02-cyanotype-laundry.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-06__niche-02-cyanotype-laundry.webp",
+          "thumbhash": "mcYFBwBa3HSYlppnjAOYVXWEfNvz6DsP"
         },
         {
           "id": "02-Lens/hottest-01-2016-bedroom.webp",
@@ -1919,7 +2085,8 @@
           "bytes": 143406,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-06__hottest-01-2016-bedroom.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-06__hottest-01-2016-bedroom.webp",
+          "thumbhash": "IQgSDYJfaXh0eHiIeHdmdz438GZG"
         },
         {
           "id": "02-Lens/hottest-02-motion-stretch.webp",
@@ -1930,7 +2097,8 @@
           "bytes": 122168,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-06__hottest-02-motion-stretch.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-06__hottest-02-motion-stretch.webp",
+          "thumbhash": "FgcKRZKIiXevdneLd7eFc3SQNAdJ"
         },
         {
           "id": "02-Lens/niche-01-straw-marquetry.webp",
@@ -1941,7 +2109,8 @@
           "bytes": 238802,
           "width": 1402,
           "height": 1122,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-06__niche-01-straw-marquetry.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-06__niche-01-straw-marquetry.webp",
+          "thumbhash": "yjgGDoSgVompeHi0dbiEaUuVoJYDajk="
         },
         {
           "id": "02-Lens/niche-03-kinetic-paper.webp",
@@ -1952,7 +2121,8 @@
           "bytes": 90396,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-06__niche-03-kinetic-paper.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-06__niche-03-kinetic-paper.webp",
+          "thumbhash": "DggKDYBAfViGeIiihzaYiAGGElA4"
         },
         {
           "id": "02-Lens/niche-04-thermal-ceramics.webp",
@@ -1963,7 +2133,8 @@
           "bytes": 96246,
           "width": 1402,
           "height": 1122,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-06__niche-04-thermal-ceramics.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-06__niche-04-thermal-ceramics.webp",
+          "thumbhash": "TCgKFoJpOGlTiWeAaFpoloeJUEQ4BAU="
         }
       ]
     },
@@ -1980,7 +2151,8 @@
           "bytes": 192160,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-05__hottest-02.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-05__hottest-02.webp",
+          "thumbhash": "F3oGHwQqijlQboOOhJu6ZoaL+CS1CWYN"
         },
         {
           "id": "01-Dreamscape/interesting-02.webp",
@@ -1991,7 +2163,8 @@
           "bytes": 232696,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-05__interesting-02.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-05__interesting-02.webp",
+          "thumbhash": "TQgGJwZ+R2S+Y3eUSgaWdHdY+YdWX1gE"
         },
         {
           "id": "02-Lens/hottest-01.webp",
@@ -2002,7 +2175,8 @@
           "bytes": 107034,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-05__hottest-01.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-05__hottest-01.webp",
+          "thumbhash": "5CgGFwTzjECGzViomjaYlWaWSEBXBHQF"
         },
         {
           "id": "02-Lens/hottest-04.webp",
@@ -2013,7 +2187,8 @@
           "bytes": 396672,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-05__hottest-04.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-05__hottest-04.webp",
+          "thumbhash": "YwgOHwSQdod7eIebh3d3mHh3WAQmRGAC"
         },
         {
           "id": "02-Lens/interesting-04.webp",
@@ -2024,7 +2199,8 @@
           "bytes": 137172,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-05__interesting-04.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-05__interesting-04.webp",
+          "thumbhash": "1CgKFwSIhndsh3ePh5eZuHd6aKUIVooA"
         },
         {
           "id": "02-Lens/niche-01.webp",
@@ -2035,7 +2211,8 @@
           "bytes": 178082,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-05__niche-01.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-05__niche-01.webp",
+          "thumbhash": "lfcJBwA5l3fPhGmlhoiGWId2p9C7Gf8K"
         },
         {
           "id": "02-Lens/niche-02.webp",
@@ -2046,7 +2223,8 @@
           "bytes": 122232,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-05__niche-02.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-05__niche-02.webp",
+          "thumbhash": "CzkGFwIDPak+xXZ2mTmrRYmYNvFUI08F"
         },
         {
           "id": "02-Lens/niche-03.webp",
@@ -2057,7 +2235,8 @@
           "bytes": 107680,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-05__niche-03.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-05__niche-03.webp",
+          "thumbhash": "BggKBwAIx2iGeIh1inaHaJiIiFBICIUF"
         },
         {
           "id": "02-Lens/niche-04.webp",
@@ -2068,7 +2247,8 @@
           "bytes": 419844,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-05__niche-04.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-05__niche-04.webp",
+          "thumbhash": "zygGFwRAk3d1eIl0h1lqSIiHpoBHC3cG"
         }
       ]
     },
@@ -2085,7 +2265,8 @@
           "bytes": 109148,
           "width": 1024,
           "height": 1536,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-04__hottest-01-butter-eclipse.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-04__hottest-01-butter-eclipse.webp",
+          "thumbhash": "JFoGDQIBRBljuoezR7mqirTAcr9d"
         },
         {
           "id": "01-Dreamscape/hottest-04-dorm-coast.webp",
@@ -2096,7 +2277,8 @@
           "bytes": 171410,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-04__hottest-04-dorm-coast.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-04__hottest-04-dorm-coast.webp",
+          "thumbhash": "aAgKFYLnyaaIiGd/iHR2iAh5gJAH"
         },
         {
           "id": "01-Dreamscape/niche-02-riso-snail.webp",
@@ -2107,7 +2289,8 @@
           "bytes": 558276,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-04__niche-02-riso-snail.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-04__niche-02-riso-snail.webp",
+          "thumbhash": "rCgKDYSJtmePdoZ6hyaIeiBPDrm0"
         },
         {
           "id": "02-Lens/hottest-02-summerween.webp",
@@ -2118,7 +2301,8 @@
           "bytes": 154212,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-04__hottest-02-summerween.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-04__hottest-02-summerween.webp",
+          "thumbhash": "zhcKDYI3h3h/hoh2mWaIiChwUfCZ"
         },
         {
           "id": "02-Lens/interesting-03-nap-courtyard.webp",
@@ -2129,7 +2313,8 @@
           "bytes": 262770,
           "width": 1535,
           "height": 1024,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-04__interesting-03-nap-courtyard.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-04__interesting-03-nap-courtyard.webp",
+          "thumbhash": "GggODYBHd3eVeIhweZiIeNpADEs9"
         },
         {
           "id": "02-Lens/interesting-04-bamboo-ticket.webp",
@@ -2140,7 +2325,8 @@
           "bytes": 210874,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-04__interesting-04-bamboo-ticket.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-04__interesting-04-bamboo-ticket.webp",
+          "thumbhash": "CQgGFYIJWXd2eIeGiBeIggV0VFBX"
         },
         {
           "id": "02-Lens/niche-01-photo-zine.webp",
@@ -2151,7 +2337,8 @@
           "bytes": 177204,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-04__niche-01-photo-zine.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-04__niche-01-photo-zine.webp",
+          "thumbhash": "yygGFYIcBUWreHaeZQhovi++/NK7"
         },
         {
           "id": "02-Lens/niche-03-photo-scroll.webp",
@@ -2162,7 +2349,8 @@
           "bytes": 213354,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-04__niche-03-photo-scroll.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-04__niche-03-photo-scroll.webp",
+          "thumbhash": "IwgKDYB2mHePeIioeMd3ZJdglmoB"
         }
       ]
     },
@@ -2179,7 +2367,8 @@
           "bytes": 186422,
           "width": 1024,
           "height": 1536,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-03__character-03-tai-si.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-03__character-03-tai-si.webp",
+          "thumbhash": "ytcFFQIDhWplG7Y5uZWJiLuQywzp"
         },
         {
           "id": "01-Dreamscape/hottest-02-mended-nebula.webp",
@@ -2190,7 +2379,8 @@
           "bytes": 464120,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-03__hottest-02-mended-nebula.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-03__hottest-02-mended-nebula.webp",
+          "thumbhash": "zBcGDYIKW6t8qWhAm1aWaO+0+mla"
         },
         {
           "id": "01-Dreamscape/interesting-01-cloud-clock.webp",
@@ -2201,7 +2391,8 @@
           "bytes": 166158,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-03__interesting-01-cloud-clock.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-03__interesting-01-cloud-clock.webp",
+          "thumbhash": "0fcFDYIcYzw7s2i/Z6iXU9RwOgqn"
         },
         {
           "id": "01-Dreamscape/interesting-02-vending-opera.webp",
@@ -2212,7 +2403,8 @@
           "bytes": 186682,
           "width": 1024,
           "height": 1536,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-03__interesting-02-vending-opera.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-03__interesting-02-vending-opera.webp",
+          "thumbhash": "BggGFQJBwGmHOJbKWJNYiAyGsWAY"
         },
         {
           "id": "01-Dreamscape/interesting-03-watermelon-planet.webp",
@@ -2223,7 +2415,8 @@
           "bytes": 212260,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-03__interesting-03-watermelon-planet.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-03__interesting-03-watermelon-planet.webp",
+          "thumbhash": "pggOJYjUmHevhnZpZXd4dgaAYhAY"
         },
         {
           "id": "01-Dreamscape/niche-01-zine-observatory.webp",
@@ -2234,7 +2427,8 @@
           "bytes": 371704,
           "width": 1024,
           "height": 1536,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-03__niche-01-zine-observatory.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-03__niche-01-zine-observatory.webp",
+          "thumbhash": "DicGDQQCaJV1B6hmd3V4V7ygZREK"
         },
         {
           "id": "01-Dreamscape/niche-02-sprouting-ring.webp",
@@ -2245,7 +2439,8 @@
           "bytes": 116896,
           "width": 1024,
           "height": 1536,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-03__niche-02-sprouting-ring.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-03__niche-02-sprouting-ring.webp",
+          "thumbhash": "CQgGBQAJpV9slOqHqnmCNjdP+S7a"
         },
         {
           "id": "01-Dreamscape/niche-03-root-tip-lab.webp",
@@ -2256,7 +2451,8 @@
           "bytes": 322522,
           "width": 1024,
           "height": 1535,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-03__niche-03-root-tip-lab.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-03__niche-03-root-tip-lab.webp",
+          "thumbhash": "zDgGFQQmmH+GiHhXiINJWFaPaPV3"
         },
         {
           "id": "01-Dreamscape/niche-04-pocket-station.webp",
@@ -2267,7 +2463,8 @@
           "bytes": 212344,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-03__niche-04-pocket-station.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-03__niche-04-pocket-station.webp",
+          "thumbhash": "yfcFFYIHiGeJh4eQeqdohjiAcRA5"
         },
         {
           "id": "02-Lens/hottest-01-2016-repair-shop.webp",
@@ -2278,7 +2475,8 @@
           "bytes": 165780,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-03__hottest-01-2016-repair-shop.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-03__hottest-01-2016-repair-shop.webp",
+          "thumbhash": "FDkGFYIVT5gug5iJdYhahj15/2b2"
         },
         {
           "id": "02-Lens/hottest-03-everyday-exhibit.webp",
@@ -2289,7 +2487,8 @@
           "bytes": 102170,
           "width": 1024,
           "height": 1536,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-03__hottest-03-everyday-exhibit.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-03__hottest-03-everyday-exhibit.webp",
+          "thumbhash": "rhgGBQCPdqGrmEWHm4WlaFEfBOVA"
         },
         {
           "id": "02-Lens/hottest-04-black-swan-rehearsal.webp",
@@ -2300,7 +2499,8 @@
           "bytes": 94482,
           "width": 1024,
           "height": 1535,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-03__hottest-04-black-swan-rehearsal.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-03__hottest-04-black-swan-rehearsal.webp",
+          "thumbhash": "CAgGBQCIV3CHSHeomXlYaCtf0+AV"
         },
         {
           "id": "02-Lens/import-01-rainy-window.webp",
@@ -2311,7 +2511,8 @@
           "bytes": 110078,
           "width": 941,
           "height": 1672,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-03__import-01-rainy-window.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-03__import-01-rainy-window.webp",
+          "thumbhash": "DAgGFASy+plYqoZ3mIh/2viVbA=="
         },
         {
           "id": "02-Lens/import-02-ccd-party.webp",
@@ -2322,7 +2523,8 @@
           "bytes": 147120,
           "width": 941,
           "height": 1672,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-03__import-02-ccd-party.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-03__import-02-ccd-party.webp",
+          "thumbhash": "FhgKBAAIN6copZ1Xd5ZIbzID/Q=="
         },
         {
           "id": "02-Lens/import-03.webp",
@@ -2333,7 +2535,8 @@
           "bytes": 162560,
           "width": 941,
           "height": 1672,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-03__import-03.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-03__import-03.webp",
+          "thumbhash": "YhgSDAKJB3eHiGh4h5cEcjFQNw=="
         }
       ]
     },
@@ -2350,7 +2553,8 @@
           "bytes": 346990,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-02__hottest-02-festival-surprise.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-02__hottest-02-festival-surprise.webp",
+          "thumbhash": "3/cNJYZXd3h/d3eIeIh3d4lgiAiW"
         },
         {
           "id": "02-Lens/hottest-04-sisters-recreate.webp",
@@ -2361,7 +2565,8 @@
           "bytes": 159482,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-02__hottest-04-sisters-recreate.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-02__hottest-04-sisters-recreate.webp",
+          "thumbhash": "mAgGDYJosIlYRoSKZ+qIjGu1YAYn"
         },
         {
           "id": "02-Lens/interesting-02-sister-wardrobe.webp",
@@ -2372,7 +2577,8 @@
           "bytes": 164396,
           "width": 1536,
           "height": 1024,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-02__interesting-02-sister-wardrobe.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-02__interesting-02-sister-wardrobe.webp",
+          "thumbhash": "ITkOFYL8h2aHmXd2h3l4hwFWE2BV"
         },
         {
           "id": "02-Lens/interesting-03-perseid-party.webp",
@@ -2383,7 +2589,8 @@
           "bytes": 193354,
           "width": 1535,
           "height": 1024,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-02__interesting-03-perseid-party.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-02__interesting-03-perseid-party.webp",
+          "thumbhash": "SfcFHYR4eXh/doeSeRd3aJdwmQmW"
         },
         {
           "id": "02-Lens/niche-01-archive-indexer.webp",
@@ -2394,7 +2601,8 @@
           "bytes": 148452,
           "width": 1024,
           "height": 1536,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-02__niche-01-archive-indexer.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-02__niche-01-archive-indexer.webp",
+          "thumbhash": "zfcFDQAEdX5nKJwU13JLVlOLQLUI"
         }
       ]
     },
@@ -2411,7 +2619,8 @@
           "bytes": 227930,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__character-03-avatar-tailor.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__character-03-avatar-tailor.webp",
+          "thumbhash": "ihgGDwKQWHZMeZenZlh5aHmHBsmUsEwM"
         },
         {
           "id": "01-Dreamscape/hottest-02-cyber-expo.webp",
@@ -2422,7 +2631,8 @@
           "bytes": 241398,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__hottest-02-cyber-expo.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__hottest-02-cyber-expo.webp",
+          "thumbhash": "1dUFJwhoeYaDiGhweaZoSGh3hWb4SJUP"
         },
         {
           "id": "01-Dreamscape/hottest-04-minimal-tactile.webp",
@@ -2433,7 +2643,8 @@
           "bytes": 104928,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__hottest-04-minimal-tactile.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__hottest-04-minimal-tactile.webp",
+          "thumbhash": "JggGBwBQp3e8Z3VjiXd2eId3eRj1pUAO"
         },
         {
           "id": "01-Dreamscape/interesting-01-teacup-weather.webp",
@@ -2444,7 +2655,8 @@
           "bytes": 191426,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__interesting-01-teacup-weather.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__interesting-01-teacup-weather.webp",
+          "thumbhash": "GCkKDwRvZYiVl3m6eYeFZ3h0eArMmIAM"
         },
         {
           "id": "01-Dreamscape/interesting-02-chair-parade.webp",
@@ -2455,7 +2667,8 @@
           "bytes": 319466,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__interesting-02-chair-parade.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__interesting-02-chair-parade.webp",
+          "thumbhash": "zBcGJwZKdIpziIlweYd4h4h3l2sHuXYA"
         },
         {
           "id": "01-Dreamscape/interesting-03-window-wardrobe.webp",
@@ -2466,7 +2679,8 @@
           "bytes": 143014,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__interesting-03-window-wardrobe.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__interesting-03-window-wardrobe.webp",
+          "thumbhash": "mUkKDwKfmUqHqYl0eGZ2h2h4uDA3CHQE"
         },
         {
           "id": "01-Dreamscape/interesting-04-moss-keyboard.webp",
@@ -2477,7 +2691,8 @@
           "bytes": 205854,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__interesting-04-moss-keyboard.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__interesting-04-moss-keyboard.webp",
+          "thumbhash": "0wgGDwJnd5ZvV2c2iifGSIZnuL4HiF8K"
         },
         {
           "id": "01-Dreamscape/niche-01-lacquer-meteorology.webp",
@@ -2488,7 +2703,8 @@
           "bytes": 229844,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__niche-01-lacquer-meteorology.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__niche-01-lacquer-meteorology.webp",
+          "thumbhash": "CggGBwImV411qWmYiJiKtGN/whiQrwAM"
         },
         {
           "id": "01-Dreamscape/niche-02-weaving-architecture.webp",
@@ -2499,7 +2715,8 @@
           "bytes": 445976,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__niche-02-weaving-architecture.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__niche-02-weaving-architecture.webp",
+          "thumbhash": "1ygKDwKAdpZ2aomCiEh6aGh7SAWPQ/AH"
         },
         {
           "id": "01-Dreamscape/niche-03-sound-ceramics.webp",
@@ -2510,7 +2727,8 @@
           "bytes": 369542,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__niche-03-sound-ceramics.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__niche-03-sound-ceramics.webp",
+          "thumbhash": "ESkGFwQgSoimZnmGh0l3eHh3Z2BoAZIF"
         },
         {
           "id": "01-Dreamscape/niche-04-urban-village-map.webp",
@@ -2521,7 +2739,8 @@
           "bytes": 348280,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__niche-04-urban-village-map.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-08-01__niche-04-urban-village-map.webp",
+          "thumbhash": "YAgKDwDHm4iUd3efemd3uIiIWLAHBYsA"
         },
         {
           "id": "02-Lens/hottest-01-avatar-cinema.webp",
@@ -2532,7 +2751,8 @@
           "bytes": 125790,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-01__hottest-01-avatar-cinema.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-01__hottest-01-avatar-cinema.webp",
+          "thumbhash": "TRgGDwLHXHpvoLVzZimLdpl4R8CnBmwL"
         },
         {
           "id": "02-Lens/hottest-03-authored-wall.webp",
@@ -2543,7 +2763,8 @@
           "bytes": 314358,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/02-Lens/2026-08-01__hottest-03-authored-wall.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-08-01__hottest-03-authored-wall.webp",
+          "thumbhash": "GCkGDwIpqpyvjJVjVHZ1V2lnOOT6dacP"
         }
       ]
     },
@@ -2560,7 +2781,8 @@
           "bytes": 84914,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-07-31__interesting-01-girl-grip-orbit.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-07-31__interesting-01-girl-grip-orbit.webp",
+          "thumbhash": "MCkGDwD4Rph7lGp5iKVYZoh4d89Gp2sA"
         },
         {
           "id": "01-Dreamscape/interesting-02-zero-shadow.webp",
@@ -2571,7 +2793,8 @@
           "bytes": 142680,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-07-31__interesting-02-zero-shadow.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-07-31__interesting-02-zero-shadow.webp",
+          "thumbhash": "bggODwDUBsepiodnc4lnmGl1tz+Jq/AC"
         },
         {
           "id": "01-Dreamscape/interesting-03-modular-oasis.webp",
@@ -2582,7 +2805,8 @@
           "bytes": 324566,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-07-31__interesting-03-modular-oasis.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-07-31__interesting-03-modular-oasis.webp",
+          "thumbhash": "WikGDwKYZ6dvial8l6eXh4dqtxsDt2AD"
         },
         {
           "id": "01-Dreamscape/interesting-04-bangladesh-demand.webp",
@@ -2593,7 +2817,8 @@
           "bytes": 428920,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-07-31__interesting-04-bangladesh-demand.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-07-31__interesting-04-bangladesh-demand.webp",
+          "thumbhash": "p+cFHwSnGrOfeZtlamtnmHiHeEsGxGEA"
         },
         {
           "id": "01-Dreamscape/niche-01-living-identity.webp",
@@ -2604,7 +2829,8 @@
           "bytes": 351836,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-07-31__niche-01-living-identity.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-07-31__niche-01-living-identity.webp",
+          "thumbhash": "JQgGDwJwt3iFmZt6ZcuIaXuZScEFImwA"
         },
         {
           "id": "01-Dreamscape/niche-04-handdrawn-bodygame.webp",
@@ -2615,7 +2841,8 @@
           "bytes": 464642,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/01-Dreamscape/2026-07-31__niche-04-handdrawn-bodygame.webp"
+          "src": "https://media.shanzoon.art/01-Dreamscape/2026-07-31__niche-04-handdrawn-bodygame.webp",
+          "thumbhash": "YjkGDwCY+IasdXdihIaIqmd6d8BaBnkO"
         },
         {
           "id": "02-Lens/hottest-01-worldcup-lifestyle.webp",
@@ -2626,7 +2853,8 @@
           "bytes": 206576,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/02-Lens/2026-07-31__hottest-01-worldcup-lifestyle.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-07-31__hottest-01-worldcup-lifestyle.webp",
+          "thumbhash": "jfcFNwpwN2zAVViBV5d6CXot9nl3j3cH"
         },
         {
           "id": "02-Lens/hottest-03-single-take-trucker.webp",
@@ -2637,7 +2865,8 @@
           "bytes": 86894,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/02-Lens/2026-07-31__hottest-03-single-take-trucker.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-07-31__hottest-03-single-take-trucker.webp",
+          "thumbhash": "0SgKDwLQl2pba5hlaGd2WHmHCLo7kcoA"
         },
         {
           "id": "02-Lens/hottest-04-sauna-core.webp",
@@ -2648,7 +2877,8 @@
           "bytes": 146096,
           "width": 1254,
           "height": 1254,
-          "src": "https://media.shanzoon.art/02-Lens/2026-07-31__hottest-04-sauna-core.webp"
+          "src": "https://media.shanzoon.art/02-Lens/2026-07-31__hottest-04-sauna-core.webp",
+          "thumbhash": "lBgGLwgmVWqLiXeQiXppZndqaCIHJnMA"
         }
       ]
     },
@@ -2665,7 +2895,8 @@
           "bytes": 114384,
           "width": 864,
           "height": 1821,
-          "src": "https://media.shanzoon.art/04-Persona/2026-07-30__character-02.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-07-30__character-02.webp",
+          "thumbhash": "JggKCwL5aV12jYycGGiAYAY="
         }
       ]
     },
@@ -2682,7 +2913,8 @@
           "bytes": 51628,
           "width": 1122,
           "height": 1402,
-          "src": "https://media.shanzoon.art/04-Persona/2026-07-11__character-01.webp"
+          "src": "https://media.shanzoon.art/04-Persona/2026-07-11__character-01.webp",
+          "thumbhash": "cggKDgL3aKeYV3h4h4d3iaeHCHh2gGc="
         }
       ]
     }

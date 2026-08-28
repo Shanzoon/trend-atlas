@@ -7,6 +7,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import sharp from "sharp";
+import { rgbaToThumbHash } from "thumbhash";
 import { categoryDefinitions } from "../categories.js";
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -54,6 +55,7 @@ export function buildArchive(items, updatedAt = new Date().toISOString()) {
       width: item.width,
       height: item.height,
       src: item.url,
+      ...(item.thumbhash ? { thumbhash: item.thumbhash } : {}),
     });
     itemsByDate.set(item.date, dayItems);
   }
@@ -99,6 +101,50 @@ async function scanSources() {
   }
 
   return items;
+}
+
+export async function createThumbHash(sourcePath) {
+  const { data, info } = await sharp(sourcePath)
+    .rotate()
+    .resize({ width: 100, height: 100, fit: "inside", withoutEnlargement: true })
+    .toColourspace("srgb")
+    .ensureAlpha()
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+  return Buffer.from(rgbaToThumbHash(info.width, info.height, data)).toString("base64");
+}
+
+export function isThumbHashString(value) {
+  if (typeof value !== "string" || !/^(?:[A-Za-z\d+/]{4})*(?:[A-Za-z\d+/]{2}==|[A-Za-z\d+/]{3}=)?$/.test(value)) return false;
+  const bytes = Buffer.from(value, "base64");
+  return bytes.length >= 5 && bytes.toString("base64") === value;
+}
+
+function previousThumbHashes(archive) {
+  return new Map((archive?.days || []).flatMap((day) => day.items || [])
+    .filter((item) => item.src && isThumbHashString(item.thumbhash))
+    .map((item) => [item.src, item.thumbhash]));
+}
+
+export async function prepareThumbHashes(items, previous) {
+  const previousBySrc = previousThumbHashes(previous);
+  let generated = 0;
+  let preserved = 0;
+  await mapLimit(items, 4, async (item) => {
+    const existing = previousBySrc.get(item.url);
+    if (existing) {
+      item.thumbhash = existing;
+      preserved += 1;
+      return;
+    }
+    try {
+      item.thumbhash = await createThumbHash(item.sourcePath);
+      generated += 1;
+    } catch (error) {
+      throw new Error(`Unable to create ThumbHash for ${item.key}: ${error.message}`);
+    }
+  });
+  return { generated, preserved };
 }
 
 async function mapLimit(items, limit, mapper) {
@@ -208,14 +254,25 @@ export async function main(args = process.argv.slice(2)) {
   const unknown = args.filter((argument) => argument !== "--dry-run");
   if (unknown.length) throw new Error(`Unknown argument: ${unknown.join(", ")}`);
 
+  let previous;
+  try {
+    previous = JSON.parse(await readFile(MANIFEST_PATH, "utf8"));
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error;
+  }
+
   const items = await scanSources();
-  const statuses = await mapLimit(items, 12, probeRemote);
+  const [statuses, thumbhashes] = await Promise.all([
+    mapLimit(items, 12, probeRemote),
+    prepareThumbHashes(items, previous),
+  ]);
   const missing = items.filter((_, index) => !statuses[index].exists);
 
   console.log(`Found ${items.length} source PNGs; ${missing.length} new image(s).`);
+  console.log(`Prepared ${items.length} ThumbHashes (${thumbhashes.generated} generated, ${thumbhashes.preserved} preserved).`);
   if (dryRun) {
     for (const item of missing) console.log(`Would upload ${item.key}`);
-    return { found: items.length, uploaded: 0, missing: missing.length, dryRun: true };
+    return { found: items.length, uploaded: 0, missing: missing.length, dryRun: true, thumbhashes };
   }
 
   const temporaryRoot = await mkdtemp(path.join(tmpdir(), "trend-atlas-publish-"));
