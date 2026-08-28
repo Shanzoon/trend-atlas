@@ -37,6 +37,7 @@ export const elements = {
   detailImage: document.querySelector("#detailImage"),
   detailImageIncoming: document.querySelector("#detailImageIncoming"),
   detailStatus: document.querySelector("#detailStatus"),
+  detailLiveStatus: document.querySelector("#detailLiveStatus"),
   detailRetry: document.querySelector("#detailRetry"),
   detailTitle: document.querySelector("#detailTitle"),
   detailCounter: document.querySelector("#detailCounter"),

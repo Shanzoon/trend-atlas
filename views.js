@@ -1,8 +1,8 @@
-import { categoryDefinitions, categoryFor } from "./categories.js?v=20260829-image2";
-import { elements } from "./elements.js?v=20260829-image2";
-import { scheduleStoryUpdate } from "./home.js?v=20260829-image2";
-import { itemsForScope, nextCollectionPageEnd, state } from "./state.js?v=20260829-image2";
-import { hashString, stableDateKey } from "./utils.js?v=20260829-image2";
+import { categoryDefinitions, categoryFor } from "./categories.js?v=20260829-image3";
+import { elements } from "./elements.js?v=20260829-image3";
+import { scheduleStoryUpdate } from "./home.js?v=20260829-image3";
+import { itemsForScope, nextCollectionPageEnd, state } from "./state.js?v=20260829-image3";
+import { hashString, stableDateKey } from "./utils.js?v=20260829-image3";
 
 let dailyDeck = [];
 const dailyLayers = [elements.dailyImage, elements.dailyImageIncoming];
@@ -18,7 +18,7 @@ let detailFailedUpdateHash = true;
 const imageLoadControllers = new WeakMap();
 let adjacentPreloadLinks = [];
 const MAX_ADJACENT_PRELOADS = 2;
-const SWITCH_INTENT_DELAY_MS = 70;
+const SWITCH_INTENT_DELAY_MS = 40;
 
 function setImageDimensions(image, item) {
   if (item.width && item.height) {
@@ -397,6 +397,10 @@ function setDetailStatus(message = "", showRetry = false) {
   elements.detailRetry.hidden = !showRetry;
 }
 
+function announceDetailStatus(message = "") {
+  elements.detailLiveStatus.textContent = message;
+}
+
 function updateDetailMetadata(item, index) {
   elements.detailTitle.textContent = item.title;
   elements.detailCounter.textContent = `${String(index + 1).padStart(2, "0")} / ${String(state.activeItems.length).padStart(2, "0")}`;
@@ -434,6 +438,7 @@ function resetDetailFrame(item) {
   elements.detailPrevious.hidden = true;
   elements.detailNext.hidden = true;
   setDetailStatus();
+  announceDetailStatus();
 }
 
 function cancelDetailRequest(releaseActiveLayer = false) {
@@ -450,6 +455,7 @@ function cancelDetailRequest(releaseActiveLayer = false) {
   if (releaseActiveLayer) detailActiveLayer = null;
   elements.detailImageWrap.classList.remove("is-loading");
   elements.detailImageWrap.setAttribute("aria-busy", "false");
+  if (releaseActiveLayer) announceDetailStatus();
 }
 
 function preloadDetailNeighbors(index) {
@@ -490,12 +496,16 @@ async function requestDetailItem(index, updateHash = true, focusHeading = false)
   if (!detailActiveLayer && item.width && item.height) {
     elements.detailImageWrap.style.setProperty("--detail-aspect", `${item.width} / ${item.height}`);
   }
-  setDetailStatus(detailActiveLayer ? "" : "正在加载图像");
+  const loadingMessage = detailActiveLayer
+    ? `正在加载 ${String(targetIndex + 1).padStart(2, "0")} / ${String(state.activeItems.length).padStart(2, "0")}`
+    : "正在加载图像";
+  setDetailStatus(loadingMessage);
 
   if (hasVisibleImage) {
     await waitForSettledSwitchIntent();
     if (seq !== detailSwitchSeq || state.page !== "detail" || state.activeItems !== items || state.detailScope !== scope) return;
   }
+  announceDetailStatus(loadingMessage);
 
   const targetLayer = detailActiveLayer
     ? detailLayers.find((layer) => layer !== detailActiveLayer)
@@ -519,6 +529,7 @@ async function requestDetailItem(index, updateHash = true, focusHeading = false)
     elements.detailImageWrap.setAttribute("aria-busy", "false");
     setDetailStatus();
     updateDetailMetadata(item, targetIndex);
+    announceDetailStatus(`已显示 ${String(targetIndex + 1).padStart(2, "0")} / ${String(state.activeItems.length).padStart(2, "0")}：${item.title}`);
     if (updateHash) history.replaceState(history.state, "", detailHash(scope, item));
     preloadDetailNeighbors(targetIndex);
     restoreDetailControlFocus(focusedControl);
@@ -531,7 +542,9 @@ async function requestDetailItem(index, updateHash = true, focusHeading = false)
     state.detailTargetIndex = detailActiveLayer ? state.detailIndex : targetIndex;
     elements.detailImageWrap.classList.remove("is-loading");
     elements.detailImageWrap.setAttribute("aria-busy", "false");
-    setDetailStatus(detailActiveLayer ? "新图加载失败，仍显示上一张。" : "图像加载失败。", true);
+    const errorMessage = detailActiveLayer ? "新图加载失败，仍显示上一张。" : "图像加载失败。";
+    setDetailStatus(errorMessage, true);
+    announceDetailStatus(errorMessage);
   }
 }
 
@@ -594,7 +607,11 @@ function selectDetail(index, updateHash = true) {
   const targetIndex = Math.min(Math.max(index, 0), state.activeItems.length - 1);
   if (targetIndex === detailPendingIndex) return;
   if (targetIndex === state.detailIndex && detailActiveLayer) {
-    if (detailPendingIndex !== null) cancelDetailRequest();
+    if (detailPendingIndex !== null) {
+      cancelDetailRequest();
+      const currentItem = state.activeItems[state.detailIndex];
+      announceDetailStatus(`仍显示 ${String(state.detailIndex + 1).padStart(2, "0")} / ${String(state.activeItems.length).padStart(2, "0")}：${currentItem.title}`);
+    }
     state.detailTargetIndex = state.detailIndex;
     setDetailStatus();
     return;

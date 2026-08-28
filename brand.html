@@ -8,11 +8,11 @@
     <link rel="icon" type="image/svg+xml" href="/assets/shanzoon-glyph-favicon.svg" />
     <link rel="preconnect" href="https://media.shanzoon.art" />
     <title>shanzoon.art</title>
-    <link rel="stylesheet" href="/base.css?v=20260829-image2" />
-    <link rel="stylesheet" href="/home.css?v=20260829-image2" />
-    <link rel="stylesheet" href="/systems.css?v=20260829-image2" />
-    <link rel="stylesheet" href="/collection.css?v=20260829-image2" />
-    <link rel="stylesheet" href="/detail.css?v=20260829-image2" />
+    <link rel="stylesheet" href="/base.css?v=20260829-image3" />
+    <link rel="stylesheet" href="/home.css?v=20260829-image3" />
+    <link rel="stylesheet" href="/systems.css?v=20260829-image3" />
+    <link rel="stylesheet" href="/collection.css?v=20260829-image3" />
+    <link rel="stylesheet" href="/detail.css?v=20260829-image3" />
   </head>
   <body data-page="home">
     <a class="skip-link" href="#mainContent">跳到主要内容</a>
@@ -159,10 +159,11 @@
             <img class="detail-layer" id="detailImageIncoming" alt="" decoding="async" aria-hidden="true" />
             <span class="detail-placeholder" aria-hidden="true"></span>
             <div class="detail-load-state">
-              <p id="detailStatus" role="status"></p>
+              <p id="detailStatus" aria-hidden="true"></p>
               <button class="detail-retry" id="detailRetry" type="button" hidden>重新加载</button>
             </div>
           </div>
+          <p class="detail-live-status" id="detailLiveStatus" role="status"></p>
           <div class="detail-copy">
             <span id="detailCounter"></span>
             <h1 id="detailTitle" tabindex="-1"></h1>
@@ -179,6 +180,6 @@
       </button>
     </template>
 
-    <script type="module" src="/app.js?v=20260829-image2"></script>
+    <script type="module" src="/app.js?v=20260829-image3"></script>
   </body>
 </html>

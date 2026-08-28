@@ -12,7 +12,7 @@ import { COLLECTION_PAGE_SIZE, nextCollectionPageEnd } from "../state.js";
 import { progressWithHold, progressWithHolds, scrollCueOpacity, systemsTimeline } from "../timelines.js";
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const ASSET_VERSION = "20260829-image2";
+const ASSET_VERSION = "20260829-image3";
 
 const [dreamscape, lens] = categoryDefinitions;
 
@@ -93,6 +93,7 @@ describe("image loading contract", () => {
 
     assert.match(views, /await loadAndDecodeImage\(targetLayer, item/);
     assert.match(views, /const MAX_ADJACENT_PRELOADS = 2;/);
+    assert.match(views, /const SWITCH_INTENT_DELAY_MS = 40;/);
     assert.match(views, /state\.detailTargetIndex = targetIndex;[\s\S]*await loadAndDecodeImage[\s\S]*state\.detailIndex = targetIndex;/);
     assert.ok(dailyRequest.indexOf("await waitForSettledSwitchIntent()") < dailyRequest.indexOf("const targetLayer"), "daily target layer must be chosen after rapid intent settles");
     assert.ok(detailRequest.indexOf("await waitForSettledSwitchIntent()") < detailRequest.indexOf("const targetLayer"), "detail target layer must be chosen after rapid intent settles");
@@ -297,6 +298,7 @@ describe("home page", () => {
     assert.ok(html.includes('class="detail-nav next"'), "detail page should expose the next image control");
     assert.ok(html.includes('id="detailImageIncoming"'), "detail switching should have a reusable decoded incoming layer");
     assert.ok(html.includes('id="detailRetry"'), "detail failures should expose a retry control");
+    assert.ok(html.includes('id="detailLiveStatus"'), "detail feedback should expose a live region outside the busy image wrapper");
     assert.ok(html.indexOf('id="detailPrevious"') < html.indexOf('class="detail-layout"'), "detail navigation should sit outside the artwork layout");
     const stylesheetOrder = ["/base.css", "/home.css", "/systems.css", "/collection.css", "/detail.css"];
     const styleIndexes = stylesheetOrder.map((href) => html.indexOf(`href="${href}?v=${ASSET_VERSION}"`));
