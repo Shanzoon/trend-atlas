@@ -75,11 +75,9 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: var(--weight-display
   letter-spacing: var(--tracking-subtitle);
   text-wrap: balance;
 }
-button:focus-visible, a:focus-visible { outline: none; }
 :where(button, a):focus-visible {
-  outline: 2px solid var(--cyan);
-  outline-offset: 4px;
-  box-shadow: 0 0 0 2px var(--night), 0 0 0 4px var(--rose);
+  outline: none;
+  box-shadow: none;
 }
 
 .skip-link {
@@ -94,7 +92,6 @@ button:focus-visible, a:focus-visible { outline: none; }
   transform: translateY(-160%);
   transition: transform 180ms var(--ease-out);
 }
-.skip-link:focus { transform: translateY(0); }
 
 .night-glow {
   position: fixed;

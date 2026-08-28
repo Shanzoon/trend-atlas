@@ -98,8 +98,7 @@
 }
 .detail-nav.previous { left: clamp(12px, 1.5vw, 28px); }
 .detail-nav.next { right: clamp(12px, 1.5vw, 28px); }
-.detail-nav:hover, .detail-nav:focus-visible { color: var(--night-ink); transform: translateY(-50%) scale(1.08); }
-.detail-nav:focus-visible { border-radius: 999px; outline: 1px solid currentColor; outline-offset: 2px; }
+.detail-nav:hover { color: var(--night-ink); transform: translateY(-50%) scale(1.08); }
 .detail-nav:active { transform: translateY(-50%) scale(0.94); }
 .detail-nav[hidden] { display: none; }
 .detail-copy { align-self: end; padding-bottom: 2px; }
