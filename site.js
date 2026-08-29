@@ -1,4 +1,4 @@
-import { siteConfig } from "./site-profile.js?v=20260829-detailstage1";
+import { siteConfig } from "./site-profile.js?v=20260830-categoryarchive1";
 
 function requireString(value, path) {
   if (typeof value !== "string" || !value.trim()) throw new Error(`${path} 必须是非空文本`);

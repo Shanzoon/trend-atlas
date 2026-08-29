@@ -1,10 +1,10 @@
-import { categoryDefinitions, categoryFor } from "./categories.js?v=20260829-detailstage1";
-import { elements } from "./elements.js?v=20260829-detailstage1";
-import { scheduleStoryUpdate } from "./home.js?v=20260829-detailstage1";
-import { siteConfig } from "./site.js?v=20260829-detailstage1";
-import { itemsForScope, nextCollectionPageEnd, state } from "./state.js?v=20260829-detailstage1";
-import { renderThumbHash } from "./thumbhash.js?v=20260829-detailstage1";
-import { hashString, stableDateKey } from "./utils.js?v=20260829-detailstage1";
+import { categoryDefinitions, categoryFor } from "./categories.js?v=20260830-categoryarchive1";
+import { elements } from "./elements.js?v=20260830-categoryarchive1";
+import { scheduleStoryUpdate } from "./home.js?v=20260830-categoryarchive1";
+import { siteConfig } from "./site.js?v=20260830-categoryarchive1";
+import { itemsForScope, nextCollectionPageEnd, state } from "./state.js?v=20260830-categoryarchive1";
+import { renderThumbHash } from "./thumbhash.js?v=20260830-categoryarchive1";
+import { hashString, stableDateKey } from "./utils.js?v=20260830-categoryarchive1";
 
 let dailyDeck = [];
 const dailyLayers = [elements.dailyImage, elements.dailyImageIncoming];
@@ -349,6 +349,8 @@ function collectionItems() {
 
 function syncCollectionScope(scope) {
   state.collectionScope = scope;
+  const category = scope === "all" ? null : categoryFor(scope);
+  elements.collectionTitle.textContent = category ? category.label.toUpperCase() : "ALL IMAGES";
   elements.collectionFilters.querySelectorAll(".collection-filter").forEach((button) => {
     const active = button.dataset.scope === scope;
     button.classList.toggle("is-active", active);
@@ -410,11 +412,7 @@ export function hydrateFolderCovers() {
     imageLayer.classList.add("is-preview-main");
     image.alt = "";
     image.decoding = "async";
-    button.addEventListener("click", () => {
-      // 落点固定为列表第一张（最新收录），保证进入后往后翻页是完整的一段。
-      const firstItem = itemsForScope(definition.id)[0];
-      if (firstItem) navigateToDetail(firstItem, definition.id);
-    });
+    button.addEventListener("click", () => navigateToArchive(definition.id));
   });
 }
 
@@ -750,10 +748,10 @@ export function navigateHome(updateHash = true, restorePosition = false) {
   scheduleStoryUpdate();
 }
 
-export function navigateToArchive(updateHash = true, restorePosition = false) {
+export function navigateToArchive(scope = "all", updateHash = true, restorePosition = false) {
   const previousPage = state.page;
   if (previousPage === "home") state.homeScrollY = scrollY;
-  syncCollectionScope(state.collectionScope);
+  syncCollectionScope(scope);
   setPage("collection");
   renderCollection();
   document.title = siteConfig.site.title;
@@ -831,8 +829,7 @@ export function routeFromHash() {
   if (location.hash === "#archive" || archiveMatch) {
     const scope = archiveMatch ? safeDecode(archiveMatch[1]) : "all";
     if (scope === "all" || categoryFor(scope)) {
-      syncCollectionScope(scope);
-      navigateToArchive(false, state.page === "detail" && state.detailSource === "collection");
+      navigateToArchive(scope, false, state.page === "detail" && state.detailSource === "collection");
       return;
     }
   }

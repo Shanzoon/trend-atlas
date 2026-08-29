@@ -13,7 +13,7 @@ import { progressWithHold, progressWithHolds, scrollCueOpacity, systemsTimeline 
 import { thumbHashToRGBA as decodeLocalThumbHash } from "../thumbhash.js";
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const ASSET_VERSION = "20260829-detailstage1";
+const ASSET_VERSION = "20260830-categoryarchive1";
 
 const [dreamscape, lens] = categoryDefinitions;
 
@@ -83,6 +83,22 @@ describe("collection pagination", () => {
     assert.equal(nextCollectionPageEnd(COLLECTION_PAGE_SIZE, total), COLLECTION_PAGE_SIZE * 2);
     assert.equal(nextCollectionPageEnd(280, total), total);
     assert.equal(nextCollectionPageEnd(total, total), total);
+  });
+});
+
+describe("archive navigation contract", () => {
+  it("routes folders through their filtered archive and keeps VIEW ALL unfiltered", async () => {
+    const views = await readFile(path.join(appRoot, "views.js"), "utf8");
+    const app = await readFile(path.join(appRoot, "app.js"), "utf8");
+    const folderHydration = views.slice(views.indexOf("export function hydrateFolderCovers"), views.indexOf("export function renderDailyItem"));
+    const archiveNavigation = views.slice(views.indexOf("export function navigateToArchive"), views.indexOf("function navigateToDetail"));
+
+    assert.match(folderHydration, /navigateToArchive\(definition\.id\)/, "each folder must open its filtered collection");
+    assert.doesNotMatch(folderHydration, /navigateToDetail/, "folders must not skip directly to an image detail");
+    assert.match(app, /archiveAll\.addEventListener\("click", \(\) => navigateToArchive\("all"\)\)/, "VIEW ALL must always clear the category filter");
+    assert.match(archiveNavigation, /navigateToArchive\(scope = "all"[\s\S]*syncCollectionScope\(scope\)/, "archive navigation must receive its scope explicitly");
+    assert.match(views, /navigateToArchive\(scope, false, state\.page === "detail" && state\.detailSource === "collection"\)/, "archive deep links must preserve their decoded scope");
+    assert.match(views, /collectionTitle\.textContent = category \? category\.label\.toUpperCase\(\) : "ALL IMAGES"/, "the collection heading must identify the active category");
   });
 });
 

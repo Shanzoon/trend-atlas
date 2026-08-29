@@ -1,9 +1,9 @@
-import { elements } from "./elements.js?v=20260829-detailstage1";
-import { invalidateMotionLayout, scheduleStoryUpdate } from "./home.js?v=20260829-detailstage1";
-import { mobileLayout, reduceMotion } from "./media.js?v=20260829-detailstage1";
-import { applySiteConfig, siteConfig } from "./site.js?v=20260829-detailstage1";
-import { state } from "./state.js?v=20260829-detailstage1";
-import { hydrateFolderCovers, initCollectionFilters, moveDetail, navigateHome, navigateToArchive, renderNextCollectionPage, retryDetailImage, routeFromHash, switchDailyItem } from "./views.js?v=20260829-detailstage1";
+import { elements } from "./elements.js?v=20260830-categoryarchive1";
+import { invalidateMotionLayout, scheduleStoryUpdate } from "./home.js?v=20260830-categoryarchive1";
+import { mobileLayout, reduceMotion } from "./media.js?v=20260830-categoryarchive1";
+import { applySiteConfig, siteConfig } from "./site.js?v=20260830-categoryarchive1";
+import { state } from "./state.js?v=20260830-categoryarchive1";
+import { hydrateFolderCovers, initCollectionFilters, moveDetail, navigateHome, navigateToArchive, renderNextCollectionPage, retryDetailImage, routeFromHash, switchDailyItem } from "./views.js?v=20260830-categoryarchive1";
 
 let configurationError;
 try {
@@ -19,11 +19,11 @@ if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 
 function leaveDetail() {
   if (history.state?.source) history.back();
-  else if (state.detailScope === "all") navigateToArchive();
+  else if (state.detailScope === "all") navigateToArchive("all");
   else navigateHome(true, true);
 }
 
-elements.archiveAll.addEventListener("click", () => navigateToArchive());
+elements.archiveAll.addEventListener("click", () => navigateToArchive("all"));
 elements.collectionMore.addEventListener("click", renderNextCollectionPage);
 elements.galleryBack.addEventListener("click", () => {
   if (state.page === "collection") {
