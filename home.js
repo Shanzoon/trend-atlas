@@ -1,9 +1,9 @@
-import { categoryFor } from "./categories.js?v=20260830-categoryarchive1";
-import { elements } from "./elements.js?v=20260830-categoryarchive1";
-import { mobileLayout, reduceMotion } from "./media.js?v=20260830-categoryarchive1";
-import { itemsForScope, state } from "./state.js?v=20260830-categoryarchive1";
-import { archiveTimeline, progressWithHold, progressWithHolds, scrollCueOpacity, systemsTimeline } from "./timelines.js?v=20260830-categoryarchive1";
-import { clamp, clearMotionStyles, lerp, setButtonInteractive, setContainerInteractive, smoothstep } from "./utils.js?v=20260830-categoryarchive1";
+import { categoryFor } from "./categories.js?v=20260902-archivehardening1";
+import { elements } from "./elements.js?v=20260902-archivehardening1";
+import { mobileLayout, reduceMotion } from "./media.js?v=20260902-archivehardening1";
+import { itemsForScope, state } from "./state.js?v=20260902-archivehardening1";
+import { archiveTimeline, offsetForProgressWithHolds, progressWithHold, progressWithHolds, scrollCueOpacity, systemsTimeline } from "./timelines.js?v=20260902-archivehardening1";
+import { clamp, clearMotionStyles, lerp, setButtonInteractive, setContainerInteractive, smoothstep } from "./utils.js?v=20260902-archivehardening1";
 
 const ARCHIVE_STAGE_SCALE = 0.84;
 
@@ -185,6 +185,7 @@ function updateStory() {
   if (state.page !== "home") return;
 
   const staticStory = mobileLayout.matches || reduceMotion.matches;
+  const archiveActionReady = state.archiveReady || state.archiveLoadState === "error";
 
   if (staticStory) {
     if (!state.folderPreviewsHydrated && scrollY - elements.story.offsetTop > innerHeight * 0.42) hydrateFolderPreviews();
@@ -193,8 +194,8 @@ function updateStory() {
     elements.stage.style.setProperty("--stage-scale", "1");
     elements.portalButtons.forEach((button) => setButtonInteractive(button, state.archiveReady));
     elements.portals.classList.toggle("is-ready", state.archiveReady);
-    setButtonInteractive(elements.archiveAll, state.archiveReady);
-    elements.archiveAll.classList.toggle("is-ready", state.archiveReady);
+    setButtonInteractive(elements.archiveAll, archiveActionReady);
+    elements.archiveAll.classList.toggle("is-ready", archiveActionReady);
     state.staticMotionApplied = true;
     return;
   }
@@ -268,7 +269,7 @@ function updateStory() {
   elements.archiveAll.style.opacity = (allEntry * (1 - archiveExit)).toFixed(3);
   elements.archiveAll.style.transform = `translateY(${(lerp(12, 0, allEntry) - 20 * archiveExit).toFixed(1)}px)`;
   elements.scrollCue.style.opacity = scrollCueOpacity(progress).toFixed(3);
-  const archiveIsInteractive = state.archiveReady && allEntry > 0.82 && handoff < 0.18;
+  const archiveIsInteractive = archiveActionReady && allEntry > 0.82 && handoff < 0.18;
   setButtonInteractive(elements.archiveAll, archiveIsInteractive);
   elements.archiveAll.classList.toggle("is-ready", archiveIsInteractive);
 }
@@ -282,4 +283,38 @@ export function invalidateMotionLayout() {
   state.motionMetrics = null;
   state.staticMotionApplied = false;
   scheduleStoryUpdate();
+}
+
+function focusAfterSceneJump(target, behavior) {
+  if (!target) return;
+  const focusTarget = () => target.focus({ preventScroll: true });
+  if (behavior === "auto") {
+    requestAnimationFrame(() => requestAnimationFrame(focusTarget));
+    return;
+  }
+  if ("onscrollend" in window) window.addEventListener("scrollend", focusTarget, { once: true });
+  else window.setTimeout(focusTarget, 450);
+}
+
+export function jumpToHomeScene(scene) {
+  if (state.page !== "home" || !["products", "contact"].includes(scene)) return;
+  const behavior = reduceMotion.matches ? "auto" : "smooth";
+
+  if (mobileLayout.matches || reduceMotion.matches) {
+    const target = scene === "products" ? elements.projectSheets[0] : elements.systemsContact;
+    const focusTarget = scene === "products" ? elements.projectTitles[0] : elements.systemsContactLinks[0];
+    target?.scrollIntoView({ behavior, block: scene === "products" ? "start" : "center" });
+    focusAfterSceneJump(focusTarget, behavior);
+    return;
+  }
+
+  const metrics = state.motionMetrics || (state.motionMetrics = measureMotionLayout());
+  const targetProgress = scene === "products" ? 0.22 : 0.99;
+  const top = metrics.systemsTop + offsetForProgressWithHolds(
+    targetProgress,
+    metrics.systemsMotionDistance,
+    metrics.systemsHoldDistances,
+  );
+  window.scrollTo({ top, left: 0, behavior });
+  focusAfterSceneJump(scene === "products" ? elements.systemsTitle : elements.systemsContactLinks[0], behavior);
 }

@@ -7,13 +7,14 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { categoryDefinitions } from "../categories.js";
+import { ARCHIVE_LOADING_DELAY_MS, ARCHIVE_TIMEOUT_MS, createArchiveLoader, normalizeArchiveManifest, scheduleDelayedArchiveFeedback } from "../archive.js";
 import { siteConfig } from "../site.config.js";
 import { COLLECTION_PAGE_SIZE, nextCollectionPageEnd } from "../state.js";
-import { progressWithHold, progressWithHolds, scrollCueOpacity, systemsTimeline } from "../timelines.js";
+import { offsetForProgressWithHolds, progressWithHold, progressWithHolds, scrollCueOpacity, systemsTimeline } from "../timelines.js";
 import { thumbHashToRGBA as decodeLocalThumbHash } from "../thumbhash.js";
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const ASSET_VERSION = "20260830-categoryarchive1";
+const ASSET_VERSION = "20260902-archivehardening1";
 
 const [dreamscape, lens] = categoryDefinitions;
 
@@ -62,6 +63,12 @@ describe("scroll timeline hold", () => {
     assert.equal(progressWithHolds(-1, motionDistance, holds), 0);
     assert.equal(progressWithHolds(1800, motionDistance, holds), 1);
   });
+
+  it("maps quick jumps to the same held timeline geometry", () => {
+    const holds = [[0.3, 300], [0.61, 300], [0.89, 200]];
+    assert.equal(offsetForProgressWithHolds(0.22, 1000, holds), 220);
+    assert.equal(offsetForProgressWithHolds(0.99, 1000, holds), 1790);
+  });
 });
 
 describe("shared archive scroll cue", () => {
@@ -86,6 +93,83 @@ describe("collection pagination", () => {
   });
 });
 
+describe("archive manifest loading", () => {
+  const validManifest = {
+    days: [{ date: "2026-09-02", items: [{ title: "A", src: "/a.webp" }] }],
+  };
+
+  it("validates the manifest and rejects invalid or empty archives", () => {
+    assert.equal(normalizeArchiveManifest(validManifest).items[0].date, "2026-09-02");
+    assert.throws(() => normalizeArchiveManifest({}), /格式无效/);
+    assert.throws(() => normalizeArchiveManifest({ days: [] }), /没有图片/);
+  });
+
+  it("does not flash delayed loading feedback after a fast success", async () => {
+    let feedbackShown = false;
+    const cancelFeedback = scheduleDelayedArchiveFeedback(() => { feedbackShown = true; }, 20);
+    const load = createArchiveLoader({
+      path: "/archive.json",
+      fetchImpl: async () => ({ ok: true, json: async () => validManifest }),
+    });
+
+    await load();
+    cancelFeedback();
+    await new Promise((resolve) => setTimeout(resolve, 30));
+    assert.equal(feedbackShown, false);
+    assert.equal(ARCHIVE_LOADING_DELAY_MS, 300);
+  });
+
+  it("aborts a manifest request at the timeout", async () => {
+    const load = createArchiveLoader({
+      path: "/archive.json",
+      timeoutMs: 10,
+      fetchImpl: (_path, { signal }) => new Promise((_resolve, reject) => {
+        signal.addEventListener("abort", () => reject(new DOMException("Aborted", "AbortError")), { once: true });
+      }),
+    });
+
+    await assert.rejects(load(), { name: "AbortError" });
+    assert.equal(ARCHIVE_TIMEOUT_MS, 10_000);
+  });
+
+  it("surfaces HTTP and JSON failures, then allows a retry", async () => {
+    let attempt = 0;
+    const load = createArchiveLoader({
+      path: "/archive.json",
+      fetchImpl: async () => {
+        attempt += 1;
+        if (attempt === 1) return { ok: false, status: 503 };
+        if (attempt === 2) return { ok: true, json: async () => { throw new SyntaxError("bad json"); } };
+        return { ok: true, json: async () => validManifest };
+      },
+    });
+
+    await assert.rejects(load(), /HTTP 503/);
+    await assert.rejects(load(), /bad json/);
+    assert.equal((await load()).items.length, 1);
+    assert.equal(attempt, 3);
+  });
+
+  it("deduplicates concurrent requests", async () => {
+    let requestCount = 0;
+    let resolveRequest;
+    const load = createArchiveLoader({
+      path: "/archive.json",
+      fetchImpl: () => {
+        requestCount += 1;
+        return new Promise((resolve) => { resolveRequest = resolve; });
+      },
+    });
+    const first = load();
+    const second = load();
+
+    assert.equal(first, second);
+    assert.equal(requestCount, 1);
+    resolveRequest({ ok: true, json: async () => validManifest });
+    await first;
+  });
+});
+
 describe("archive navigation contract", () => {
   it("routes folders through their filtered archive and keeps VIEW ALL unfiltered", async () => {
     const views = await readFile(path.join(appRoot, "views.js"), "utf8");
@@ -95,14 +179,59 @@ describe("archive navigation contract", () => {
 
     assert.match(folderHydration, /navigateToArchive\(definition\.id\)/, "each folder must open its filtered collection");
     assert.doesNotMatch(folderHydration, /navigateToDetail/, "folders must not skip directly to an image detail");
-    assert.match(app, /archiveAll\.addEventListener\("click", \(\) => navigateToArchive\("all"\)\)/, "VIEW ALL must always clear the category filter");
+    assert.match(app, /archiveAll\.addEventListener[\s\S]*state\.archiveReady\) navigateToArchive\("all"\)/, "VIEW ALL must always clear the category filter");
     assert.match(archiveNavigation, /navigateToArchive\(scope = "all"[\s\S]*syncCollectionScope\(scope\)/, "archive navigation must receive its scope explicitly");
     assert.match(views, /navigateToArchive\(scope, false, state\.page === "detail" && state\.detailSource === "collection"\)/, "archive deep links must preserve their decoded scope");
     assert.match(views, /collectionTitle\.textContent = category \? category\.label\.toUpperCase\(\) : "ALL IMAGES"/, "the collection heading must identify the active category");
   });
 });
 
+describe("quick index navigation contract", () => {
+  it("keeps quick browsing on stable home scenes and hides it off the homepage", async () => {
+    const app = await readFile(path.join(appRoot, "app.js"), "utf8");
+    const home = await readFile(path.join(appRoot, "home.js"), "utf8");
+    const systemsCss = await readFile(path.join(appRoot, "systems.css"), "utf8");
+    const views = await readFile(path.join(appRoot, "views.js"), "utf8");
+
+    assert.match(app, /quickIndexArchive[\s\S]*navigateToArchive\("all"\)/, "the archive shortcut must open the complete archive");
+    assert.match(app, /quickIndexProducts[\s\S]*jumpToHomeScene\("products"\)/, "the products shortcut must use the scene-aware jump");
+    assert.match(app, /quickIndexContact[\s\S]*jumpToHomeScene\("contact"\)/, "the contact shortcut must use the scene-aware jump");
+    assert.match(home, /targetProgress = scene === "products" \? 0\.22 : 0\.99/, "desktop shortcuts must land on readable held frames");
+    assert.match(home, /mobileLayout\.matches \|\| reduceMotion\.matches[\s\S]*scrollIntoView/, "static layouts must jump to real content");
+    assert.match(home, /focusTarget = scene === "products" \? elements\.projectTitles\[0\] : elements\.systemsContactLinks\[0\]/, "static product jumps must focus visible content");
+    assert.match(systemsCss, /\.project-sheet\s*\{[^}]*scroll-margin-top:\s*calc\(76px \+ env\(safe-area-inset-top\)\)/s, "static product jumps must clear the fixed header");
+    assert.match(views, /quickIndex\.hidden = page !== "home"/, "the quick index must not compete with gallery navigation");
+  });
+});
+
 describe("image loading contract", () => {
+  it("keeps archive failure and retry separate from the daily image status", async () => {
+    const app = await readFile(path.join(appRoot, "app.js"), "utf8");
+    const html = await readFile(path.join(appRoot, "brand.html"), "utf8");
+    const archiveLoading = app.slice(app.indexOf("function setArchiveLoadState"), app.indexOf("function leaveDetail"));
+
+    assert.match(html, /id="archiveStatus" role="status" aria-live="polite" tabindex="-1"/);
+    assert.match(archiveLoading, /RETRY ARCHIVE/);
+    assert.match(archiveLoading, /ARCHIVE · LOADING/);
+    assert.doesNotMatch(archiveLoading, /homeStatus/, "archive failures must not overwrite daily-image feedback");
+    assert.match(app, /console\.error\("Archive manifest failed to load", error\)/, "technical diagnostics should stay in the console");
+  });
+
+  it("keeps failed collection thumbnails usable with a quiet fallback", async () => {
+    const views = await readFile(path.join(appRoot, "views.js"), "utf8");
+    const html = await readFile(path.join(appRoot, "brand.html"), "utf8");
+    const css = await readFile(path.join(appRoot, "collection.css"), "utf8");
+    const collectionRender = views.slice(views.indexOf("export function renderNextCollectionPage"), views.indexOf("function renderCollection"));
+
+    assert.match(html, /class="collection-placeholder"[\s\S]*高清图暂不可用/);
+    assert.match(collectionRender, /renderThumbHash\(placeholder, item\.thumbhash\)/);
+    assert.ok(collectionRender.indexOf("imageFrame.style.aspectRatio") < collectionRender.indexOf("image.src = item.src"), "thumbnail geometry must be reserved before the request");
+    assert.match(collectionRender, /image\.addEventListener\("error"[\s\S]*is-image-error[\s\S]*详情页可重试/);
+    assert.match(collectionRender, /card\.addEventListener\("click", \(\) => navigateToDetail/, "a failed thumbnail must still open detail");
+    assert.match(css, /\.collection-placeholder\.is-hidden\s*\{\s*opacity:\s*0;/);
+    assert.match(css, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.collection-placeholder, \.collection-image img\s*\{\s*transition:\s*none;/);
+  });
+
   it("decodes into reusable layers and bounds adjacent prefetching", async () => {
     const views = await readFile(path.join(appRoot, "views.js"), "utf8");
     const dailyRequest = views.slice(views.indexOf("async function requestDailyItem"), views.indexOf("function cancelDailyRequest"));
@@ -191,7 +320,7 @@ describe("image loading contract", () => {
   });
 
   it("keeps the browser module graph on one cache version", async () => {
-    for (const file of ["app.js", "home.js", "views.js", "utils.js"]) {
+    for (const file of ["app.js", "home.js", "views.js", "utils.js", "site.js", "site-profile.js", "categories.js"]) {
       const source = await readFile(path.join(appRoot, file), "utf8");
       const imports = [...source.matchAll(/from "(\.\/[^\"]+)"/g)].map((match) => match[1]);
       for (const specifier of imports) {
@@ -364,6 +493,10 @@ describe("home page", () => {
     assert.ok(html.includes('id="collectionMore"'), "expected a manual archive pagination control");
     assert.ok(html.includes('id="collectionFilters"'), "expected a collection category filter control");
     assert.ok(html.includes('id="dailyRefresh"'), "expected a daily pick refresh control");
+    assert.match(html, /<nav class="quick-index" id="quickIndex" aria-label="快速浏览">/, "expected one labelled flat quick-index navigation");
+    assert.ok(!html.includes("quickIndexToggle"), "the quick index must not require a disclosure step");
+    assert.ok(!html.includes("popover"), "the quick index must stay flat rather than opening a menu");
+    assert.equal((html.match(/class="quick-index-link"/g) || []).length, 3, "expected archive, products, and contact shortcuts");
     const archiveCuePattern = /<div class="scroll-cue" id="scrollCue" aria-hidden="true">\s*<span class="scroll-cue-label">ENTER ARCHIVE<\/span>\s*<span class="scroll-cue-mouse"><\/span>\s*<\/div>/g;
     assert.equal(html.match(archiveCuePattern)?.length, 1, "one complete scroll cue component should serve both archive transitions");
     assert.ok(!html.includes('id="archiveScrollCue"'), "archive transitions should not fork the scroll cue component");
@@ -406,6 +539,7 @@ describe("static assets", () => {
       "/site.config.owner.js",
       "/site-profile.js",
       "/site.js",
+      "/archive.js",
       "/app.js",
       "/views.js",
       "/home.js",

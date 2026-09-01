@@ -4,6 +4,7 @@ export const state = {
   days: [],
   allItems: [],
   archiveReady: false,
+  archiveLoadState: "idle",
   activeItems: [],
   dailyItem: null,
   detailIndex: 0,

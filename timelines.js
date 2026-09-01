@@ -55,3 +55,13 @@ export function progressWithHolds(offset, motionDistance, holds) {
 export function progressWithHold(offset, motionDistance, holdProgress, holdDistance) {
   return progressWithHolds(offset, motionDistance, [[holdProgress, holdDistance]]);
 }
+
+export function offsetForProgressWithHolds(progress, motionDistance, holds) {
+  const motion = Math.max(1, motionDistance);
+  const target = Math.min(1, Math.max(0, progress));
+  const heldDistance = holds.reduce((total, [holdProgress, holdDistance]) => {
+    const holdAt = Math.min(1, Math.max(0, holdProgress));
+    return target > holdAt ? total + Math.max(0, holdDistance) : total;
+  }, 0);
+  return motion * target + heldDistance;
+}

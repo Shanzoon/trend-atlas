@@ -75,12 +75,24 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: end;
-  gap: clamp(28px, 5vw, 72px);
+  gap: 10px clamp(28px, 5vw, 72px);
   width: min(760px, 100%);
   margin: clamp(26px, 3.8vh, 36px) auto 0;
   text-align: left;
 }
 .archive-subtitle { max-width: 28ch; margin: 0; }
+.archive-status {
+  grid-column: 1 / -1;
+  min-height: 1.4em;
+  margin: -10px 0 0;
+  color: var(--stage-muted);
+  font-size: var(--type-small);
+  line-height: 1.4;
+  opacity: 0;
+  transition: opacity 160ms var(--ease-out);
+}
+.archive-status.is-visible { opacity: 1; }
+.archive-status.is-error { color: var(--danger); }
 
 .daily-art {
   position: absolute;
@@ -243,6 +255,7 @@
   .archive-copy { top: 724px; width: calc(100% - 32px); opacity: 1 !important; filter: none !important; transform: translateX(-50%) !important; }
   .archive-identity { font-size: clamp(1.5rem, 8vw, 2.1rem); letter-spacing: 0.035em; }
   .archive-meta { display: flex; flex-direction: column; align-items: center; gap: 17px; width: 100%; margin-top: 14px; text-align: center; }
+  .archive-status { min-height: 2.8em; margin-top: -7px; }
   .archive-subtitle { max-width: 30ch; }
   .folder-portals { inset: auto 8px 72px; height: 390px; opacity: 1 !important; pointer-events: auto; }
   .folder-portal { opacity: 1 !important; }

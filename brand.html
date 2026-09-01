@@ -7,11 +7,11 @@
     <meta name="description" content="Personal portfolio" />
     <link id="siteFavicon" rel="icon" type="image/svg+xml" href="/assets/example-logo.svg" />
     <title>Personal portfolio</title>
-    <link rel="stylesheet" href="/base.css?v=20260830-categoryarchive1" />
-    <link rel="stylesheet" href="/home.css?v=20260830-categoryarchive1" />
-    <link rel="stylesheet" href="/systems.css?v=20260830-categoryarchive1" />
-    <link rel="stylesheet" href="/collection.css?v=20260830-categoryarchive1" />
-    <link rel="stylesheet" href="/detail.css?v=20260830-categoryarchive1" />
+    <link rel="stylesheet" href="/base.css?v=20260902-archivehardening1" />
+    <link rel="stylesheet" href="/home.css?v=20260902-archivehardening1" />
+    <link rel="stylesheet" href="/systems.css?v=20260902-archivehardening1" />
+    <link rel="stylesheet" href="/collection.css?v=20260902-archivehardening1" />
+    <link rel="stylesheet" href="/detail.css?v=20260902-archivehardening1" />
   </head>
   <body data-page="home">
     <a class="skip-link" href="#mainContent">跳到主要内容</a>
@@ -25,6 +25,11 @@
       <button class="gallery-back" id="galleryBack" type="button" hidden>
         <span aria-hidden="true">←</span> <span id="galleryBackLabel">返回首页</span>
       </button>
+      <nav class="quick-index" id="quickIndex" aria-label="快速浏览">
+        <a class="quick-index-link" id="quickIndexArchive" href="#archive" aria-disabled="true" tabindex="-1">ARCHIVE</a>
+        <a class="quick-index-link" id="quickIndexProducts" href="#systemsStory" aria-label="跳到 LIVE PRODUCTS">PRODUCTS</a>
+        <a class="quick-index-link" id="quickIndexContact" href="#systemsContact">CONTACT</a>
+      </nav>
     </header>
 
     <main id="mainContent" tabindex="-1">
@@ -43,6 +48,7 @@
               <div class="archive-meta">
                 <p class="archive-subtitle chapter-subtitle" id="archiveIntroduction">你的视觉作品，<br />可以从这里开始。</p>
                 <button class="archive-all" id="archiveAll" type="button" tabindex="-1">VIEW ALL</button>
+                <p class="archive-status" id="archiveStatus" role="status" aria-live="polite" tabindex="-1"></p>
               </div>
             </div>
 
@@ -89,12 +95,12 @@
         <section class="systems-story" id="systemsStory" aria-labelledby="systemsTitle">
           <div class="systems-deck">
             <div class="systems-bridge" id="systemsBridge">
-              <h2 id="systemsTitle">LIVE PRODUCTS</h2>
+              <h2 id="systemsTitle" tabindex="-1">LIVE PRODUCTS</h2>
               <p class="chapter-subtitle" id="systemsIntroduction">选择代表项目，<br />讲清楚你做成的事情。</p>
             </div>
 
             <article class="project-sheet" data-project-sheet>
-              <h3 class="project-title">Project One</h3>
+              <h3 class="project-title" tabindex="-1">Project One</h3>
 
               <figure class="project-board">
                 <img width="1600" height="1000" loading="lazy" decoding="async" alt="" />
@@ -184,11 +190,15 @@
 
     <template id="collectionItemTemplate">
       <button class="collection-item" type="button">
-        <span class="collection-image"><img alt="" loading="lazy" decoding="async" /></span>
+        <span class="collection-image">
+          <canvas class="collection-placeholder" aria-hidden="true"></canvas>
+          <img alt="" loading="lazy" decoding="async" />
+          <span class="collection-image-failure" aria-hidden="true">高清图暂不可用</span>
+        </span>
         <span class="collection-meta"><strong></strong><small></small></span>
       </button>
     </template>
 
-    <script type="module" src="/app.js?v=20260830-categoryarchive1"></script>
+    <script type="module" src="/app.js?v=20260902-archivehardening1"></script>
   </body>
 </html>

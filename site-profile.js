@@ -1,5 +1,5 @@
-import { siteConfig as templateConfig } from "./site.config.js?v=20260830-categoryarchive1";
-import { siteConfig as ownerConfig } from "./site.config.owner.js?v=20260830-categoryarchive1";
+import { siteConfig as templateConfig } from "./site.config.js?v=20260902-archivehardening1";
+import { siteConfig as ownerConfig } from "./site.config.owner.js?v=20260902-archivehardening1";
 
 const isOwnerHost = (hostname) => hostname === "me.shanzoon.art"
   || hostname === "trend-atlas.pages.dev"

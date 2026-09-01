@@ -240,6 +240,7 @@ const server = http.createServer(async (request, response) => {
     "/site.config.owner.js": "site.config.owner.js",
     "/site-profile.js": "site-profile.js",
     "/site.js": "site.js",
+    "/archive.js": "archive.js",
     "/app.js": "app.js",
     "/views.js": "views.js",
     "/home.js": "home.js",

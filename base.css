@@ -116,7 +116,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: var(--weight-display
   pointer-events: none;
 }
 
-.site-signature, .gallery-back { pointer-events: auto; }
+.site-signature, .gallery-back, .quick-index { pointer-events: auto; }
 .site-signature { display: inline-flex; align-items: center; gap: 10px; color: var(--night-ink); text-decoration: none; }
 .site-signature img { width: 25px; height: 28px; object-fit: contain; filter: invert(1); }
 .site-signature span { font-size: var(--type-small); font-weight: 650; letter-spacing: -0.02em; }
@@ -138,6 +138,31 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: var(--weight-display
 }
 .gallery-back:hover { background: oklch(0.22 0.015 356.8); border-color: oklch(1 0 0 / 0.26); transform: translateY(-1px); }
 .gallery-back:active { transform: scale(0.97); }
+
+.quick-index { display: flex; align-items: center; gap: clamp(10px, 1.6vw, 22px); }
+.quick-index-link {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--night-ink);
+  font-family: var(--font-display);
+  font-size: var(--type-small);
+  font-weight: var(--weight-display);
+  letter-spacing: 0.045em;
+  text-decoration: none;
+  white-space: nowrap;
+  opacity: 0.7;
+  transition: color 150ms var(--ease-out), opacity 150ms var(--ease-out), transform 150ms var(--ease-out);
+}
+.quick-index-link:hover { color: var(--cyan); opacity: 1; transform: translateY(-1px); }
+.quick-index-link:active { transform: translateY(0) scale(0.98); }
+.quick-index-link[aria-disabled="true"] { color: var(--night-muted); cursor: wait; opacity: 0.58; }
+.quick-index-link:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 1px var(--night);
+}
 
 .image-placeholder {
   position: absolute;
@@ -187,6 +212,12 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: var(--weight-display
 
 @media (max-width: 760px) {
   .site-header { min-height: 64px; }
+  .quick-index { gap: 10px; }
+  .quick-index-link { font-size: 0.7rem; letter-spacing: 0.025em; }
+}
+
+@media (max-width: 340px) {
+  .site-signature span { display: none; }
 }
 
 @media (min-width: 761px) and (prefers-reduced-motion: no-preference) {

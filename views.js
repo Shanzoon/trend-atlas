@@ -1,10 +1,10 @@
-import { categoryDefinitions, categoryFor } from "./categories.js?v=20260830-categoryarchive1";
-import { elements } from "./elements.js?v=20260830-categoryarchive1";
-import { scheduleStoryUpdate } from "./home.js?v=20260830-categoryarchive1";
-import { siteConfig } from "./site.js?v=20260830-categoryarchive1";
-import { itemsForScope, nextCollectionPageEnd, state } from "./state.js?v=20260830-categoryarchive1";
-import { renderThumbHash } from "./thumbhash.js?v=20260830-categoryarchive1";
-import { hashString, stableDateKey } from "./utils.js?v=20260830-categoryarchive1";
+import { categoryDefinitions, categoryFor } from "./categories.js?v=20260902-archivehardening1";
+import { elements } from "./elements.js?v=20260902-archivehardening1";
+import { scheduleStoryUpdate } from "./home.js?v=20260902-archivehardening1";
+import { siteConfig } from "./site.js?v=20260902-archivehardening1";
+import { itemsForScope, nextCollectionPageEnd, state } from "./state.js?v=20260902-archivehardening1";
+import { renderThumbHash } from "./thumbhash.js?v=20260902-archivehardening1";
+import { hashString, stableDateKey } from "./utils.js?v=20260902-archivehardening1";
 
 let dailyDeck = [];
 const dailyLayers = [elements.dailyImage, elements.dailyImageIncoming];
@@ -392,6 +392,7 @@ function setPage(page) {
   elements.collectionPage.hidden = page !== "collection";
   elements.detailPage.hidden = page !== "detail";
   elements.galleryBack.hidden = page === "home";
+  elements.quickIndex.hidden = page !== "home";
 
   if (page === "collection") elements.galleryBackLabel.textContent = "返回首页";
   if (page === "detail") {
@@ -455,17 +456,31 @@ export function renderNextCollectionPage() {
 
   items.slice(state.collectionRenderedCount, pageEnd).forEach((item) => {
     const card = elements.itemTemplate.content.firstElementChild.cloneNode(true);
+    const imageFrame = card.querySelector(".collection-image");
     const image = card.querySelector("img");
+    const placeholder = card.querySelector(".collection-placeholder");
+    const failureLabel = card.querySelector(".collection-image-failure");
     card.dataset.category = item.category;
     card.setAttribute("aria-label", `查看 ${item.title}，归档于 ${item.date}`);
+    renderThumbHash(placeholder, item.thumbhash);
+    imageFrame.style.aspectRatio = item.width && item.height ? `${item.width} / ${item.height}` : "4 / 3";
     image.loading = "lazy";
     image.decoding = "async";
-    image.src = item.src;
     image.alt = `${item.title}，${item.categoryLabel}`;
     if (item.width && item.height) {
       image.width = item.width;
       image.height = item.height;
     }
+    image.addEventListener("load", () => {
+      image.classList.add("is-loaded");
+      placeholder.classList.add("is-hidden");
+    }, { once: true });
+    image.addEventListener("error", () => {
+      card.classList.add("is-image-error");
+      failureLabel.setAttribute("aria-hidden", "false");
+      card.setAttribute("aria-label", `查看 ${item.title}，归档于 ${item.date}；高清图暂不可用，详情页可重试`);
+    }, { once: true });
+    image.src = item.src;
     card.querySelector("strong").textContent = item.title;
     card.querySelector("small").textContent = item.date;
     // 详情翻页范围跟随当前筛选分类。
