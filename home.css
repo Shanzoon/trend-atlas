@@ -140,12 +140,12 @@
 .daily-refresh {
   position: absolute;
   z-index: 4;
-  top: 8px;
-  right: 8px;
+  top: 1px;
+  right: 1px;
   display: grid;
   place-items: center;
-  width: 30px;
-  height: 30px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   border: 0;
   border-radius: 999px;
@@ -187,6 +187,11 @@
 .folder-front { z-index: 4; left: 0; right: 0; bottom: 0; height: 31%; display: flex; align-items: center; justify-content: center; padding: 2% 7% 0; border: 1px solid var(--folder-edge); border-top-color: var(--folder-highlight); border-radius: 0 0 10px 10px; background: linear-gradient(180deg, var(--folder-front-top), var(--folder-front-bottom)); box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.08); }
 .folder-label { color: oklch(0.78 0.012 356.8); font-family: var(--font-display); font-size: var(--type-eyebrow); font-weight: var(--weight-display); line-height: 1; letter-spacing: 0.12em; white-space: nowrap; opacity: 0.68; text-shadow: 0 1px 1px var(--folder-shadow); transition: color 180ms var(--ease-out), opacity 180ms var(--ease-out), letter-spacing 220ms var(--ease-out); }
 .folder-portal:hover .folder-label { color: var(--night-ink); letter-spacing: 0.15em; opacity: 1; }
+
+@media (hover: none), (pointer: coarse) {
+  .folder-portal:not(:disabled) { pointer-events: none; }
+  .folder-portal:not(:disabled) :is(.folder-back, .folder-image, .folder-front) { pointer-events: auto; }
+}
 
 @media (hover: hover) and (pointer: fine) {
   .folder-portal.has-preview-stack:hover .folder-image.is-preview-main { transform: translateY(-10%) scale(0.99); }

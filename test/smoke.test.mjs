@@ -14,7 +14,7 @@ import { offsetForProgressWithHolds, progressWithHold, progressWithHolds, scroll
 import { thumbHashToRGBA as decodeLocalThumbHash } from "../thumbhash.js";
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const ASSET_VERSION = "20260902-archivehardening1";
+const ASSET_VERSION = "20260902-touch1";
 
 const [dreamscape, lens] = categoryDefinitions;
 
@@ -201,6 +201,18 @@ describe("quick index navigation contract", () => {
     assert.match(home, /focusTarget = scene === "products" \? elements\.projectTitles\[0\] : elements\.systemsContactLinks\[0\]/, "static product jumps must focus visible content");
     assert.match(systemsCss, /\.project-sheet\s*\{[^}]*scroll-margin-top:\s*calc\(76px \+ env\(safe-area-inset-top\)\)/s, "static product jumps must clear the fixed header");
     assert.match(views, /quickIndex\.hidden = page !== "home"/, "the quick index must not compete with gallery navigation");
+  });
+});
+
+describe("touch interaction contract", () => {
+  it("keeps primary touch targets large and limits folder hits to visible surfaces", async () => {
+    const baseCss = await readFile(path.join(appRoot, "base.css"), "utf8");
+    const homeCss = await readFile(path.join(appRoot, "home.css"), "utf8");
+
+    assert.match(baseCss, /button, a\s*\{[^}]*touch-action:\s*manipulation;/s, "links and buttons should avoid delayed touch activation without disabling zoom");
+    assert.match(baseCss, /\.site-signature\s*\{[^}]*min-width:\s*44px;[^}]*min-height:\s*44px;/s, "the home signature should expose a 44px touch target");
+    assert.match(homeCss, /\.daily-refresh\s*\{[^}]*width:\s*44px;[^}]*height:\s*44px;/s, "the daily refresh control should expose a 44px touch target");
+    assert.match(homeCss, /@media \(hover: none\), \(pointer: coarse\)\s*\{[\s\S]*?\.folder-portal:not\(:disabled\)\s*\{\s*pointer-events:\s*none;\s*\}[\s\S]*?\.folder-portal:not\(:disabled\) :is\(\.folder-back, \.folder-image, \.folder-front\)\s*\{\s*pointer-events:\s*auto;\s*\}/, "touch input should ignore each folder's transparent bounding box");
   });
 });
 
