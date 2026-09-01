@@ -10,11 +10,12 @@ import { categoryDefinitions } from "../categories.js";
 import { ARCHIVE_LOADING_DELAY_MS, ARCHIVE_TIMEOUT_MS, createArchiveLoader, normalizeArchiveManifest, scheduleDelayedArchiveFeedback } from "../archive.js";
 import { siteConfig } from "../site.config.js";
 import { COLLECTION_PAGE_SIZE, nextCollectionPageEnd } from "../state.js";
+import { DETAIL_SWIPE_MAX_DISTANCE_PX, DETAIL_SWIPE_MIN_DISTANCE_PX, detailSwipeDirection } from "../swipe.js";
 import { offsetForProgressWithHolds, progressWithHold, progressWithHolds, scrollCueOpacity, systemsTimeline } from "../timelines.js";
 import { thumbHashToRGBA as decodeLocalThumbHash } from "../thumbhash.js";
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const ASSET_VERSION = "20260902-touch1";
+const ASSET_VERSION = "20260902-swipe1";
 
 const [dreamscape, lens] = categoryDefinitions;
 
@@ -213,6 +214,24 @@ describe("touch interaction contract", () => {
     assert.match(baseCss, /\.site-signature\s*\{[^}]*min-width:\s*44px;[^}]*min-height:\s*44px;/s, "the home signature should expose a 44px touch target");
     assert.match(homeCss, /\.daily-refresh\s*\{[^}]*width:\s*44px;[^}]*height:\s*44px;/s, "the daily refresh control should expose a 44px touch target");
     assert.match(homeCss, /@media \(hover: none\), \(pointer: coarse\)\s*\{[\s\S]*?\.folder-portal:not\(:disabled\)\s*\{\s*pointer-events:\s*none;\s*\}[\s\S]*?\.folder-portal:not\(:disabled\) :is\(\.folder-back, \.folder-image, \.folder-front\)\s*\{\s*pointer-events:\s*auto;\s*\}/, "touch input should ignore each folder's transparent bounding box");
+  });
+
+  it("maps deliberate horizontal touch gestures to adjacent detail images", async () => {
+    const app = await readFile(path.join(appRoot, "app.js"), "utf8");
+    const detailCss = await readFile(path.join(appRoot, "detail.css"), "utf8");
+
+    assert.equal(detailSwipeDirection({ deltaX: -60, deltaY: 4, width: 320 }), 1, "left swipe should open the next image");
+    assert.equal(detailSwipeDirection({ deltaX: 60, deltaY: 4, width: 320 }), -1, "right swipe should open the previous image");
+    assert.equal(detailSwipeDirection({ deltaX: -40, deltaY: 0, width: 320 }), 0, "short drags should not navigate");
+    assert.equal(detailSwipeDirection({ deltaX: -80, deltaY: 70, width: 320 }), 0, "mostly vertical drags should keep scrolling");
+    assert.equal(detailSwipeDirection({ deltaX: -71, deltaY: 0, width: 800 }), 0, "wide media should use the capped threshold");
+    assert.equal(detailSwipeDirection({ deltaX: -73, deltaY: 0, width: 800 }), 1);
+    assert.equal(DETAIL_SWIPE_MIN_DISTANCE_PX, 48);
+    assert.equal(DETAIL_SWIPE_MAX_DISTANCE_PX, 72);
+    assert.match(app, /pointerdown[\s\S]*pointerType !== "touch"[\s\S]*pointerup[\s\S]*detailSwipeDirection[\s\S]*moveDetail\(direction\)/, "detail swipes should reuse the existing navigation path");
+    assert.match(app, /pointercancel[\s\S]*lostpointercapture/, "cancelled gestures must clear pending swipe state");
+    assert.match(app, /pointermove[\s\S]*event\.pointerType !== "mouse"/, "touch gestures must not trigger pointer tilt");
+    assert.match(detailCss, /\.detail-media\s*\{[^}]*touch-action:\s*pan-y pinch-zoom;/s, "detail swipes must preserve vertical scroll and pinch zoom");
   });
 });
 
@@ -552,6 +571,7 @@ describe("static assets", () => {
       "/site-profile.js",
       "/site.js",
       "/archive.js",
+      "/swipe.js",
       "/app.js",
       "/views.js",
       "/home.js",

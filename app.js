@@ -1,10 +1,11 @@
-import { elements } from "./elements.js?v=20260902-touch1";
-import { createArchiveLoader, scheduleDelayedArchiveFeedback } from "./archive.js?v=20260902-touch1";
-import { invalidateMotionLayout, jumpToHomeScene, scheduleStoryUpdate } from "./home.js?v=20260902-touch1";
-import { mobileLayout, reduceMotion } from "./media.js?v=20260902-touch1";
-import { applySiteConfig, siteConfig } from "./site.js?v=20260902-touch1";
-import { state } from "./state.js?v=20260902-touch1";
-import { hydrateFolderCovers, initCollectionFilters, moveDetail, navigateHome, navigateToArchive, renderNextCollectionPage, retryDetailImage, routeFromHash, switchDailyItem } from "./views.js?v=20260902-touch1";
+import { elements } from "./elements.js?v=20260902-swipe1";
+import { createArchiveLoader, scheduleDelayedArchiveFeedback } from "./archive.js?v=20260902-swipe1";
+import { invalidateMotionLayout, jumpToHomeScene, scheduleStoryUpdate } from "./home.js?v=20260902-swipe1";
+import { mobileLayout, reduceMotion } from "./media.js?v=20260902-swipe1";
+import { applySiteConfig, siteConfig } from "./site.js?v=20260902-swipe1";
+import { state } from "./state.js?v=20260902-swipe1";
+import { detailSwipeDirection } from "./swipe.js?v=20260902-swipe1";
+import { hydrateFolderCovers, initCollectionFilters, moveDetail, navigateHome, navigateToArchive, renderNextCollectionPage, retryDetailImage, routeFromHash, switchDailyItem } from "./views.js?v=20260902-swipe1";
 
 let configurationError;
 try {
@@ -21,6 +22,7 @@ if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 let archiveLoadPromise = null;
 let loadArchiveManifest;
 let cancelArchiveLoadingFeedback = () => {};
+let detailSwipe = null;
 
 function setArchiveLoadState(loadState, showDelayedLoading = false) {
   const moveRetryFocus = loadState === "loading"
@@ -129,8 +131,50 @@ elements.detailPrevious.addEventListener("click", () => moveDetail(-1));
 elements.detailNext.addEventListener("click", () => moveDetail(1));
 elements.detailRetry.addEventListener("click", retryDetailImage);
 
+elements.detailMedia.addEventListener("pointerdown", (event) => {
+  if (event.pointerType !== "touch") return;
+  if (!event.isPrimary) {
+    detailSwipe = null;
+    return;
+  }
+  if (state.page !== "detail" || event.target.closest("button, a")) return;
+  if (event.clientX <= 24 || event.clientX >= window.innerWidth - 24) return;
+
+  detailSwipe = {
+    pointerId: event.pointerId,
+    startX: event.clientX,
+    startY: event.clientY,
+  };
+  elements.detailMedia.setPointerCapture(event.pointerId);
+});
+
+elements.detailMedia.addEventListener("pointerup", (event) => {
+  if (!detailSwipe || event.pointerId !== detailSwipe.pointerId) return;
+  const swipe = detailSwipe;
+  detailSwipe = null;
+
+  if (elements.detailMedia.hasPointerCapture(event.pointerId)) {
+    elements.detailMedia.releasePointerCapture(event.pointerId);
+  }
+  if (state.page !== "detail") return;
+
+  const direction = detailSwipeDirection({
+    deltaX: event.clientX - swipe.startX,
+    deltaY: event.clientY - swipe.startY,
+    width: elements.detailMedia.clientWidth,
+  });
+  if (direction) moveDetail(direction);
+});
+
+elements.detailMedia.addEventListener("pointercancel", (event) => {
+  if (detailSwipe?.pointerId === event.pointerId) detailSwipe = null;
+});
+elements.detailMedia.addEventListener("lostpointercapture", (event) => {
+  if (detailSwipe?.pointerId === event.pointerId) detailSwipe = null;
+});
+
 elements.detailMedia.addEventListener("pointermove", (event) => {
-  if (reduceMotion.matches) return;
+  if (reduceMotion.matches || event.pointerType !== "mouse") return;
   const rect = elements.detailMedia.getBoundingClientRect();
   elements.detailImageWrap.style.setProperty("--detail-ry", `${((event.clientX - rect.left) / rect.width - 0.5) * 3}deg`);
   elements.detailImageWrap.style.setProperty("--detail-rx", `${(0.5 - (event.clientY - rect.top) / rect.height) * 3}deg`);

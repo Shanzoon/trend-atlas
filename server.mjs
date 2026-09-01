@@ -241,6 +241,7 @@ const server = http.createServer(async (request, response) => {
     "/site-profile.js": "site-profile.js",
     "/site.js": "site.js",
     "/archive.js": "archive.js",
+    "/swipe.js": "swipe.js",
     "/app.js": "app.js",
     "/views.js": "views.js",
     "/home.js": "home.js",

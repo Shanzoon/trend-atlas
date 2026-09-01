@@ -1,10 +1,10 @@
-import { categoryDefinitions, categoryFor } from "./categories.js?v=20260902-touch1";
-import { elements } from "./elements.js?v=20260902-touch1";
-import { scheduleStoryUpdate } from "./home.js?v=20260902-touch1";
-import { siteConfig } from "./site.js?v=20260902-touch1";
-import { itemsForScope, nextCollectionPageEnd, state } from "./state.js?v=20260902-touch1";
-import { renderThumbHash } from "./thumbhash.js?v=20260902-touch1";
-import { hashString, stableDateKey } from "./utils.js?v=20260902-touch1";
+import { categoryDefinitions, categoryFor } from "./categories.js?v=20260902-swipe1";
+import { elements } from "./elements.js?v=20260902-swipe1";
+import { scheduleStoryUpdate } from "./home.js?v=20260902-swipe1";
+import { siteConfig } from "./site.js?v=20260902-swipe1";
+import { itemsForScope, nextCollectionPageEnd, state } from "./state.js?v=20260902-swipe1";
+import { renderThumbHash } from "./thumbhash.js?v=20260902-swipe1";
+import { hashString, stableDateKey } from "./utils.js?v=20260902-swipe1";
 
 let dailyDeck = [];
 const dailyLayers = [elements.dailyImage, elements.dailyImageIncoming];

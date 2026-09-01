@@ -64,6 +64,7 @@
   border-radius: 8px;
   overflow: hidden;
   flex: 0 0 auto;
+  touch-action: pan-y pinch-zoom;
 }
 .detail-image-wrap .detail-layer {
   position: absolute;
