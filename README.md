@@ -144,6 +144,8 @@ Cloudflare Pages 设置：
 4. 用户绑定自定义域名并确认 DNS/TLS。
 5. 上线后检查 `/`、`/brand.html`、配置中的归档 JSON，以及至少一张真实图片。
 
+如果已有 Pages 项目设置了 `SKIP_DEPENDENCY_INSTALL`，构建命令使用 `npm ci --ignore-scripts && npm run build:owner`（Fork 使用 `npm run build`），先安装锁定依赖。HTML 构建不需要图片发布工具的安装脚本。
+
 `dist/index.html` 和 `dist/brand.html` 包含相同的完整页面，根入口无需跳转。只发布 `dist/`，不要直接发布源码目录；`dist/` 不提交到 Git。仓库的 `vercel.json` 也使用此构建流程，部署维护者版本时设置环境变量 `SITE_PROFILE=owner`。`server.mjs` 只用于本地开发。
 
 ## 验证与常见反馈
