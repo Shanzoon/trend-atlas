@@ -1,4 +1,4 @@
-import { siteConfig } from "./site-profile.js?v=20260902-swipe1";
+import { siteConfig } from "./site-profile.js?v=20260911-static1";
 
 function requireString(value, path) {
   if (typeof value !== "string" || !value.trim()) throw new Error(`${path} 必须是非空文本`);
@@ -58,6 +58,7 @@ export function validateSiteConfig(config = siteConfig) {
 }
 
 function setTwoLineCopy(element, lines) {
+  const document = element.ownerDocument;
   element.replaceChildren(document.createTextNode(lines[0]), document.createElement("br"), document.createTextNode(lines[1]));
 }
 
@@ -88,13 +89,14 @@ function configureProject(sheet, project) {
   }, { once: true });
 }
 
-export function applySiteConfig(config = siteConfig) {
+// The build and the browser use the same renderer and configuration snapshot.
+export function applySiteConfig(config = siteConfig, document = globalThis.document) {
   validateSiteConfig(config);
   document.documentElement.lang = config.site.language;
   document.title = config.site.title;
   document.querySelector('meta[name="description"]').content = config.site.description;
   document.querySelector("#siteFavicon").href = config.site.favicon;
-  document.querySelector("#homeLink").ariaLabel = config.site.homeLabel;
+  document.querySelector("#homeLink").setAttribute("aria-label", config.site.homeLabel);
   document.querySelector("#siteLogo").src = config.site.logo;
   document.querySelector("#siteSignature").textContent = config.site.signature;
   document.querySelector("#identityKicker").textContent = config.hero.kicker;
@@ -104,16 +106,17 @@ export function applySiteConfig(config = siteConfig) {
   document.querySelector("#archiveIdentity").textContent = config.archive.title;
   setTwoLineCopy(document.querySelector("#archiveIntroduction"), config.archive.introduction);
   const dailyCategory = config.archive.categories[0];
-  document.querySelector("#dailyImageWrap").ariaLabel = `当前 ${dailyCategory.label} 精选，点击换一张`;
-  document.querySelector("#dailyRefresh").ariaLabel = `随机换一张 ${dailyCategory.label} 图像`;
+  document.querySelector("#dailyImageWrap").setAttribute("aria-label", `当前 ${dailyCategory.label} 精选，点击换一张`);
+  document.querySelector("#dailyRefresh").setAttribute("aria-label", `随机换一张 ${dailyCategory.label} 图像`);
   document.querySelector(".daily-caption span:first-child").textContent = `${dailyCategory.label.toUpperCase()} PICK`;
   document.querySelector("#systemsTitle").textContent = config.systems.title;
+  document.querySelector("#quickIndexProducts").setAttribute("aria-label", `跳到 ${config.systems.title}`);
   setTwoLineCopy(document.querySelector("#systemsIntroduction"), config.systems.introduction);
 
   document.querySelectorAll(".folder-portal").forEach((button, index) => {
     const category = config.archive.categories[index];
     button.dataset.category = category.id;
-    button.ariaLabel = `打开 ${category.label} 图库`;
+    button.setAttribute("aria-label", `打开 ${category.label} 图库`);
     button.querySelector(".folder-label").textContent = category.label.toUpperCase();
   });
 

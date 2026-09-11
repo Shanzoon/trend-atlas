@@ -15,7 +15,7 @@ import { offsetForProgressWithHolds, progressWithHold, progressWithHolds, scroll
 import { thumbHashToRGBA as decodeLocalThumbHash } from "../thumbhash.js";
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const ASSET_VERSION = "20260902-swipe1";
+const ASSET_VERSION = "20260911-static1";
 
 const [dreamscape, lens] = categoryDefinitions;
 
@@ -510,7 +510,6 @@ describe("home page", () => {
   it("exposes every category portal and loads the single entry script and stylesheet", async () => {
     const response = await fetchWithRetry(`${baseUrl}/`);
     assert.equal(response.status, 200);
-    if (process.env.SITE_PROFILE === "owner") assert.match(response.url, /\/brand\.html\?profile=owner$/);
     assert.match(response.headers.get("content-type"), /text\/html/);
     const html = await response.text();
 
@@ -518,9 +517,9 @@ describe("home page", () => {
     assert.equal((html.match(/class="folder-portal"/g) || []).length, 4);
     assert.equal((html.match(/data-project-sheet/g) || []).length, 3);
     assert.ok(html.includes(`<script type="module" src="/app.js?v=${ASSET_VERSION}">`), "expected versioned /app.js module entry");
-    assert.ok(!html.includes("media.shanzoon.art"), "personal media URLs should live only in site.config.js and archive.json");
+    if (process.env.SITE_PROFILE !== "owner") assert.ok(!html.includes("media.shanzoon.art"), "starter HTML must not request owner media");
     assert.ok(html.includes('id="siteLogo"'), "expected a configurable logo slot");
-    assert.match(html, /<img alt="" loading="lazy" decoding="async" \/>/, "collection images should remain lazy-loaded");
+    assert.match(html, /<img alt="" loading="lazy" decoding="async"\s*\/?>/, "collection images should remain lazy-loaded");
     assert.ok(html.includes('id="collectionMore"'), "expected a manual archive pagination control");
     assert.ok(html.includes('id="collectionFilters"'), "expected a collection category filter control");
     assert.ok(html.includes('id="dailyRefresh"'), "expected a daily pick refresh control");
@@ -625,12 +624,18 @@ describe("static assets", () => {
   });
 });
 
-describe("static deployment entry", () => {
-  it("provides an index.html fallback for hosts that do not apply vercel.json", async () => {
-    const response = await fetchWithRetry(`${baseUrl}/index.html`);
-    assert.equal(response.status, 200);
-    const html = await response.text();
-    assert.match(html, /location\.replace\(`\/brand\.html/);
+describe("rendered page entries", () => {
+  it("delivers the configured identity at every entry without executing JavaScript", async () => {
+    for (const entry of ["/", "/index.html", "/brand.html"]) {
+      for (const [profile, name] of [["owner", "Shanzoon"], ["template", "Your Name"]]) {
+        const response = await fetchWithRetry(`${baseUrl}${entry}?profile=${profile}`);
+        assert.equal(response.status, 200);
+        assert.equal(response.redirected, false);
+        const html = await response.text();
+        assert.ok(html.includes(`<h1 id="brandName" tabindex="-1">${name}</h1>`));
+        assert.doesNotMatch(html, /http-equiv="refresh"|location\.replace/);
+      }
+    }
   });
 });
 

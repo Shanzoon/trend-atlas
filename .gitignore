@@ -1,5 +1,6 @@
 .DS_Store
 node_modules/
+dist/
 
 # 本地内容素材：不随开源仓库发布
 assets/project-*.png

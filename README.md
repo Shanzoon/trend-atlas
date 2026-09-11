@@ -28,9 +28,9 @@ npm run dev
 
 Fork 用户只需编辑 `site.config.js`，不需要全仓库搜索替换姓名、域名或图片地址。
 
-仓库维护者的现有公开内容保存在 `site.config.owner.js`。`me.shanzoon.art` 和现有 Pages 域名会自动使用该配置；本地检查可运行 `npm run dev:owner`，或在页面 URL 后加 `?profile=owner`。Fork 用户不需要修改或删除这个文件。
+仓库维护者的现有公开内容保存在 `site.config.owner.js`。维护者运行 `npm run build:owner` 生成生产页面；本地检查可运行 `npm run dev:owner`，或在本地页面 URL 后加 `?profile=owner`。Fork 用户使用默认的 `npm run build`，不需要修改或删除维护者配置。
 
-`brand.html` 刻意保留中性的静态骨架，避免 Fork 在配置生效前暴露原站身份或请求原站图片；站点内容和交互需要浏览器启用 JavaScript。若项目另有“无 JavaScript 也要输出定制 SEO/正文”的要求，应在自己的部署流程中增加静态生成或边缘渲染，这不属于本模板的默认复杂度。
+`brand.html` 是共用模板。构建时使用与浏览器相同的配置渲染函数，把姓名、标题、Logo、介绍、项目和联系方式写进 HTML，输出到 `dist/`。页面携带生成时的配置快照，浏览器不会再按域名或查询参数切换身份。首次访问和脚本不可用时也能直接看到真实内容；图库与动画仍需要 JavaScript。本地服务也使用同一渲染函数。HTML 解析依赖只在开发和构建时运行，不发送到浏览器。
 
 ## 替换内容
 
@@ -128,22 +128,23 @@ Agent 可以完成：修改代码和公开配置、整理归档清单、检查�
 
 ## 部署
 
-这是一个无构建步骤的静态网站。部署前运行：
+这是一个在发布前生成 HTML 的静态网站。部署前运行：
 
 ```bash
 npm run check
+npm run build
 git diff --check
 ```
 
 Cloudflare Pages 设置：
 
 1. 用户登录 Cloudflare Pages，连接自己的 Git 仓库并完成授权。
-2. Framework preset 选无框架，不填写构建命令，输出目录使用仓库根目录 `.`。
+2. Framework preset 选无框架，构建命令为 `npm run build`，输出目录为 `dist`。Shanzoon 自己的 Pages 项目使用 `npm run build:owner`。
 3. 先推送非生产分支并检查预览站点，再合并到生产分支。
 4. 用户绑定自定义域名并确认 DNS/TLS。
 5. 上线后检查 `/`、`/brand.html`、配置中的归档 JSON，以及至少一张真实图片。
 
-顶层 `index.html` 为普通静态托管提供根入口，`brand.html` 是页面本体。仓库保留 `vercel.json`，因此现有 Vercel 路由也继续可用。其他静态平台同样只需发布仓库根目录；`server.mjs` 只用于本地开发。
+`dist/index.html` 和 `dist/brand.html` 包含相同的完整页面，根入口无需跳转。只发布 `dist/`，不要直接发布源码目录；`dist/` 不提交到 Git。仓库的 `vercel.json` 也使用此构建流程，部署维护者版本时设置环境变量 `SITE_PROFILE=owner`。`server.mjs` 只用于本地开发。
 
 ## 验证与常见反馈
 
@@ -151,7 +152,7 @@ Cloudflare Pages 设置：
 npm run check
 ```
 
-检查覆盖语法、配置结构、模板资源、归档格式、ThumbHash、服务端路径安全、图片发布参数和既有交互契约。
+检查覆盖语法、配置结构、模板资源、初始 HTML 内容、配置快照一致性、HTML 转义、静态构建、归档格式、ThumbHash、服务端路径安全、图片发布参数和既有交互契约。
 
 - “站点配置错误”：按提示修复 `site.config.js` 中的字段。
 - “图像归档读取失败”：确认 `archive.manifestPath` 指向已提交且可访问的 JSON。

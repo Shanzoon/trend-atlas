@@ -5,6 +5,9 @@ import { fileURLToPath } from "node:url";
 import { categories } from "./categories.js";
 import { siteConfig, siteProfile } from "./site-profile.js";
 import { validateSiteConfig } from "./site.js";
+import { siteConfig as templateConfig } from "./site.config.js";
+import { siteConfig as ownerConfig } from "./site.config.owner.js";
+import { renderSiteHtml } from "./scripts/render-site.mjs";
 
 const appRoot = path.dirname(fileURLToPath(import.meta.url));
 validateSiteConfig(siteConfig);
@@ -169,11 +172,15 @@ const server = http.createServer(async (request, response) => {
     return;
   }
 
-  if (siteProfile === "owner" && (url.pathname === "/" || url.pathname === "/brand.html") && !url.searchParams.has("profile")) {
-    url.pathname = "/brand.html";
-    url.searchParams.set("profile", "owner");
-    response.writeHead(302, { Location: `${url.pathname}${url.search}`, "Cache-Control": "no-cache" });
-    response.end();
+  if (["/", "/index.html", "/brand.html"].includes(url.pathname)) {
+    const profile = url.searchParams.get("profile") || siteProfile;
+    const config = profile === "owner" ? ownerConfig : templateConfig;
+    try {
+      const html = renderSiteHtml(await readFile(path.join(appRoot, "brand.html"), "utf8"), config);
+      send(response, 200, html, mimeTypes[".html"]);
+    } catch (error) {
+      send(response, 500, `站点配置错误：${error.message}`);
+    }
     return;
   }
 
@@ -225,9 +232,6 @@ const server = http.createServer(async (request, response) => {
   }
 
   const staticFiles = {
-    "/": "brand.html",
-    "/index.html": "index.html",
-    "/brand.html": "brand.html",
     "/archive.json": "archive.json",
     "/archive.example.json": "archive.example.json",
     "/base.css": "base.css",
