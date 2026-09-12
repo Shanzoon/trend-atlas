@@ -46,6 +46,7 @@
 .holo-gallery button:hover { color: var(--rose); }
 .holo-gallery button:disabled { opacity: .4; cursor: wait; }
 .holo-gallery :is(button, a, [tabindex]):focus-visible, #quickIndexCards:focus-visible { outline: 2px solid var(--rose); outline-offset: 3px; }
+.holo-gallery .holo-surface:focus { outline: none; }
 .holo-footer { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 20px; min-height: 22px; font-size: 11px; color: var(--night-muted); }
 .holo-footer p { margin: 0; }
 .holo-footer a { margin-left: auto; padding: 8px 0; color: inherit; text-underline-offset: 4px; }
