@@ -1,0 +1,35 @@
+{
+  "title": "SYNTH",
+  "subtitle": "绯白机心 · 人造灵魂",
+  "technique": "SYNTHETIC SOUL",
+  "tagline": "白色装甲，赤色心跳",
+  "edition": "003 / 003",
+  "collection": "CYBERNETIC PORTRAIT · PERSONAL COLLECTION",
+  "description": "白发蓝瞳与瓷白装甲，暗色机械结构藏在颈侧。转动卡片，观察装甲上的全息流光与人物视差。",
+  "assets": {
+    "subject": "./assets/subject.webp",
+    "background": "./assets/background.webp",
+    "text": "./assets/text.webp",
+    "lineart": "./assets/lineart.webp",
+    "effects": "./assets/effects.webp",
+    "model": "./assets/card.glb"
+  },
+  "parameters": {
+    "subjectScale": 1.18,
+    "subjectDepth": 0.34,
+    "backgroundDepth": -0.18,
+    "effectsScale": 1,
+    "effectsDepth": 0.52,
+    "foil": 0.42
+  },
+  "safeArea": {
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "appearance": {
+    "finish": "pearl"
+  }
+}

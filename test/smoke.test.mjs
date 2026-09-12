@@ -15,7 +15,7 @@ import { offsetForProgressWithHolds, progressWithHold, progressWithHolds, scroll
 import { thumbHashToRGBA as decodeLocalThumbHash } from "../thumbhash.js";
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const ASSET_VERSION = "20260911-static1";
+const ASSET_VERSION = "20260911-holo1";
 
 const [dreamscape, lens] = categoryDefinitions;
 
@@ -526,12 +526,12 @@ describe("home page", () => {
     assert.match(html, /<nav class="quick-index" id="quickIndex" aria-label="快速浏览">/, "expected one labelled flat quick-index navigation");
     assert.ok(!html.includes("quickIndexToggle"), "the quick index must not require a disclosure step");
     assert.ok(!html.includes("popover"), "the quick index must stay flat rather than opening a menu");
-    assert.equal((html.match(/class="quick-index-link"/g) || []).length, 3, "expected archive, products, and contact shortcuts");
-    const archiveCuePattern = /<div class="scroll-cue" id="scrollCue" aria-hidden="true">\s*<span class="scroll-cue-label">ENTER ARCHIVE<\/span>\s*<span class="scroll-cue-mouse"><\/span>\s*<\/div>/g;
+    assert.equal((html.match(/class="quick-index-link"/g) || []).length, 4, "expected cards, archive, products, and contact shortcuts");
+    const archiveCuePattern = /<div class="scroll-cue" id="scrollCue" aria-hidden="true">\s*<span class="scroll-cue-label">ENTER (?:CARDS|ARCHIVE)<\/span>\s*<span class="scroll-cue-mouse"><\/span>\s*<\/div>/g;
     assert.equal(html.match(archiveCuePattern)?.length, 1, "one complete scroll cue component should serve both archive transitions");
     assert.ok(!html.includes('id="archiveScrollCue"'), "archive transitions should not fork the scroll cue component");
     assert.ok(html.indexOf('id="homeStatus"') < html.indexOf('id="folderPortals"'), "daily feedback should stay inside the artwork before archive controls");
-    assert.match(html, /<\/div>\s*<div class="scroll-cue" id="scrollCue"/, "the scroll cue should sit outside the scaled stage");
+    assert.match(html, /<\/section>\s*<div class="scroll-cue" id="scrollCue"/, "the scroll cue should sit after the cards, outside the scaled stage");
     assert.ok(!html.includes('id="detailStrip"'), "detail page should not render the old thumbnail strip");
     assert.ok(!html.includes('class="detail-browser"'), "detail page should not render the old thumbnail browser");
     assert.ok(html.includes('class="detail-nav previous"'), "detail page should expose the previous image control");
@@ -562,6 +562,8 @@ describe("static assets", () => {
       "/systems.css",
       "/collection.css",
       "/detail.css",
+      "/holographic.css",
+      "/holographic.js",
       "/archive.json",
       "/archive.example.json",
       "/categories.js",
@@ -600,6 +602,28 @@ describe("static assets", () => {
       const decoded = decodeLocalThumbHash(Buffer.from(item.thumbhash, "base64"));
       assert.ok(decoded.width > 0 && decoded.height > 0, `invalid ThumbHash dimensions for ${item.id}`);
       assert.equal(decoded.rgba.length, decoded.width * decoded.height * 4);
+    }
+  });
+
+  it("serves all local card resources and blocks paths outside the public card directory", async () => {
+    for (const file of ["gallery.js", "card-scene.js", "css-card.js", "shaders.js", "vendor.js", "credits.html", "LICENSE-RuiC.txt", "LICENSE-three.txt"]) {
+      assert.equal((await fetchWithRetry(`${baseUrl}/holographic/${file}`)).status, 200);
+    }
+    for (const id of ["redline", "telemetry", "synth"]) {
+      const base = `${baseUrl}/holographic/${id}/`;
+      const response = await fetchWithRetry(`${base}card-config.json`);
+      assert.equal(response.status, 200);
+      const config = await response.json();
+      for (const [role, reference] of Object.entries(config.assets)) {
+        const asset = await fetchWithRetry(new URL(reference, base));
+        assert.equal(asset.status, 200);
+        assert.match(asset.headers.get("content-type"), role === "model" ? /model\/gltf-binary/ : /image\/webp/);
+        if (role !== "model") assert.equal((await fetchWithRetry(new URL(reference.replace("assets/", "mobile/"), base))).status, 200);
+      }
+    }
+    for (const reference of ["..%2fpackage.json", "%2e%2e/package.json", "%00"]) {
+      const response = await fetchWithRetry(`${baseUrl}/holographic/${reference}`);
+      assert.ok([400, 404].includes(response.status));
     }
   });
 

@@ -29,6 +29,20 @@ export async function buildSite(config = siteConfig, outputDir = path.join(appRo
   const html = renderSiteHtml(await readFile(path.join(appRoot, "brand.html"), "utf8"), config);
   const files = new Set((await readdir(appRoot)).filter((file) => /\.(js|css)$/.test(file)));
   files.add("_headers");
+  if (config.holographic === true) {
+    for (const file of ["gallery.js", "card-scene.js", "css-card.js", "shaders.js", "vendor.js", "credits.html", "LICENSE-three.txt", "LICENSE-RuiC.txt"]) files.add(`holographic/${file}`);
+    for (const id of ["redline", "telemetry", "synth"]) {
+      const base = `holographic/${id}`;
+      files.add(`${base}/card-config.json`);
+      files.add(`${base}/poster.webp`);
+      const card = JSON.parse(await readFile(path.join(appRoot, base, "card-config.json"), "utf8"));
+      for (const [role, reference] of Object.entries(card.assets)) {
+        if (!/^\.\/assets\/[a-z-]+\.(webp|glb)$/.test(reference)) throw new Error(`Invalid card asset: ${reference}`);
+        files.add(`${base}/${reference.slice(2)}`);
+        if (role !== "model") files.add(`${base}/${reference.slice(2).replace("assets/", "mobile/")}`);
+      }
+    }
+  }
 
   const references = [config.site.logo, config.site.favicon];
   for (const category of config.archive.categories) references.push(category.cover, category.preview);

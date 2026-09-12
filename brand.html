@@ -7,11 +7,12 @@
     <meta name="description" content="Personal portfolio" />
     <link id="siteFavicon" rel="icon" type="image/svg+xml" href="/assets/example-logo.svg" />
     <title>Personal portfolio</title>
-    <link rel="stylesheet" href="/base.css?v=20260911-static1" />
-    <link rel="stylesheet" href="/home.css?v=20260911-static1" />
-    <link rel="stylesheet" href="/systems.css?v=20260911-static1" />
-    <link rel="stylesheet" href="/collection.css?v=20260911-static1" />
-    <link rel="stylesheet" href="/detail.css?v=20260911-static1" />
+    <link rel="stylesheet" href="/base.css?v=20260911-holo1" />
+    <link rel="stylesheet" href="/home.css?v=20260911-holo1" />
+    <link rel="stylesheet" href="/systems.css?v=20260911-holo1" />
+    <link rel="stylesheet" href="/collection.css?v=20260911-holo1" />
+    <link rel="stylesheet" href="/detail.css?v=20260911-holo1" />
+    <link rel="stylesheet" href="/holographic.css?v=20260911-holo1" />
   </head>
   <body data-page="home">
     <a class="skip-link" href="#mainContent">跳到主要内容</a>
@@ -26,6 +27,7 @@
         <span aria-hidden="true">←</span> <span id="galleryBackLabel">返回首页</span>
       </button>
       <nav class="quick-index" id="quickIndex" aria-label="快速浏览">
+        <a class="quick-index-link" id="quickIndexCards" href="#cards" hidden>CARDS</a>
         <a class="quick-index-link" id="quickIndexArchive" href="#archive" aria-disabled="true" tabindex="-1">ARCHIVE</a>
         <a class="quick-index-link" id="quickIndexProducts" href="#systemsStory" aria-label="跳到 LIVE PRODUCTS">PRODUCTS</a>
         <a class="quick-index-link" id="quickIndexContact" href="#systemsContact">CONTACT</a>
@@ -84,6 +86,56 @@
             </div>
 
           </div>
+          <section class="holo-gallery" id="holoGallery" aria-labelledby="holoTitle" hidden>
+            <header class="holo-heading">
+              <div><p class="holo-eyebrow">02 / INTERACTIVE EDITIONS</p><h2 id="holoTitle" tabindex="-1">IN A DIFFERENT LIGHT</h2></div>
+              <p class="holo-intro">转动视角，让图像有了另一面。</p>
+            </header>
+            <div class="holo-deck" id="holoDeck">
+              <article class="holo-card is-selected" data-card="redline">
+                <div class="holo-surface" role="button" tabindex="0" aria-label="REDLINE 赤域赛车，拖动旋转，按 F 翻面" aria-pressed="true"><img class="holo-poster" data-poster="/holographic/redline/poster.webp" alt="REDLINE 赤域赛车全息卡" width="400" height="556" decoding="async" /></div>
+                <button class="holo-caption" type="button" data-select="redline" aria-pressed="true"><span class="holo-number">01</span><span><strong>REDLINE</strong><small>赤域赛车</small></span><span class="holo-selected-mark" aria-hidden="true">↗</span></button>
+              </article>
+              <article class="holo-card" data-card="telemetry">
+                <div class="holo-surface" role="button" tabindex="0" aria-label="TELEMETRY 赛道解析，拖动旋转，按 F 翻面" aria-pressed="false"><img class="holo-poster" data-poster="/holographic/telemetry/poster.webp" alt="TELEMETRY 赛道解析全息卡" width="400" height="556" decoding="async" /></div>
+                <button class="holo-caption" type="button" data-select="telemetry" aria-pressed="false"><span class="holo-number">02</span><span><strong>TELEMETRY</strong><small>赛道解析</small></span><span class="holo-selected-mark" aria-hidden="true">↗</span></button>
+              </article>
+              <article class="holo-card" data-card="synth">
+                <div class="holo-surface" role="button" tabindex="0" aria-label="SYNTH 绯白机心，拖动旋转，按 F 翻面" aria-pressed="false"><img class="holo-poster" data-poster="/holographic/synth/poster.webp" alt="SYNTH 绯白机心全息卡" width="400" height="556" decoding="async" /></div>
+                <button class="holo-caption" type="button" data-select="synth" aria-pressed="false"><span class="holo-number">03</span><span><strong>SYNTH</strong><small>绯白机心</small></span><span class="holo-selected-mark" aria-hidden="true">↗</span></button>
+              </article>
+            </div>
+            <nav class="holo-switcher" aria-label="选择闪卡">
+              <button type="button" data-select="redline" aria-pressed="true">01 <span>REDLINE</span></button>
+              <button type="button" data-select="telemetry" aria-pressed="false">02 <span>TELEMETRY</span></button>
+              <button type="button" data-select="synth" aria-pressed="false">03 <span>SYNTH</span></button>
+            </nav>
+            <div class="holo-controls">
+              <div class="holo-finishes" role="group" aria-label="当前卡片材质">
+                <button type="button" data-finish="pearl" aria-pressed="true">珠光</button><button type="button" data-finish="silver" aria-pressed="false">银箔</button><button type="button" data-finish="gold" aria-pressed="false">烫金</button><button type="button" data-finish="original" aria-pressed="false">原画</button>
+              </div>
+              <div class="holo-actions">
+                <button id="holoFlip" type="button" aria-label="翻到背面">翻面 <span aria-hidden="true">↔</span></button>
+                <button id="holoMotion" type="button" aria-pressed="true">动效 <span>开</span></button>
+                <button id="holoSettingsOpen" type="button" aria-haspopup="dialog">调整 <span aria-hidden="true">＋</span></button>
+              </div>
+            </div>
+            <footer class="holo-footer"><p class="holo-hint">拖动卡面旋转 · 点选卡片后调整材质</p><p id="holoStatus" role="status" aria-live="polite"></p><button id="holoRetry" type="button" hidden>重试加载</button><a href="/holographic/credits.html" target="_blank" rel="noopener">技术来源 ↗</a></footer>
+            <dialog class="holo-settings" id="holoSettings" aria-labelledby="holoSettingsTitle">
+              <form method="dialog"><button class="holo-close" aria-label="关闭调整" autofocus>关闭 ×</button></form>
+              <p class="holo-eyebrow" id="holoSettingsCard">REDLINE / 01</p><h3 id="holoSettingsTitle">光与景深</h3>
+              <div class="holo-sliders">
+                <label for="holo-foil">全息强度 <output></output><input id="holo-foil" data-parameter="foil" type="range" min="0" max="1" step="0.01" value="0.5" /></label>
+                <label for="holo-scale">画面比例 <output></output><input id="holo-scale" data-parameter="scale" type="range" min="0.7" max="1.6" step="0.01" value="1.15" /></label>
+                <label for="holo-depth">画面景深 <output></output><input id="holo-depth" data-parameter="depth" type="range" min="-0.5" max="1" step="0.01" value="0.4" /></label>
+                <label for="holo-fx-depth">特效景深 <output></output><input id="holo-fx-depth" data-parameter="fx-depth" type="range" min="-0.5" max="1" step="0.01" value="0.5" /></label>
+                <label for="holo-bg-depth">底纹景深 <output></output><input id="holo-bg-depth" data-parameter="bg-depth" type="range" min="-0.8" max="0.5" step="0.01" value="-0.25" /></label>
+                <label for="holo-zoom">观看距离 <output></output><input id="holo-zoom" data-parameter="zoom" type="range" min="0.82" max="1.05" step="0.01" value="1" /></label>
+              </div>
+              <div class="holo-settings-actions"><button type="button" id="holoReset">复位</button><button type="button" id="holoSave">保存当前卡面 ↓</button></div>
+              <p class="holo-keyboard">卡面获得焦点时：方向键旋转 · F 翻面 · R 复位 · 空格切换动效</p>
+            </dialog>
+          </section>
           <div class="scroll-cue" id="scrollCue" aria-hidden="true">
             <span class="scroll-cue-label">ENTER ARCHIVE</span>
             <span class="scroll-cue-mouse"></span>
@@ -199,6 +251,6 @@
       </button>
     </template>
 
-    <script type="module" src="/app.js?v=20260911-static1"></script>
+    <script type="module" src="/app.js?v=20260911-holo1"></script>
   </body>
 </html>

@@ -1,11 +1,12 @@
-import { elements } from "./elements.js?v=20260911-static1";
-import { createArchiveLoader, scheduleDelayedArchiveFeedback } from "./archive.js?v=20260911-static1";
-import { invalidateMotionLayout, jumpToHomeScene, scheduleStoryUpdate } from "./home.js?v=20260911-static1";
-import { mobileLayout, reduceMotion } from "./media.js?v=20260911-static1";
-import { applySiteConfig, siteConfig } from "./site.js?v=20260911-static1";
-import { state } from "./state.js?v=20260911-static1";
-import { detailSwipeDirection } from "./swipe.js?v=20260911-static1";
-import { hydrateFolderCovers, initCollectionFilters, moveDetail, navigateHome, navigateToArchive, renderNextCollectionPage, retryDetailImage, routeFromHash, switchDailyItem } from "./views.js?v=20260911-static1";
+import { elements } from "./elements.js?v=20260911-holo1";
+import { initHolographic } from "./holographic.js?v=20260911-holo1";
+import { createArchiveLoader, scheduleDelayedArchiveFeedback } from "./archive.js?v=20260911-holo1";
+import { invalidateMotionLayout, jumpToHomeScene, scheduleStoryUpdate } from "./home.js?v=20260911-holo1";
+import { mobileLayout, reduceMotion } from "./media.js?v=20260911-holo1";
+import { applySiteConfig, siteConfig } from "./site.js?v=20260911-holo1";
+import { state } from "./state.js?v=20260911-holo1";
+import { detailSwipeDirection } from "./swipe.js?v=20260911-holo1";
+import { hydrateFolderCovers, initCollectionFilters, moveDetail, navigateHome, navigateToArchive, renderNextCollectionPage, retryDetailImage, routeFromHash, switchDailyItem } from "./views.js?v=20260911-holo1";
 
 let configurationError;
 try {
@@ -17,6 +18,7 @@ try {
 }
 
 document.documentElement.classList.add("motion-ready");
+initHolographic();
 if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 
 let archiveLoadPromise = null;
@@ -101,6 +103,11 @@ elements.quickIndexArchive.addEventListener("click", (event) => {
 elements.quickIndexProducts.addEventListener("click", (event) => {
   event.preventDefault();
   jumpToHomeScene("products");
+});
+elements.quickIndexCards.addEventListener("click", (event) => {
+  event.preventDefault();
+  if (location.hash !== "#cards") history.pushState({ source: "home" }, "", "#cards");
+  jumpToHomeScene("cards");
 });
 elements.quickIndexContact.addEventListener("click", (event) => {
   event.preventDefault();
@@ -203,6 +210,7 @@ async function initialize() {
   if (configurationError) return;
   hydrateFolderCovers();
   initCollectionFilters();
+  if (location.hash === "#cards") jumpToHomeScene("cards");
   loadArchiveManifest = createArchiveLoader({ path: siteConfig.archive.manifestPath });
   await loadArchive();
 }

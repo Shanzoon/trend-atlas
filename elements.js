@@ -1,5 +1,8 @@
 export const elements = {
   story: document.querySelector("#brandStory"),
+  holoGallery: document.querySelector("#holoGallery"),
+  holoTitle: document.querySelector("#holoTitle"),
+  quickIndexCards: document.querySelector("#quickIndexCards"),
   brandName: document.querySelector("#brandName"),
   stage: document.querySelector("#brightStage"),
   identity: document.querySelector("#stageIdentity"),

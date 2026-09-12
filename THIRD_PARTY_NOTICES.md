@@ -1,5 +1,13 @@
 # Third-party notices
 
+## Holographic card viewer
+
+The shaders and card scene in `holographic/` are adapted from HRuiCcc's
+RuiC-card-skill (Copyright 2026 HRuiCcc, MIT). The runtime uses Three.js
+0.180.0 and GLTFLoader (MIT). Full licenses are distributed with the website
+in `holographic/LICENSE-RuiC.txt` and `holographic/LICENSE-three.txt`.
+These software licenses do not apply to generated artwork or user references.
+
 ## ThumbHash
 
 The browser-side decoder in `thumbhash.js` is adapted from

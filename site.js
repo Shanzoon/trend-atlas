@@ -1,4 +1,4 @@
-import { siteConfig } from "./site-profile.js?v=20260911-static1";
+import { siteConfig } from "./site-profile.js?v=20260911-holo1";
 
 function requireString(value, path) {
   if (typeof value !== "string" || !value.trim()) throw new Error(`${path} 必须是非空文本`);
@@ -92,6 +92,10 @@ function configureProject(sheet, project) {
 // The build and the browser use the same renderer and configuration snapshot.
 export function applySiteConfig(config = siteConfig, document = globalThis.document) {
   validateSiteConfig(config);
+  document.body.classList.toggle("has-holographic", config.holographic === true);
+  document.querySelector("#holoGallery").hidden = config.holographic !== true;
+  document.querySelector("#quickIndexCards").hidden = config.holographic !== true;
+  document.querySelector(".scroll-cue-label").textContent = config.holographic === true ? "ENTER CARDS" : "ENTER ARCHIVE";
   document.documentElement.lang = config.site.language;
   document.title = config.site.title;
   document.querySelector('meta[name="description"]').content = config.site.description;

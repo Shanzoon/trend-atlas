@@ -1,0 +1,34 @@
+{
+  "title": "REDLINE",
+  "subtitle": "赤域 · 赛车典藏",
+  "technique": "FULL THROTTLE",
+  "tagline": "向红线疾驰",
+  "edition": "001 / 001",
+  "collection": "AI CONCEPT · PERSONAL COLLECTION",
+  "description": "以用户提供的红黑赛车图为参考，制作带有视差和全息流光的个人收藏卡。",
+  "assets": {
+    "subject": "./assets/subject.webp",
+    "background": "./assets/background.webp",
+    "text": "./assets/text.webp",
+    "lineart": "./assets/lineart.webp",
+    "model": "./assets/card.glb"
+  },
+  "parameters": {
+    "subjectScale": 1.15,
+    "subjectDepth": 0.4,
+    "backgroundDepth": -0.25,
+    "effectsScale": 1,
+    "effectsDepth": 0.5,
+    "foil": 0.5
+  },
+  "safeArea": {
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "appearance": {
+    "finish": "pearl"
+  }
+}

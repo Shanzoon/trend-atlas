@@ -32,6 +32,7 @@ export const siteConfig = {
     title: "LIVE PRODUCTS",
     introduction: ["从发现方向，", "到构建真正运行的产品。"],
   },
+  holographic: true,
   projects: [
     {
       title: "灵境 AI 创作平台",

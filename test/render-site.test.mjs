@@ -96,6 +96,22 @@ describe("static production build", () => {
         for (const privateFile of ["server.mjs", "node_modules", "scripts", ".env", ".wrangler", "package.json"]) assert.ok(!names.includes(privateFile));
         const assets = await readdir(path.join(output, "assets"));
         assert.ok(assets.every((file) => file.endsWith(".svg")), "unreferenced local source PNGs must not be published");
+        if (config.holographic) {
+          for (const name of ["gallery.js", "card-scene.js", "css-card.js", "shaders.js", "vendor.js", "credits.html", "LICENSE-RuiC.txt", "LICENSE-three.txt"]) {
+            await readFile(path.join(output, "holographic", name));
+          }
+          for (const id of ["redline", "telemetry", "synth"]) {
+            const base = path.join(output, "holographic", id);
+            const card = JSON.parse(await readFile(path.join(base, "card-config.json"), "utf8"));
+            await readFile(path.join(base, "poster.webp"));
+            for (const [role, reference] of Object.entries(card.assets)) {
+              await readFile(path.join(base, reference));
+              if (role !== "model") await readFile(path.join(base, reference.replace("assets/", "mobile/")));
+            }
+          }
+          const published = await readdir(path.join(output, "holographic"), { recursive: true });
+          assert.ok(published.every((file) => !/\.blend|\.png|node_modules|server\.mjs|verification|renders|tools|Downloads/i.test(file)), "only card web resources may be published");
+        } else assert.ok(!names.includes("holographic"), "forks must not publish owner artwork implicitly");
       }
     } finally {
       await rm(root, { recursive: true, force: true });

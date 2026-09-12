@@ -30,6 +30,8 @@ const mimeTypes = {
   ".jpeg": "image/jpeg",
   ".webp": "image/webp",
   ".svg": "image/svg+xml",
+  ".glb": "model/gltf-binary",
+  ".txt": "text/plain; charset=utf-8",
 };
 
 function titleFromFile(file) {
@@ -203,7 +205,7 @@ const server = http.createServer(async (request, response) => {
     return;
   }
 
-  if (url.pathname.startsWith("/assets/")) {
+  if (url.pathname.startsWith("/assets/") || url.pathname.startsWith("/holographic/")) {
     let relativePath;
     try {
       relativePath = decodeURIComponent(url.pathname.slice(1));
@@ -211,7 +213,7 @@ const server = http.createServer(async (request, response) => {
       send(response, 400, "Invalid asset path");
       return;
     }
-    const assetsRoot = path.join(appRoot, "assets");
+    const assetsRoot = path.join(appRoot, url.pathname.startsWith("/holographic/") ? "holographic" : "assets");
     const assetPath = path.resolve(appRoot, relativePath);
     if (!assetPath.startsWith(`${assetsRoot}${path.sep}`)) {
       send(response, 400, "Invalid asset path");
@@ -239,6 +241,8 @@ const server = http.createServer(async (request, response) => {
     "/systems.css": "systems.css",
     "/collection.css": "collection.css",
     "/detail.css": "detail.css",
+    "/holographic.css": "holographic.css",
+    "/holographic.js": "holographic.js",
     "/categories.js": "categories.js",
     "/site.config.js": "site.config.js",
     "/site.config.owner.js": "site.config.owner.js",

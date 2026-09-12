@@ -1,10 +1,10 @@
-import { categoryDefinitions, categoryFor } from "./categories.js?v=20260911-static1";
-import { elements } from "./elements.js?v=20260911-static1";
-import { scheduleStoryUpdate } from "./home.js?v=20260911-static1";
-import { siteConfig } from "./site.js?v=20260911-static1";
-import { itemsForScope, nextCollectionPageEnd, state } from "./state.js?v=20260911-static1";
-import { renderThumbHash } from "./thumbhash.js?v=20260911-static1";
-import { hashString, stableDateKey } from "./utils.js?v=20260911-static1";
+import { categoryDefinitions, categoryFor } from "./categories.js?v=20260911-holo1";
+import { elements } from "./elements.js?v=20260911-holo1";
+import { jumpToHomeScene, scheduleStoryUpdate } from "./home.js?v=20260911-holo1";
+import { siteConfig } from "./site.js?v=20260911-holo1";
+import { itemsForScope, nextCollectionPageEnd, state } from "./state.js?v=20260911-holo1";
+import { renderThumbHash } from "./thumbhash.js?v=20260911-holo1";
+import { hashString, stableDateKey } from "./utils.js?v=20260911-holo1";
 
 let dailyDeck = [];
 const dailyLayers = [elements.dailyImage, elements.dailyImageIncoming];
@@ -830,6 +830,11 @@ export function retryDetailImage() {
 }
 
 export function routeFromHash() {
+  if (location.hash === "#cards" && !elements.holoGallery.hidden) {
+    if (state.page !== "home") navigateHome(false);
+    jumpToHomeScene("cards");
+    return;
+  }
   if (!state.allItems.length) return;
 
   const safeDecode = (value) => {

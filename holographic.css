@@ -1,0 +1,116 @@
+/* The second chapter shares the site's typography, dotted ground and rose accent. */
+.has-holographic { min-width: 0; }
+.holo-gallery { position: absolute; z-index: 6; inset: 94px clamp(24px, 7vw, 110px) 30px; display: grid; grid-template-rows: auto minmax(180px, 1fr) auto auto; gap: 18px; max-width: 1280px; margin: auto; opacity: 0; pointer-events: none; }
+.holo-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; }
+.holo-heading h2 { margin: 0; font-size: clamp(1.8rem, 3.1vw, 3rem); letter-spacing: -.025em; line-height: 1; }
+.holo-heading h2[tabindex="-1"]:focus { outline: none; }
+.holo-eyebrow { margin: 0 0 14px; font-size: 11px; letter-spacing: .16em; color: var(--night-muted); }
+.holo-intro { margin: 0 0 3px; font-size: var(--type-body); color: var(--chapter-subtitle-ink); }
+.holo-deck { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 4vw, 64px); min-height: 0; }
+.holo-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+.holo-card { display: grid; grid-template-rows: minmax(0, 1fr) auto; min-width: 0; min-height: 0; }
+.holo-surface { position: relative; display: grid; place-items: center; min-height: 0; outline-offset: -4px; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; }
+.holo-surface.is-dragging { cursor: grabbing; }
+.holo-poster { display: block; max-height: 100%; max-width: 100%; width: auto; height: 100%; object-fit: contain; opacity: .75; pointer-events: none; }
+.holo-surface.is-ready .holo-poster { visibility: hidden; }
+/* RuiC's layered CSS-3D fallback; animation is driven by the shared gallery loop. */
+.holo-css-wrap { position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; perspective: 1000px; pointer-events: none; }
+.holo-css-rotation { position: relative; transform-style: preserve-3d; }
+.holo-css-face { position: absolute; inset: 0; transform-style: preserve-3d; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.holo-css-layer, .holo-css-foil { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.holo-css-layer img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.holo-css-layer[data-layer="lineart"] { mix-blend-mode: multiply; }
+.holo-css-foil { opacity: var(--foil-amount, .5); background: linear-gradient(118deg, #ffffff66, #c8cdd71f 50%, #ffffff4d 75%); mix-blend-mode: soft-light; }
+.holo-css-foil::after { content: ""; position: absolute; inset: 0; background: radial-gradient(55% 40% at var(--mx, 50%) var(--my, 45%), #ffeebeaa, transparent 70%); mix-blend-mode: screen; }
+.holo-css-wrap[data-finish="gold"] .holo-css-foil { background: linear-gradient(118deg, #e6b4508c, #c9a24a2e 45%, #fff4d21f 70%); mix-blend-mode: overlay; }
+.holo-css-wrap[data-finish="silver"] .holo-css-foil { background: linear-gradient(118deg, #d2d6dc80, #b4bac029 45%, #f5f8fc24 70%); }
+.holo-css-wrap[data-finish="original"] .holo-css-foil { display: none; }
+.holo-css-back { transform: rotateY(180deg); background: #242326; border: 1px solid #777269; color: #aaa399; display: grid; grid-template-rows: auto 1fr auto auto; place-items: center; padding: 14% 8%; gap: 8%; text-align: center; font-size: calc(var(--card-unit) * 3); }
+.holo-css-back::before { content: ""; position: absolute; inset: 5%; border: 1px solid #777269; }
+.holo-css-back-mark { font-family: var(--font-display); font-size: calc(var(--card-unit) * 40); line-height: 1; color: #f3eee5; }
+.holo-css-back-title { font-size: calc(var(--card-unit) * 4); }
+.holo-caption { position: relative; z-index: 2; display: flex; align-items: center; gap: 14px; width: 100%; min-height: 66px; padding: 13px 0 0; background: none; border: 0; border-top: 1px solid oklch(1 0 0 / .2); text-align: left; cursor: pointer; }
+.holo-caption strong { display: block; font-family: var(--font-display); font-size: clamp(1rem, 1.4vw, 1.35rem); font-weight: 500; letter-spacing: .065em; }
+.holo-caption small { display: block; margin-top: 2px; font-size: 12px; color: var(--night-muted); }
+.holo-number { align-self: start; padding-top: 3px; font-size: 10px; color: var(--night-muted); }
+.holo-selected-mark { margin-left: auto; color: var(--rose); opacity: 0; }
+.holo-card.is-selected .holo-caption { border-top-color: var(--rose); }
+.holo-card.is-selected .holo-selected-mark { opacity: 1; }
+.holo-controls { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 2px; }
+.holo-finishes, .holo-actions { display: flex; align-items: center; gap: 6px; }
+.holo-gallery button { cursor: pointer; }
+.holo-controls button, .holo-settings-actions button, .holo-close, .holo-switcher button, #holoRetry { min-height: 44px; padding: 8px 15px; background: transparent; border: 1px solid transparent; border-radius: 4px; font-size: 13px; color: var(--night-muted); }
+.holo-finishes button[aria-pressed="true"] { color: var(--night-ink); border-color: oklch(1 0 0 / .25); background: oklch(1 0 0 / .05); }
+.holo-actions button { color: var(--night-ink); }
+.holo-actions button span { margin-left: 10px; color: var(--night-muted); }
+.holo-gallery button:hover { color: var(--rose); }
+.holo-gallery button:disabled { opacity: .4; cursor: wait; }
+.holo-gallery :is(button, a, [tabindex]):focus-visible, #quickIndexCards:focus-visible { outline: 2px solid var(--rose); outline-offset: 3px; }
+.holo-footer { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 20px; min-height: 22px; font-size: 11px; color: var(--night-muted); }
+.holo-footer p { margin: 0; }
+.holo-footer a { margin-left: auto; padding: 8px 0; color: inherit; text-underline-offset: 4px; }
+#holoStatus { color: var(--chapter-subtitle-ink); }
+#holoRetry { color: var(--rose); }
+.holo-switcher { display: none; }
+.holo-settings { width: min(430px, calc(100% - 28px)); max-height: min(720px, calc(100dvh - 40px)); padding: 32px; border: 1px solid oklch(1 0 0 / .2); border-radius: 10px; background: var(--night-raised); color: var(--night-ink); box-shadow: 0 24px 100px #0009; overscroll-behavior: contain; }
+.holo-settings::backdrop { background: #000b; }
+.holo-settings h3 { margin: 0 0 30px; font-size: 1.8rem; letter-spacing: -.02em; }
+.holo-settings form { float: right; margin: -12px -15px 0 0; }
+.holo-sliders { display: grid; gap: 23px; }
+.holo-sliders label { display: block; font-size: 13px; }
+.holo-sliders output { float: right; font-variant-numeric: tabular-nums; color: var(--night-muted); }
+.holo-sliders input { display: block; width: 100%; margin: 8px 0 0; accent-color: var(--rose); min-height: 24px; touch-action: pan-y; }
+.holo-settings-actions { display: flex; justify-content: space-between; margin-top: 24px; }
+.holo-settings-actions button { border-color: oklch(1 0 0 / .2); color: var(--night-ink); }
+.holo-keyboard { margin: 20px 0 0; font-size: 11px; line-height: 1.8; color: var(--night-muted); }
+
+@media (min-width: 761px) and (prefers-reduced-motion: no-preference) {
+  .motion-ready .has-holographic .brand-story { height: 530dvh; min-height: calc(1800px + 230dvh); }
+}
+
+/* In the static/mobile story, flex order places cards between hero and archive. */
+@media (max-width: 760px), (prefers-reduced-motion: reduce) {
+  .has-holographic .story-sticky { display: flex; flex-direction: column; align-items: center; padding: 100px 20px 24px; height: auto; }
+  .has-holographic .bright-stage { display: contents; }
+  .has-holographic .stage-identity { position: relative; order: 1; top: auto !important; left: auto !important; width: 100% !important; transform: none !important; text-align: center; }
+  .has-holographic .daily-art { position: relative; order: 2; top: auto !important; left: auto !important; right: auto !important; width: min(600px, 100%); height: 400px; margin: 36px 0 90px; }
+  .has-holographic .holo-gallery { position: relative; order: 3; inset: auto; width: 100%; height: auto; min-height: 0; margin: 0 0 100px; opacity: 1 !important; transform: none !important; pointer-events: auto; scroll-margin-top: 92px; }
+  .has-holographic .archive-copy { position: relative; order: 4; top: auto; left: auto; width: 100%; transform: none !important; margin: 0; }
+  .has-holographic .folder-portals { position: relative; order: 5; inset: auto; width: calc(100% - 16px); height: 390px; flex-shrink: 0; }
+  .holo-deck { height: clamp(300px, 53dvh, 520px); }
+}
+@media (max-width: 760px) {
+  .has-holographic .archive-identity { font-size: clamp(1.25rem, 7vw, 2.1rem); }
+  .holo-gallery { gap: 18px; }
+  .holo-heading { display: block; }
+  .holo-heading h2 { font-size: clamp(1.5rem, 5.4vw, 2rem); }
+  .holo-eyebrow { font-size: 10px; }
+  .holo-intro { margin-top: 12px; font-size: 13px; }
+  .holo-deck { grid-template-columns: 1fr; height: clamp(300px, 49dvh, 450px); }
+  .holo-card:not(.is-selected) { display: none; }
+  .holo-surface { width: calc(100% - 24px); margin: 0 12px; }
+  .holo-caption { padding-left: 12px; padding-right: 12px; }
+  .holo-caption strong { font-size: 1.2rem; }
+  .holo-switcher { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+  .holo-switcher button { padding: 9px 5px; font-size: 10px; border-color: oklch(1 0 0 / .15); }
+  .holo-switcher button span { margin-left: 5px; }
+  .holo-switcher button[aria-pressed="true"] { color: var(--night-ink); border-color: var(--rose); }
+  .holo-controls { display: grid; gap: 8px; }
+  .holo-finishes, .holo-actions { justify-content: center; }
+  .holo-finishes button { flex: 1; }
+  .holo-actions { justify-content: space-around; }
+  .holo-footer { font-size: 10px; }
+  .holo-footer a { min-height: 44px; display: flex; align-items: center; }
+  .holo-settings { padding: 26px; }
+  .holo-keyboard { display: none; }
+}
+@media (max-width: 1050px) and (min-width: 761px) {
+  .holo-intro { max-width: 13em; font-size: 12px; }
+  .holo-gallery { inset-inline: 30px; }
+}
+@media (min-width: 761px) and (max-height: 720px) and (prefers-reduced-motion: no-preference) {
+  .holo-gallery { inset-block: 82px 12px; gap: 10px; }
+  .holo-eyebrow { margin-bottom: 8px; }
+  .holo-heading h2 { font-size: 1.8rem; }
+  .holo-caption { min-height: 54px; padding-top: 8px; }
+}

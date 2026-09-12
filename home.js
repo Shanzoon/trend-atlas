@@ -1,9 +1,10 @@
-import { categoryFor } from "./categories.js?v=20260911-static1";
-import { elements } from "./elements.js?v=20260911-static1";
-import { mobileLayout, reduceMotion } from "./media.js?v=20260911-static1";
-import { itemsForScope, state } from "./state.js?v=20260911-static1";
-import { archiveTimeline, offsetForProgressWithHolds, progressWithHold, progressWithHolds, scrollCueOpacity, systemsTimeline } from "./timelines.js?v=20260911-static1";
-import { clamp, clearMotionStyles, lerp, setButtonInteractive, setContainerInteractive, smoothstep } from "./utils.js?v=20260911-static1";
+import { categoryFor } from "./categories.js?v=20260911-holo1";
+import { setHolographicVisibility } from "./holographic.js?v=20260911-holo1";
+import { elements } from "./elements.js?v=20260911-holo1";
+import { mobileLayout, reduceMotion } from "./media.js?v=20260911-holo1";
+import { itemsForScope, state } from "./state.js?v=20260911-holo1";
+import { archiveTimeline, offsetForProgressWithHolds, progressWithHolds, scrollCueOpacity, systemsTimeline } from "./timelines.js?v=20260911-holo1";
+import { clamp, clearMotionStyles, lerp, setButtonInteractive, setContainerInteractive, smoothstep } from "./utils.js?v=20260911-holo1";
 
 const ARCHIVE_STAGE_SCALE = 0.84;
 
@@ -12,6 +13,7 @@ function measureMotionLayout() {
   const systemsTop = elements.systemsStory.getBoundingClientRect().top + scrollY;
   const storyDistance = Math.max(1, elements.story.offsetHeight - innerHeight);
   const holdDistance = innerHeight * 0.35;
+  const holographicHold = elements.holoGallery.hidden ? 0 : innerHeight * 1.8;
   const systemsHoldDistances = [
     [0.30, innerHeight * 0.30],
     [0.61, innerHeight * 0.30],
@@ -24,7 +26,8 @@ function measureMotionLayout() {
   return {
     storyTop,
     storyDistance,
-    motionDistance: Math.max(1, storyDistance - holdDistance),
+    motionDistance: Math.max(1, storyDistance - holdDistance - holographicHold),
+    storyHolds: [[0.34, holographicHold], [archiveTimeline.handoff[0], holdDistance]],
     holdDistance,
     systemsTop,
     systemsMotionDistance: Math.max(1, elements.systemsStory.offsetHeight - innerHeight - systemsHoldDistance),
@@ -98,6 +101,9 @@ function hydrateFolderPreviews() {
 
 function updateSystemsStory(staticStory, metrics, titleProgress = 0, handoffY = 0) {
   if (staticStory) {
+    setHolographicVisibility(null);
+    elements.stage.style.opacity = "";
+    elements.stage.inert = false;
     clearMotionStyles(elements.systemsBridge);
     elements.projectSheets.forEach((sheet) => {
       clearMotionStyles(sheet);
@@ -202,12 +208,16 @@ function updateStory() {
 
   state.staticMotionApplied = false;
   const metrics = state.motionMetrics || (state.motionMetrics = measureMotionLayout());
-  const progress = progressWithHold(
+  const progress = progressWithHolds(
     scrollY - metrics.storyTop,
     metrics.motionDistance,
-    archiveTimeline.handoff[0],
-    metrics.holdDistance,
+    metrics.storyHolds,
   );
+  const holoOpacity = elements.holoGallery.hidden ? 0
+    : smoothstep(0.10, 0.29, progress) * (1 - smoothstep(0.43, 0.64, progress));
+  setHolographicVisibility(holoOpacity);
+  elements.stage.style.opacity = (1 - holoOpacity).toFixed(3);
+  elements.stage.inert = holoOpacity > 0.85;
   const titleProgress = smoothstep(...archiveTimeline.titleHandoff, progress);
   const bridgeFinalViewportY = elements.systemsBridge.offsetTop;
   const handoffY = lerp(metrics.archiveTitleAnchorY, bridgeFinalViewportY, titleProgress);
@@ -269,6 +279,7 @@ function updateStory() {
   elements.archiveAll.style.opacity = (allEntry * (1 - archiveExit)).toFixed(3);
   elements.archiveAll.style.transform = `translateY(${(lerp(12, 0, allEntry) - 20 * archiveExit).toFixed(1)}px)`;
   elements.scrollCue.style.opacity = scrollCueOpacity(progress).toFixed(3);
+  elements.scrollCue.querySelector(".scroll-cue-label").textContent = !elements.holoGallery.hidden && progress < 0.64 ? "ENTER CARDS" : "ENTER ARCHIVE";
   const archiveIsInteractive = archiveActionReady && allEntry > 0.82 && handoff < 0.18;
   setButtonInteractive(elements.archiveAll, archiveIsInteractive);
   elements.archiveAll.classList.toggle("is-ready", archiveIsInteractive);
@@ -297,8 +308,19 @@ function focusAfterSceneJump(target, behavior) {
 }
 
 export function jumpToHomeScene(scene) {
-  if (state.page !== "home" || !["products", "contact"].includes(scene)) return;
+  if (state.page !== "home" || !["cards", "products", "contact"].includes(scene)) return;
   const behavior = reduceMotion.matches ? "auto" : "smooth";
+
+  if (scene === "cards") {
+    if (elements.holoGallery.hidden) return;
+    if (mobileLayout.matches || reduceMotion.matches) elements.holoGallery.scrollIntoView({ behavior, block: "start" });
+    else {
+      const metrics = state.motionMetrics || (state.motionMetrics = measureMotionLayout());
+      window.scrollTo({ top: metrics.storyTop + metrics.motionDistance * 0.34 + innerHeight * 0.65, left: 0, behavior });
+    }
+    focusAfterSceneJump(elements.holoTitle, behavior);
+    return;
+  }
 
   if (mobileLayout.matches || reduceMotion.matches) {
     const target = scene === "products" ? elements.projectSheets[0] : elements.systemsContact;

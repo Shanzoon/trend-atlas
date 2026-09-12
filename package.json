@@ -11,7 +11,7 @@
     "publish:images:dry": "node scripts/publish-images.mjs --dry-run",
     "publish:images:owner": "SITE_PROFILE=owner node scripts/publish-images.mjs",
     "publish:images:owner:dry": "SITE_PROFILE=owner node scripts/publish-images.mjs --dry-run",
-    "check": "node --check scripts/build-site.mjs && node --check scripts/render-site.mjs && node --check server.mjs && node --check scripts/publish-images.mjs && node --check site.config.js && node --check site.config.owner.js && node --check site-profile.js && node --check site.js && node --check categories.js && node --check app.js && node --check views.js && node --check home.js && node --check elements.js && node --check state.js && node --check media.js && node --check timelines.js && node --check thumbhash.js && node --check utils.js && node --test",
+    "check": "node --check scripts/build-site.mjs && node --check scripts/render-site.mjs && node --check server.mjs && node --check scripts/publish-images.mjs && node --check site.config.js && node --check site.config.owner.js && node --check site-profile.js && node --check site.js && node --check categories.js && node --check app.js && node --check views.js && node --check home.js && node --check elements.js && node --check state.js && node --check media.js && node --check timelines.js && node --check thumbhash.js && node --check utils.js && node --check holographic.js && node --check holographic/gallery.js && node --check holographic/card-scene.js && node --check holographic/css-card.js && node --check holographic/shaders.js && node --test",
     "build": "node scripts/build-site.mjs",
     "build:owner": "SITE_PROFILE=owner node scripts/build-site.mjs"
   },

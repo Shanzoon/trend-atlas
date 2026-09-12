@@ -1,0 +1,35 @@
+{
+  "title": "TELEMETRY",
+  "subtitle": "赛道解析 · 数字诊断档案",
+  "technique": "SCAN COMPLETE",
+  "tagline": "速度，被逐帧解析",
+  "edition": "002 / 002",
+  "collection": "REDLINE ARCHIVE · CONCEPT SERIES",
+  "description": "红色赛车、荧光扫描框与细节拼贴组成的全息收藏卡。诊断读数为概念视觉设计。",
+  "assets": {
+    "subject": "./assets/subject.webp",
+    "background": "./assets/background.webp",
+    "text": "./assets/text.webp",
+    "lineart": "./assets/lineart.webp",
+    "effects": "./assets/effects.webp",
+    "model": "./assets/card.glb"
+  },
+  "parameters": {
+    "subjectScale": 1.1,
+    "subjectDepth": 0.35,
+    "backgroundDepth": -0.16,
+    "effectsScale": 1,
+    "effectsDepth": 0.55,
+    "foil": 0.42
+  },
+  "safeArea": {
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "appearance": {
+    "finish": "pearl"
+  }
+}
