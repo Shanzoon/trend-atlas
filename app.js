@@ -1,12 +1,12 @@
-import { elements } from "./elements.js?v=20260911-holo1";
-import { initHolographic } from "./holographic.js?v=20260911-holo1";
-import { createArchiveLoader, scheduleDelayedArchiveFeedback } from "./archive.js?v=20260911-holo1";
-import { invalidateMotionLayout, jumpToHomeScene, scheduleStoryUpdate } from "./home.js?v=20260911-holo1";
-import { mobileLayout, reduceMotion } from "./media.js?v=20260911-holo1";
-import { applySiteConfig, siteConfig } from "./site.js?v=20260911-holo1";
-import { state } from "./state.js?v=20260911-holo1";
-import { detailSwipeDirection } from "./swipe.js?v=20260911-holo1";
-import { hydrateFolderCovers, initCollectionFilters, moveDetail, navigateHome, navigateToArchive, renderNextCollectionPage, retryDetailImage, routeFromHash, switchDailyItem } from "./views.js?v=20260911-holo1";
+import { elements } from "./elements.js?v=20260912-cards-home1";
+import { initHolographic } from "./holographic.js?v=20260912-cards-home1";
+import { createArchiveLoader, scheduleDelayedArchiveFeedback } from "./archive.js?v=20260912-cards-home1";
+import { invalidateMotionLayout, jumpToHomeScene, scheduleStoryUpdate } from "./home.js?v=20260912-cards-home1";
+import { mobileLayout, reduceMotion } from "./media.js?v=20260912-cards-home1";
+import { applySiteConfig, siteConfig } from "./site.js?v=20260912-cards-home1";
+import { state } from "./state.js?v=20260912-cards-home1";
+import { detailSwipeDirection } from "./swipe.js?v=20260912-cards-home1";
+import { hydrateFolderCovers, initCollectionFilters, moveDetail, navigateHome, navigateToArchive, renderNextCollectionPage, retryDetailImage, routeFromHash, switchDailyItem } from "./views.js?v=20260912-cards-home1";
 
 let configurationError;
 try {

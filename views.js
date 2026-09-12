@@ -1,10 +1,10 @@
-import { categoryDefinitions, categoryFor } from "./categories.js?v=20260911-holo1";
-import { elements } from "./elements.js?v=20260911-holo1";
-import { jumpToHomeScene, scheduleStoryUpdate } from "./home.js?v=20260911-holo1";
-import { siteConfig } from "./site.js?v=20260911-holo1";
-import { itemsForScope, nextCollectionPageEnd, state } from "./state.js?v=20260911-holo1";
-import { renderThumbHash } from "./thumbhash.js?v=20260911-holo1";
-import { hashString, stableDateKey } from "./utils.js?v=20260911-holo1";
+import { categoryDefinitions, categoryFor } from "./categories.js?v=20260912-cards-home1";
+import { elements } from "./elements.js?v=20260912-cards-home1";
+import { jumpToHomeScene, scheduleStoryUpdate } from "./home.js?v=20260912-cards-home1";
+import { siteConfig } from "./site.js?v=20260912-cards-home1";
+import { itemsForScope, nextCollectionPageEnd, state } from "./state.js?v=20260912-cards-home1";
+import { renderThumbHash } from "./thumbhash.js?v=20260912-cards-home1";
+import { hashString, stableDateKey } from "./utils.js?v=20260912-cards-home1";
 
 let dailyDeck = [];
 const dailyLayers = [elements.dailyImage, elements.dailyImageIncoming];
@@ -832,6 +832,7 @@ export function retryDetailImage() {
 export function routeFromHash() {
   if (location.hash === "#cards" && !elements.holoGallery.hidden) {
     if (state.page !== "home") navigateHome(false);
+    else if (state.allItems.length) renderDailyItem();
     jumpToHomeScene("cards");
     return;
   }

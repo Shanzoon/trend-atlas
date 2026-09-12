@@ -15,7 +15,7 @@ import { offsetForProgressWithHolds, progressWithHold, progressWithHolds, scroll
 import { thumbHashToRGBA as decodeLocalThumbHash } from "../thumbhash.js";
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const ASSET_VERSION = "20260911-holo1";
+const ASSET_VERSION = "20260912-cards-home1";
 
 const [dreamscape, lens] = categoryDefinitions;
 

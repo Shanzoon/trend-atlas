@@ -1,10 +1,10 @@
-import { categoryFor } from "./categories.js?v=20260911-holo1";
-import { setHolographicVisibility } from "./holographic.js?v=20260911-holo1";
-import { elements } from "./elements.js?v=20260911-holo1";
-import { mobileLayout, reduceMotion } from "./media.js?v=20260911-holo1";
-import { itemsForScope, state } from "./state.js?v=20260911-holo1";
-import { archiveTimeline, offsetForProgressWithHolds, progressWithHolds, scrollCueOpacity, systemsTimeline } from "./timelines.js?v=20260911-holo1";
-import { clamp, clearMotionStyles, lerp, setButtonInteractive, setContainerInteractive, smoothstep } from "./utils.js?v=20260911-holo1";
+import { categoryFor } from "./categories.js?v=20260912-cards-home1";
+import { setHolographicVisibility } from "./holographic.js?v=20260912-cards-home1";
+import { elements } from "./elements.js?v=20260912-cards-home1";
+import { mobileLayout, reduceMotion } from "./media.js?v=20260912-cards-home1";
+import { itemsForScope, state } from "./state.js?v=20260912-cards-home1";
+import { archiveTimeline, offsetForProgressWithHolds, progressWithHolds, scrollCueOpacity, systemsTimeline } from "./timelines.js?v=20260912-cards-home1";
+import { clamp, clearMotionStyles, lerp, setButtonInteractive, setContainerInteractive, smoothstep } from "./utils.js?v=20260912-cards-home1";
 
 const ARCHIVE_STAGE_SCALE = 0.84;
 

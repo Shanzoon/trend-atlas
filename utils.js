@@ -1,4 +1,4 @@
-import { elements } from "./elements.js?v=20260911-holo1";
+import { elements } from "./elements.js?v=20260912-cards-home1";
 
 export function clamp(value, min = 0, max = 1) {
   return Math.min(max, Math.max(min, value));
